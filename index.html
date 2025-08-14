@@ -5,11 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>17/19 Urban Bistrot • Techno • Electro • House</title>
   <meta name="description" content="17/19 Urban Bistrot Roma. DJ set in vinile curated by Riccardo Battaglia. Colazioni, pranzi, cene e cocktail signature." />
-  <!-- Theme-colors per barra indirizzi -->
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
@@ -62,10 +59,10 @@
     /* ===== Header ===== */
     header{position:fixed;top:0;left:0;right:0;background:transparent;border-bottom:0;z-index:100}
     header.header--solid{background:color-mix(in oklab, var(--bg) 85%, transparent);border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
-    nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+    nav{display:flex;align-items:center;justify-content:space-between;height:64px}
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-    .brand img{height:44px;width:auto}
-    @media (min-width:768px){ .brand img{ height:54px } }
+    .brand img{height:48px;width:auto}
+    @media (min-width:768px){ .brand img{ height:56px } }
     /* Logo swap */
     .logo-dark{display:none}
     .logo-light{display:inline}
@@ -108,14 +105,14 @@
     .sheet__cta{display:inline-flex;margin-top:10px}
 
     /* ===== Hero ===== */
-    .hero{padding:76px 0 24px}
+    .hero{padding:52px 0 20px}
     .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:700;color:var(--muted);background:var(--chip)}
     h1{font-family:'Orbitron',monospace;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
     .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.22rem);margin:8px 0 14px}
     .chips{display:flex;gap:8px;flex-wrap:wrap}
     .chip{border:1px solid var(--line);border-radius:999px;font-size:.8rem;font-weight:800;padding:6px 10px;background:var(--chip);color:var(--chip-fg)}
 
-    /* Hero carousel (sotto poster) */
+    /* ===== Media frame (riusato per Live Shots) ===== */
     .hero-media{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--chip);margin-top:14px}
     @media (min-width:768px){ .hero-media{aspect-ratio:16/9;margin-top:18px} }
     .slide{position:absolute;inset:0;opacity:0;transition:opacity .35s}
@@ -168,7 +165,7 @@
     .fab svg{width:26px;height:26px}
     .fab path{fill:var(--accent-fg)}
 
-    /* ===== Light animations / reveals ===== */
+    /* ===== Reveal ===== */
     .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease, transform .5s ease}
     .reveal.active{opacity:1;transform:translateY(0)}
 
@@ -196,7 +193,6 @@
     <div class="container">
       <nav aria-label="principale">
         <a class="brand" href="#">
-          <!-- Logo: chiaro (light) / bianco (dark) -->
           <img class="logo-light" src="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logooo.svg?v=1755102480" alt="17/19 Urban Bistrot - Logo"/>
           <img class="logo-dark"  src="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logobianco.svg?v=1755104086" alt="17/19 Urban Bistrot - Logo (dark)"/>
         </a>
@@ -239,51 +235,40 @@
     </aside>
   </div>
 
-  <!-- HERO: Poster -->
+  <!-- Hero: Poster -->
   <section class="hero">
     <div class="container grid grid-2">
       <div class="reveal">
         <div class="poster-frame">
           <div class="poster-inner">
             <div class="poster-head">
-              <div class="venue"   id="posterVenue"></div>
-              <div class="series"  id="posterSeries"></div>
-              <div class="date"    id="posterDate"></div>
+              <div class="venue" id="posterVenue"></div>
+              <div class="series" id="posterSeries"></div>
+              <div class="date" id="posterDate"></div>
               <div class="tagline" id="posterTagline"></div>
               <div class="curated" id="posterCurated"></div>
             </div>
-
             <div class="poster-canvas" id="posterCanvas">
               <svg class="poster-svg" id="posterSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
             </div>
-
             <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
           </div>
         </div>
-
         <span class="tag" style="margin-top:12px">
-          <!-- Pin icon -->
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px">
             <path d="M12 22s7-5.33 7-12a7 7 0 1 0-14 0c0 6.67 7 12 7 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
           </svg>
           Roma • Via di Santa Costanza 17/19
         </span>
-
-        <!-- Carosello hero: sotto al poster -->
-        <div class="hero-media" id="heroMedia" aria-label="carosello">
-          <div class="dots" id="heroDots"></div>
-        </div>
       </div>
 
-      <!-- Orari -->
       <aside class="card reveal" aria-label="Orari & servizio">
         <div class="block-title"><h3>Orari</h3><span class="meta">Servizio cucina</span></div>
         <div class="time-grid">
           <div class="row">
             <div class="l">
               <span class="i" aria-hidden="true">
-                <!-- Coffee -->
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="6"/>
                   <line x1="10" y1="2" x2="10" y2="6"/><line x1="14" y1="2" x2="14" y2="6"/>
@@ -296,7 +281,6 @@
           <div class="row">
             <div class="l">
               <span class="i" aria-hidden="true">
-                <!-- UtensilsCrossed -->
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                   <path d="m16 4-12 12"/><path d="m20 7-7 7"/><path d="M8.5 16.5 4 21"/><path d="M15 4v7"/><path d="M19 4v3"/>
                 </svg>
@@ -308,7 +292,6 @@
           <div class="row">
             <div class="l">
               <span class="i" aria-hidden="true">
-                <!-- ChefHat -->
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M6 18v-2a6 6 0 0 1 12 0v2"/><path d="M4 22h16"/><path d="M8 18v4"/><path d="M16 18v4"/><path d="M7 8a5 5 0 0 1 10 0"/>
                 </svg>
@@ -320,7 +303,6 @@
           <div class="row">
             <div class="l">
               <span class="i" aria-hidden="true">
-                <!-- Disc3 -->
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M14 10h.01"/><path d="M10 14h.01"/>
                 </svg>
@@ -339,7 +321,7 @@
     </div>
   </section>
 
-  <!-- Live Carousel -->
+  <!-- Live Shots (unico carosello immagini) -->
   <section id="live">
     <div class="container">
       <div class="block-title" style="margin-bottom:14px"><h3>Live Shots</h3></div>
@@ -415,7 +397,7 @@
           <li>Selezione <strong>electro / techno / house</strong> romana–berlinese</li>
           <li>Set estesi, warm-up e closing “storytelling”</li>
         </ul>
-        <p class="meta" style="margin-top:10px">Manifesto: profondità, dinamica, eleganza. Qualità senza compromessi.</p>
+        <p class="meta" style="margin-top:10px">Manifesto: profondità, dinamica, eleganza. Zero compromessi sulla qualità.</p>
       </div>
 
       <div class="card reveal">
@@ -442,7 +424,7 @@
     <div class="container">
       <div class="block-title" style="margin-bottom:14px"><h3>Prossimi Eventi</h3></div>
       <div class="grid" id="eventsList" style="gap:12px"></div>
-      <!-- AGGIORNA QUI: array 'events' nello script -->
+      <!-- AGGIORNA SOLO l'array 'events' nello script. Il poster si sincronizza con il PROSSIMO evento -->
     </div>
   </section>
 
@@ -499,7 +481,7 @@
   </a>
 
   <script>
-    /* ========== Reveal on Scroll ========== */
+    /* ========== Scroll reveal ========== */
     const reveals = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); io.unobserve(e.target);} });
@@ -508,7 +490,7 @@
 
     /* ========== Header translucido on scroll ========== */
     const header = document.querySelector('header');
-    const onS = () => { if (window.scrollY > 8) header.classList.add('header--solid'); else header.classList.remove('header--solid'); };
+    const onS = () => { header.classList.toggle('header--solid', window.scrollY > 8); };
     window.addEventListener('scroll', onS, {passive:true}); onS();
 
     /* ========== Mobile menu ========== */
@@ -522,25 +504,16 @@
 
     /* ========== Link esterni fix (niente rimbalzo) ========== */
     (function(){
-      // Normalizza tutti i link esterni: target _blank + rel noopener
       document.querySelectorAll('a[href^="http"]').forEach(a=>{
-        try{
-          const u=new URL(a.getAttribute('href'), location.href);
-          if(u.origin!==location.origin){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); }
-        }catch{}
+        try{ const u=new URL(a.getAttribute('href'), location.href); if(u.origin!==location.origin){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); } }catch{}
       });
-      // Intercetta i click ed evita “ritorno” (Safari/iOS)
       document.addEventListener('click', function(e){
         const a = e.target.closest('a[href]'); if(!a) return;
         const href = a.getAttribute('href'); if(!href) return;
         if(href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
         let isExternal=false; try{ isExternal = (new URL(href, location.href).origin !== location.origin); }catch{}
         const openNewTab = isExternal || a.getAttribute('target')==='_blank';
-        if(openNewTab){
-          e.preventDefault(); e.stopImmediatePropagation();
-          const win = window.open(href, '_blank');
-          if(!win){ location.href = href; } // fallback se popup bloccato
-        }
+        if(openNewTab){ e.preventDefault(); e.stopImmediatePropagation(); const win = window.open(href, '_blank'); if(!win){ location.href = href; } }
       }, true);
     })();
 
@@ -566,48 +539,35 @@
       const icon = mode==='auto' ? svgAuto : mode==='light' ? svgSun : svgMoon;
       document.querySelectorAll('#themeToggle,#themeToggleM').forEach(btn=>btn.innerHTML = icon);
     }
-    function cycleTheme(){
-      const cur = root.getAttribute('data-theme') || 'auto';
-      const next = cur==='auto' ? 'light' : cur==='light' ? 'dark' : 'auto';
-      applyTheme(next);
-    }
+    function cycleTheme(){ const cur = root.getAttribute('data-theme') || 'auto'; const next = cur==='auto' ? 'light' : cur==='light' ? 'dark' : 'auto'; applyTheme(next); }
     document.getElementById('themeToggle').addEventListener('click', cycleTheme);
     document.getElementById('themeToggleM').addEventListener('click', cycleTheme);
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
-    /* ========== HERO CAROUSEL (AGGIORNA QUI LE FOTO) ========== */
-    const heroImages = [
+    /* ========== Live Shots (UNICO carosello) ========== */
+    // AGGIORNA QUI le immagini "Live Shots"
+    const liveImages = [
       'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
       'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
       'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg'
     ];
-    const heroMedia = document.getElementById('heroMedia');
-    const heroDots  = document.getElementById('heroDots');
-    let slideIdx = 0;
-    function renderSlides(){
-      if(!heroMedia) return;
-      heroMedia.querySelectorAll('.slide').forEach(n=>n.remove());
-      if(heroDots) heroDots.innerHTML='';
-      heroImages.forEach((src,i)=>{
-        const wrap=document.createElement('div'); wrap.className='slide'+(i===0?' active':'');
-        const img=new Image(); img.src=src; img.alt=`DJ set su vinile ${i+1}`; img.loading='lazy';
-        Object.assign(img.style,{width:'100%',height:'100%',objectFit:'cover'});
-        wrap.appendChild(img); heroMedia.appendChild(wrap);
-        if(heroDots){ const d=document.createElement('button'); d.className='dot'+(i===0?' active':''); d.addEventListener('click',()=>goSlide(i)); heroDots.appendChild(d);} 
+    (function(){
+      const box  = document.getElementById('liveCarousel');
+      const dots = document.getElementById('liveDots');
+      if(!box) return;
+      let i = 0; const slides=[], bullets=[];
+      liveImages.forEach((src,idx)=>{
+        const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
+        const im=new Image(); im.src=src; im.alt='Live '+(idx+1);
+        Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
+        s.appendChild(im); box.appendChild(s); slides.push(s);
+        const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
       });
-    }
-    function goSlide(i){
-      if(!heroMedia) return;
-      const s=heroMedia.querySelectorAll('.slide'); const d=heroDots? heroDots.querySelectorAll('.dot') : [];
-      if(!s.length) return;
-      s[slideIdx]?.classList.remove('active'); d[slideIdx]?.classList.remove('active');
-      slideIdx=i % s.length;
-      s[slideIdx].classList.add('active'); d[slideIdx]?.classList.add('active');
-    }
-    renderSlides();
-    setInterval(()=>{ const s=heroMedia? heroMedia.querySelectorAll('.slide'):[]; if(s.length>1) goSlide((slideIdx+1)%s.length); }, 5000);
+      function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
+      setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
+    })();
 
-    /* ========== POSTER base (verrà aggiornato dal primo evento) ========== */
+    /* ========== POSTER base (verrà sovrascritto dal PROSSIMO evento) ========== */
     const posterData = {
       venue: '17/19 URBAN BISTROT',
       series: 'ELECTRO TECHNO NIGHT',
@@ -622,6 +582,7 @@
       ],
       logos:[ { text:'CASAMIGOS' }, { text:'FUNKTION-ONE' }, { text:'TMAG' }, { text:'ORGANICS' } ]
     };
+
     function renderPoster(){
       const set = (id,txt)=>{ const el=document.getElementById(id); if(el) el.textContent=(txt||'').toUpperCase(); };
       set('posterVenue', posterData.venue);
@@ -629,38 +590,30 @@
       set('posterDate',  posterData.date);
       set('posterTagline', posterData.tagline);
       set('posterCurated', posterData.curatedBy);
-
       const svg = document.getElementById('posterSvg');
       const canvas = document.getElementById('posterCanvas');
       const logosWrap = document.getElementById('posterLogos');
       svg.innerHTML=''; canvas.querySelectorAll('.artist').forEach(n=>n.remove()); logosWrap.innerHTML='';
-
-      // punto origine
+      // origine
       const originDot = document.createElementNS('http://www.w3.org/2000/svg','circle');
       originDot.setAttribute('cx', posterData.origin.x);
       originDot.setAttribute('cy', posterData.origin.y);
       originDot.setAttribute('r', '0.8'); originDot.setAttribute('fill','currentColor'); svg.appendChild(originDot);
-
-      // linee sottili (accorciate per non toccare il testo)
+      // linee + label (accorciate per non toccare il testo)
       (posterData.artists||[]).forEach((a,i)=>{
         const dx = a.x - posterData.origin.x, dy = a.y - posterData.origin.y;
         const f = 0.975; const endX = posterData.origin.x + dx * f; const endY = posterData.origin.y + dy * f;
         const line = document.createElementNS('http://www.w3.org/2000/svg','line');
         line.setAttribute('x1', posterData.origin.x); line.setAttribute('y1', posterData.origin.y);
         line.setAttribute('x2', endX); line.setAttribute('y2', endY);
-        line.setAttribute('stroke','currentColor');
-        line.style.strokeDasharray='120'; line.style.strokeDashoffset='120'; line.style.animation=`lineDraw .9s ease forwards ${i*0.08}s`;
+        line.setAttribute('stroke','currentColor'); line.style.strokeDasharray='120'; line.style.strokeDashoffset='120'; line.style.animation=`lineDraw .9s ease forwards ${i*0.08}s`;
         svg.appendChild(line);
         const end = document.createElementNS('http://www.w3.org/2000/svg','rect');
-        end.setAttribute('x', endX-0.6); end.setAttribute('y', endY-0.6); end.setAttribute('width','1.2'); end.setAttribute('height','1.2');
-        end.setAttribute('fill','currentColor'); svg.appendChild(end);
-        const label = document.createElement('div');
-        label.className = 'artist'; label.style.left = a.x + '%'; label.style.top  = a.y + '%';
-        label.innerHTML = `<span class="dot"></span>${a.name}`;
-        canvas.appendChild(label);
+        end.setAttribute('x', endX-0.6); end.setAttribute('y', endY-0.6); end.setAttribute('width','1.2'); end.setAttribute('height','1.2'); end.setAttribute('fill','currentColor'); svg.appendChild(end);
+        const label = document.createElement('div'); label.className = 'artist'; label.style.left = a.x + '%'; label.style.top  = a.y + '%';
+        label.innerHTML = `<span class="dot"></span>${a.name}`; canvas.appendChild(label);
       });
-
-      // sponsor / partner
+      // sponsor
       (posterData.logos||[]).forEach(L=>{
         if(L.src){ const img=new Image(); img.src=L.src; img.alt=L.alt||'logo'; img.style.maxHeight='14px'; img.style.opacity='.9'; logosWrap.appendChild(img); }
         else if(L.text){ const s=document.createElement('span'); s.textContent=L.text; s.style.fontWeight='900'; s.style.fontSize='.72rem'; s.style.letterSpacing='.12em'; logosWrap.appendChild(s); }
@@ -668,67 +621,120 @@
     }
     renderPoster();
 
-    /* ========== Eventi (AGGIORNA QUI) ========== */
-    // Il PRIMO evento viene usato automaticamente per la locandina (poster)
+    /* ========== DATI EVENTI (AGGIORNA SOLO QUI) ========== */
+    // Schema evento:
+    // {
+    //   dateISO: 'YYYY-MM-DD',
+    //   dow: 'LUN/MAR/MER/GIO/VEN/SAB/DOM' (opzionale, calcolato se mancante),
+    //   venue: '17/19 URBAN BISTROT',
+    //   title: 'Titolo/tema serata',
+    //   genres: ['TECHNO','ELECTRO','VINYL'],
+    //   start: '22:30',
+    //   curatedBy: 'Riccardo Battaglia',
+    //   headliner: 'NOME DJ',
+    //   guests: ['OSPITE 1','OSPITE 2'],
+    //   sponsors: [{text:'CASAMIGOS'},{src:'https://…',alt:'…'}],
+    //   poster:{ origin:{x:48,y:56}, positions:[{x:12,y:80},{x:60,y:74},{x:66,y:44}] }
+    // }
     const events = [
-      { dow:'MER', day:'03', mon:'SET', title:'Electro Techno • Vinyl Only', time:'22:30', note:'Curated by Riccardo Battaglia' },
-      { dow:'GIO', day:'04', mon:'SET', title:'Techno Grooves',              time:'22:30', note:'Solo vinile' },
-      { dow:'VEN', day:'05', mon:'SET', title:'Acid Night',                   time:'22:30', note:'Special guest' }
+      {
+        dateISO:'2025-09-03',
+        venue:'17/19 URBAN BISTROT',
+        title:'Electro Techno • Vinyl Only',
+        genres:['TECHNO','ELECTRO','VINYL'],
+        start:'22:30',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'DANIELE PAVONI',
+        guests:['MIN-ED','LORENZO PALAZZI'],
+        sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}],
+        poster:{ origin:{x:48,y:56}, positions:[{x:12,y:80},{x:60,y:74},{x:66,y:44}] }
+      },
+      {
+        dateISO:'2025-09-05',
+        venue:'17/19 URBAN BISTROT',
+        title:'Acid District',
+        genres:['ACID','TECHNO','VINYL'],
+        start:'22:30',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'ALBA NERA',
+        guests:['RBN','GIO BERLIN'],
+        sponsors:[{text:'CASAMIGOS'}],
+        poster:{ origin:{x:52,y:58}, positions:[{x:20,y:70},{x:68,y:60},{x:72,y:32}] }
+      },
+      {
+        dateISO:'2025-09-07',
+        venue:'17/19 URBAN BISTROT',
+        title:'Minimal Sunday',
+        genres:['MINIMAL','DEEP','VINYL'],
+        start:'18:00',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'MARCO VOSS',
+        guests:['LIVIA FERRO'],
+        sponsors:[{text:'ORGANICS'}],
+        poster:{ origin:{x:44,y:54}, positions:[{x:18,y:76},{x:66,y:42},{x:70,y:70}] }
+      }
     ];
+
+    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
+    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
+    function formatPosterDate(iso){
+      const d = new Date(iso + 'T12:00:00Z');
+      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+      const dd = String(d.getUTCDate()).padStart(2,'0');
+      const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+      return `${days[d.getUTCDay()]} ${dd}/${mm}`;
+    }
+    function pickNextEvent(){
+      const today = new Date(); today.setHours(0,0,0,0);
+      const up = events.filter(e=>!isNaN(new Date(e.dateISO)) && new Date(e.dateISO) >= today)
+                       .sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
+      return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
+    }
+    function bindPosterFromEvent(ev){
+      const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
+      const pos = (ev.poster && ev.poster.positions) || [];
+      const origin = (ev.poster && ev.poster.origin) || {x:48,y:56};
+      posterData.venue    = (ev.venue||'17/19 URBAN BISTROT').toUpperCase();
+      posterData.series   = (ev.title||'').toUpperCase();
+      posterData.date     = formatPosterDate(ev.dateISO);
+      posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
+      posterData.curatedBy= ('CURATED BY ' + (ev.curatedBy || 'RICCARDO BATTAGLIA')).toUpperCase();
+      posterData.origin   = origin;
+      posterData.artists  = names.slice(0,3).map((n,i)=> ({ name:n, x: pos[i]?.x ?? (22 + i*26), y: pos[i]?.y ?? (45 + i*18) }));
+      posterData.logos    = (ev.sponsors || []).map(s => s.src ? {src:s.src, alt:s.alt||'logo'} : {text:(s.text||'').toUpperCase()});
+      renderPoster();
+    }
+
+    // Render lista eventi
     function renderEvents(){
       const list = document.getElementById('eventsList'); if(!list) return;
       list.innerHTML='';
-      events.forEach(ev=>{
+      const sorted = [...events].sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
+      sorted.forEach(ev=>{
+        const d = new Date(ev.dateISO + 'T12:00:00');
+        const day = String(d.getUTCDate()).padStart(2,'0');
+        const mon = toMonShort(d);
+        const dow = (ev.dow || toItDowShort(d)).slice(0,3).toUpperCase();
+        const guests = ev.guests && ev.guests.length ? ` • Guests: ${ev.guests.join(', ')}` : '';
         const el = document.createElement('div'); el.className='event';
         el.innerHTML = `
           <div class="event__date">
-            <div class="event__dow">${ev.dow}</div>
-            <div class="event__day">${ev.day} ${ev.mon}</div>
+            <div class="event__dow">${dow}</div>
+            <div class="event__day">${day} ${mon}</div>
           </div>
           <div>
             <strong>${ev.title}</strong>
-            <div class="event__meta">Start ${ev.time}${ev.note ? ' • ' + ev.note : ''}</div>
+            <div class="event__meta">Start ${ev.start} • ${ev.genres.join(' / ')}${guests}</div>
           </div>
-          <a class="pill pill--ghost event__cta"
-             href="https://wa.me/393298252092?text=Lista%20${encodeURIComponent(ev.title)}"
-             target="_blank" rel="noopener">Entra in lista</a>`;
+          <a class="pill pill--ghost event__cta" href="https://wa.me/393298252092?text=Lista%20${encodeURIComponent(ev.title)}" target="_blank" rel="noopener">Entra in lista</a>
+        `;
         list.appendChild(el);
       });
     }
+
+    // Init
     renderEvents();
-
-    /* ========== Poster ⇄ primo evento (auto binding) ========== */
-    (function bindPosterFromFirstEvent(){
-      if(!events.length) return;
-      const ev = events[0];
-      const DOW = {LUN:'MONDAY',MAR:'TUESDAY',MER:'WEDNESDAY',GIO:'THURSDAY',VEN:'FRIDAY',SAB:'SATURDAY',DOM:'SUNDAY'};
-      const MON = {GEN:'01',FEB:'02',MAR:'03',APR:'04',MAG:'05',GIU:'06',LUG:'07',AGO:'08',SET:'09',OTT:'10',NOV:'11',DIC:'12'};
-      posterData.venue    = '17/19 URBAN BISTROT';
-      posterData.series   = (ev.title||'').toUpperCase();
-      posterData.date     = `${DOW[ev.dow]||ev.dow} ${ev.day}/${MON[ev.mon]||ev.mon}`;
-      posterData.tagline  = 'TECHNO • ELECTRO • VINYL';
-      posterData.curatedBy= 'CURATED BY RICCARDO BATTAGLIA';
-      renderPoster();
-    })();
-
-    /* ========== Live carousel (riusa le immagini hero) ========== */
-    (function(){
-      const box  = document.getElementById('liveCarousel');
-      const dots = document.getElementById('liveDots');
-      if(!box) return;
-      const imgs = heroImages.slice();
-      let i = 0; const slides=[], bullets=[];
-      imgs.forEach((src,idx)=>{
-        const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
-        const im=new Image(); im.src=src; im.alt='Live '+(idx+1);
-        Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
-        s.appendChild(im); box.appendChild(s); slides.push(s);
-        const b=document.createElement('button'); b.className='dot'+(idx===0?' active':'');
-        b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
-      });
-      function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
-      setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
-    })();
+    bindPosterFromEvent(pickNextEvent());
 
     /* ========== Gallery (con crediti) ========== */
     const galleryData = [
