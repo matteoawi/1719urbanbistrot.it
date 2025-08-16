@@ -9,7 +9,8 @@
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <!-- Font: classico + geometrico -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
 
   <style>
     /* ================= THEME TOKENS ================= */
@@ -41,7 +42,7 @@
     /* ================ BASE UI ================ */
     *{box-sizing:border-box}
     html,body{margin:0}
-    body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
+    body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
     img{max-width:100%;display:block}
     .container{max-width:var(--max);margin-inline:auto;padding-inline:var(--pad)}
     section{padding:72px 0}
@@ -79,13 +80,14 @@
       html[data-theme="auto"] .logo-dark{display:none}
     }
     .nav-desktop{display:none;gap:18px;align-items:center;list-style:none;margin:0;padding:0}
-    .nav-desktop a{color:var(--fg);text-decoration:none;font-weight:600;opacity:.82}
+    .nav-desktop a{color:var(--fg);text-decoration:none;font-weight:700;opacity:.82}
     .nav-desktop a:hover{opacity:1}
     @media (min-width:768px){ .nav-desktop{display:flex} }
 
-    .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:700;background:var(--chip);color:var(--chip-fg)}
+    .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:800;background:var(--chip);color:var(--chip-fg)}
     .pill--accent{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
     .pill--ghost{background:transparent}
+    .pill--disabled{opacity:.5;pointer-events:none}
     .pill:where(:hover,:focus-visible){transform:translateY(-1px);transition:transform .15s ease}
 
     .toggle{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--chip-fg);display:grid;place-items:center;cursor:pointer}
@@ -94,23 +96,22 @@
     .menu-toggle span::before{position:absolute;top:-6px}
     .menu-toggle span::after{position:absolute;top:6px}
 
-    /* ===== Mobile sheet ===== */
-    .sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:.2s;z-index:60}
+    /* ===== Fullscreen Site Menu (overlay) ===== */
+    .sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.2s;z-index:120}
     .sheet.active{opacity:1;pointer-events:auto}
-    .sheet__panel{position:absolute;right:0;top:0;bottom:0;width:min(90vw,360px);background:var(--bg);border-left:1px solid var(--line);padding:18px;transform:translateX(100%);transition:.25s}
-    .sheet.active .sheet__panel{transform:translateX(0)}
-    .sheet__list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
-    .sheet__list a{display:block;padding:12px 10px;border-radius:12px;border:1px solid var(--line);text-decoration:none;color:var(--fg);font-weight:700;background:var(--chip)}
-    .sheet__list a:hover{filter:brightness(1.02)}
-    .sheet__cta{display:inline-flex;margin-top:10px}
+    .sheet__panel{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;align-items:start}
+    .sheet__close{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--chip);color:var(--chip-fg);font-size:20px;font-weight:900;display:grid;place-items:center;cursor:pointer}
+    .sheet__inner{display:grid;place-items:center;height:100%;padding:28px}
+    .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
+    .sheet__list a{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:var(--fg);font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em}
+    .sheet__list a:hover{background:color-mix(in oklab, var(--chip) 92%, transparent)}
+    .sheet__cta{display:inline-flex;margin-top:18px}
 
     /* ===== Hero ===== */
     .hero{padding:52px 0 20px}
-    .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:700;color:var(--muted);background:var(--chip)}
-    h1{font-family:'Orbitron',monospace;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
-    .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.22rem);margin:8px 0 14px}
-    .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{border:1px solid var(--line);border-radius:999px;font-size:.8rem;font-weight:800;padding:6px 10px;background:var(--chip);color:var(--chip-fg)}
+    .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:800;color:var(--muted);background:var(--chip)}
+    h1{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
+    .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.18rem);margin:8px 0 14px}
 
     /* ===== Media frame (riusato per Live Shots) ===== */
     .hero-media{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--chip);margin-top:14px}
@@ -124,7 +125,7 @@
     /* ===== Cards ===== */
     .card{border:1px solid var(--line);border-radius:16px;padding:16px;background:color-mix(in oklab, var(--bg) 96%, transparent)}
     .block-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .block-title h3{font-family:'Orbitron',monospace;font-size:1rem;margin:0;letter-spacing:.02em}
+    .block-title h3{font-family:'Montserrat',system-ui,sans-serif;font-size:1rem;margin:0;letter-spacing:.02em}
     .meta{color:var(--muted);font-size:.95rem}
 
     /* ===== Time grid ===== */
@@ -134,9 +135,18 @@
     .row .l{display:flex;align-items:center;gap:10px}
     .i{width:28px;height:28px;display:inline-grid;place-items:center}
 
-    /* ===== Menu ===== */
+    /* ===== Menu (locale) — Accordion ===== */
     .badge{display:inline-block;background:var(--accent);color:var(--accent-fg);padding:6px 10px;border-radius:999px;font-size:.75rem;font-weight:900}
-    .menu-item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px dashed var(--line)}
+    details.menu-acc{border:1px solid var(--line);border-radius:16px;background:color-mix(in oklab, var(--bg) 96%, transparent);padding:12px}
+    details.menu-acc + details.menu-acc{margin-top:12px}
+    details.menu-acc[open]{background:color-mix(in oklab, var(--bg) 98%, transparent)}
+    summary.menu-sum{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer}
+    summary.menu-sum::-webkit-details-marker{display:none}
+    .menu-sum h3{margin:8px 0 0;font-family:'Montserrat',system-ui,sans-serif}
+    .menu-sum .chev{margin-left:auto;transition:transform .2s}
+    details[open] .menu-sum .chev{transform:rotate(180deg)}
+    .menu-body{padding:8px 4px 2px}
+    .menu-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
     .menu-item:last-child{border-bottom:0}
     .price{color:var(--accent);font-weight:800}
 
@@ -147,6 +157,7 @@
     .event__day{font-size:1.4rem;font-weight:900;line-height:1}
     .event__meta{color:var(--muted);font-size:.95rem}
     .event__cta{margin-left:auto}
+    .events-more{display:flex;justify-content:center;margin-top:10px}
 
     /* ===== Gallery ===== */
     .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -172,19 +183,18 @@
     /* ===== Poster (hero) ===== */
     .poster-frame{position:relative;border:1px solid var(--line);border-radius:20px;background:var(--bg);overflow:hidden}
     .poster-inner{position:relative;padding:clamp(18px,4vw,28px)}
-    .poster-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
-    .poster-head .venue{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1.05rem)}
-    .poster-head .series{font-family:'Orbitron',monospace;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(2rem,6.5vw,3.2rem);line-height:1.05}
-    .poster-head .date{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(1rem,3.5vw,1.35rem)}
-    .poster-head .tagline{margin-top:6px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;color:var(--fg);font-size:clamp(.85rem,2.4vw,1rem)}
-    .poster-head .curated{color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(.8rem,2.2vw,.95rem)}
-    .poster-canvas{position:relative;margin-top:clamp(18px,3.5vw,28px);height:clamp(320px,56vw,480px)}
-    .poster-svg{position:absolute;inset:0;color:var(--fg);z-index:0}
-    .poster-svg line{vector-effect:non-scaling-stroke;stroke-width:.5;stroke-linecap:square;stroke-dasharray:120;stroke-dashoffset:120;animation:lineDraw .9s ease forwards}
-    @keyframes lineDraw{to{stroke-dashoffset:0}}
-    .artist{position:absolute;transform:translateY(-50%);font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;background:var(--bg);padding:2px .35em;border-radius:4px;z-index:1;box-shadow:0 0 0 1px var(--bg) inset}
-    .artist .dot{display:inline-block;width:6px;height:6px;border-radius:1px;background:var(--fg);margin-right:10px;vertical-align:middle}
-    .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:12px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center}
+    .poster-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+    .poster-head .venue{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1rem)}
+    .poster-head .series{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:clamp(2rem,6.5vw,3.1rem);line-height:1.05}
+    .poster-head .date{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.95rem,3.5vw,1.2rem)}
+    .poster-head .tagline{margin-top:4px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;color:var(--fg);font-size:clamp(.82rem,2.2vw,.96rem)}
+    .poster-head .curated{color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(.78rem,2vw,.9rem)}
+    .poster-canvas{position:relative;margin-top:clamp(16px,3.2vw,26px);height:clamp(320px,56vw,480px);background:color-mix(in oklab, var(--chip) 94%, transparent);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .poster-svg{position:absolute;inset:0;color:var(--fg);z-index:0;opacity:.08}
+    /* Bouncers (nomi che rimbalzano) */
+    .bouncer{position:absolute;display:inline-block;padding:.16em .4em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;user-select:none;will-change:transform;box-shadow:0 0 0 1px var(--line) inset}
+    .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:8px;vertical-align:middle}
+    .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:10px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center}
   </style>
 </head>
 <body>
@@ -208,6 +218,10 @@
           <li class="only-desktop">
             <button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button>
           </li>
+          <!-- Apre overlay full-screen anche da desktop -->
+          <li class="only-desktop">
+            <button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button>
+          </li>
         </ul>
 
         <div class="only-mobile" style="gap:8px;align-items:center">
@@ -220,19 +234,22 @@
     </div>
   </header>
 
-  <!-- Mobile sheet -->
+  <!-- Fullscreen Site Menu -->
   <div class="sheet" id="sheet" aria-hidden="true">
-    <aside class="sheet__panel" role="dialog" aria-label="menu mobile">
-      <ul class="sheet__list">
-        <li><a href="#about">About</a></li>
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#music">Musica</a></li>
-        <li><a href="#events">Eventi</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contatti</a></li>
-      </ul>
-      <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
-    </aside>
+    <div class="sheet__panel">
+      <button class="sheet__close" id="sheetClose" aria-label="Chiudi menu">×</button>
+      <div class="sheet__inner">
+        <ul class="sheet__list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#music">Musica</a></li>
+          <li><a href="#events">Eventi</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contatti</a></li>
+        </ul>
+        <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
+      </div>
+    </div>
   </div>
 
   <!-- Hero: Poster -->
@@ -249,7 +266,16 @@
               <div class="curated" id="posterCurated"></div>
             </div>
             <div class="poster-canvas" id="posterCanvas">
-              <svg class="poster-svg" id="posterSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <!-- tenue griglia di sfondo opzionale -->
+              <svg class="poster-svg" id="posterSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" stroke="currentColor" stroke-width="0.4" opacity="0.35"/>
+                  </pattern>
+                </defs>
+                <rect x="0" y="0" width="100" height="100" fill="url(#grid)"></rect>
+              </svg>
+              <!-- nomi che rimbalzano saranno iniettati qui -->
             </div>
             <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
           </div>
@@ -264,7 +290,7 @@
       </div>
 
       <aside class="card reveal" aria-label="Orari & servizio">
-        <div class="block-title"><h3>Orari</h3><span class="meta">Servizio cucina</span></div>
+        <div class="block-title"><h3>Orari</h3><span class="meta">Cucina</span></div>
         <div class="time-grid">
           <div class="row">
             <div class="l">
@@ -314,7 +340,7 @@
         </div>
         <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px">
           <div class="meta">Weekend</div>
-          <strong>Techno Vibes • Solo vinile</strong><br/>
+          <strong>Techno Vibes • Vinyl</strong><br/>
           <span class="meta">Start 22:30</span>
         </div>
       </aside>
@@ -337,8 +363,8 @@
       <div class="card reveal">
         <div class="block-title"><h3>Urban Bistrot</h3></div>
         <p style="margin:0">
-          Specialty coffee, cucina contemporanea e serate in vinile.
-          Line-up <strong>a cura di Riccardo Battaglia</strong>. Deep, minimal, acid.
+          Specialty coffee, cucina contemporanea e serate <strong>vinyl only</strong>.
+          Line-up a cura di <strong>Riccardo Battaglia</strong>.
         </p>
       </div>
 
@@ -354,32 +380,47 @@
     </div>
   </section>
 
-  <!-- Menu -->
+  <!-- Menu (locale) - Accordion -->
   <section id="menu">
     <div class="container">
-      <div class="grid grid-3">
-        <div class="card reveal">
+      <details class="menu-acc reveal">
+        <summary class="menu-sum">
           <span class="badge">BREAKFAST</span>
-          <h3 style="margin:10px 0 6px">Colazioni</h3>
-          <div class="menu-item"><div>Cornetto Artigianale <span class="meta">crema/marmellata/vuoto</span></div><div class="price">€2</div></div>
-          <div class="menu-item"><div>Avocado Toast <span class="meta">uovo poché, lime, pepe rosa</span></div><div class="price">€9</div></div>
-          <div class="menu-item"><div>Pancake Stack <span class="meta">sciroppo d'acero, frutti rossi</span></div><div class="price">€8</div></div>
+          <h3>Colazioni</h3>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="menu-body">
+          <div class="menu-item"><div>Cornetto Artigianale <span class="meta">crema / marmellata / vuoto</span></div><div class="price">€2</div></div>
+          <div class="menu-item"><div>Avocado Toast <span class="meta">uovo poché, lime</span></div><div class="price">€9</div></div>
+          <div class="menu-item"><div>Pancake Stack <span class="meta">acero, frutti rossi</span></div><div class="price">€8</div></div>
         </div>
-        <div class="card reveal">
+      </details>
+
+      <details class="menu-acc reveal">
+        <summary class="menu-sum">
           <span class="badge">LUNCH</span>
-          <h3 style="margin:10px 0 6px">Pranzo</h3>
-          <div class="menu-item"><div>Caesar Salad <span class="meta">pollo, crostini, parmigiano</span></div><div class="price">€12</div></div>
-          <div class="menu-item"><div>Club Sandwich <span class="meta">tacchino, bacon, pomodoro</span></div><div class="price">€13</div></div>
+          <h3>Pranzo</h3>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="menu-body">
+          <div class="menu-item"><div>Caesar Salad <span class="meta">pollo, crostini</span></div><div class="price">€12</div></div>
+          <div class="menu-item"><div>Club Sandwich <span class="meta">tacchino, bacon</span></div><div class="price">€13</div></div>
           <div class="menu-item"><div>Pasta del Giorno <span class="meta">chiedi allo staff</span></div><div class="price">€14</div></div>
         </div>
-        <div class="card reveal">
+      </details>
+
+      <details class="menu-acc reveal">
+        <summary class="menu-sum">
           <span class="badge">DINNER</span>
-          <h3 style="margin:10px 0 6px">Cena</h3>
-          <div class="menu-item"><div>Polpo Grigliato <span class="meta">patate, olive, pomodorini</span></div><div class="price">€18</div></div>
-          <div class="menu-item"><div>Black Burger <span class="meta">pane al carbone, cheddar, bacon</span></div><div class="price">€16</div></div>
-          <div class="menu-item"><div>Risotto Techno <span class="meta">nero di seppia, lime, gamberi</span></div><div class="price">€17</div></div>
+          <h3>Cena</h3>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="menu-body">
+          <div class="menu-item"><div>Polpo Grigliato <span class="meta">patate, olive</span></div><div class="price">€18</div></div>
+          <div class="menu-item"><div>Black Burger <span class="meta">cheddar, bacon</span></div><div class="price">€16</div></div>
+          <div class="menu-item"><div>Risotto Techno <span class="meta">nero di seppia</span></div><div class="price">€17</div></div>
         </div>
-      </div>
+      </details>
     </div>
   </section>
 
@@ -389,27 +430,26 @@
       <div class="card reveal">
         <div class="block-title"><h3>Musica • Vinyl Only</h3></div>
         <p style="margin-top:6px">
-          Il suono del 17/19 unisce <strong>Roma</strong> e <strong>Berlino</strong>: groove ipnotici, minimal deep, acid
-          e incursioni electro. La consolle è <strong>solo vinile</strong>, con selezioni curate da <strong>Riccardo Battaglia</strong>.
+          Vibe tra <strong>Roma</strong> e <strong>Berlino</strong>: groove ipnotici, minimal, acid ed electro. <strong>Solo vinile</strong>.
         </p>
         <ul style="margin:12px 0 0 18px;line-height:1.7">
-          <li>Estetica <em>raw</em> e attitudine club</li>
-          <li>Selezione <strong>electro / techno / house</strong> romana–berlinese</li>
-          <li>Set estesi, warm-up e closing “storytelling”</li>
+          <li>Estetica raw, attitudine club</li>
+          <li>Electro / techno / house essenziale</li>
+          <li>Set estesi, warm-up & closing</li>
         </ul>
-        <p class="meta" style="margin-top:10px">Manifesto: profondità, dinamica, eleganza. Zero compromessi sulla qualità.</p>
+        <p class="meta" style="margin-top:10px">Manifesto: profondità, dinamica, eleganza.</p>
       </div>
 
       <div class="card reveal">
         <div class="block-title"><h3>Resident & Guests</h3></div>
-        <p><strong>Resident</strong>: Riccardo Battaglia (curation, vinyl only)</p>
-        <p><strong>Guests</strong>: selezione di dj e collezionisti romano/berlinesi, special set a sorpresa.</p>
+        <p><strong>Resident</strong>: Riccardo Battaglia</p>
+        <p><strong>Guests</strong>: selezione romano-berlinese, special set a sorpresa.</p>
         <div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px">
           <div class="block-title" style="margin:0"><h3>Impianto</h3><span class="meta">setup</span></div>
           <ul style="margin:8px 0 0 18px;line-height:1.7">
-            <li>Giradischi e mixer pro, testine calibrate</li>
-            <li>Sound system ottimizzato per pressione e dettaglio</li>
-            <li>Monitoraggio sala e headroom controllata</li>
+            <li>Giradischi e mixer pro</li>
+            <li>Sound system ottimizzato</li>
+            <li>Headroom controllata</li>
           </ul>
         </div>
         <p style="margin-top:12px">
@@ -424,6 +464,9 @@
     <div class="container">
       <div class="block-title" style="margin-bottom:14px"><h3>Prossimi Eventi</h3></div>
       <div class="grid" id="eventsList" style="gap:12px"></div>
+      <div class="events-more">
+        <button id="eventsMoreBtn" class="pill pill--ghost" type="button">Mostra altri</button>
+      </div>
       <!-- AGGIORNA SOLO l'array 'events' nello script. Il poster si sincronizza con il PROSSIMO evento -->
     </div>
   </section>
@@ -493,16 +536,26 @@
     const onS = () => { header.classList.toggle('header--solid', window.scrollY > 8); };
     window.addEventListener('scroll', onS, {passive:true}); onS();
 
-    /* ========== Mobile menu ========== */
+    /* ========== Fullscreen site menu ========== */
     const sheet = document.getElementById('sheet');
-    const toggleBtn = document.getElementById('menuToggle');
+    const sheetClose = document.getElementById('sheetClose');
+    const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
     const openMenu = ()=>sheet.classList.add('active');
     const closeMenu = ()=>sheet.classList.remove('active');
-    toggleBtn.addEventListener('click', ()=> sheet.classList.contains('active') ? closeMenu() : openMenu());
-    sheet.addEventListener('click', (e)=>{ if(e.target === sheet) closeMenu(); });
-    sheet.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,100)));
+    toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> sheet.classList.contains('active') ? closeMenu() : openMenu()));
+    sheetClose.addEventListener('click', closeMenu);
+    // chiudi cliccando dove non ci sono scritte (fuori contenuto centrale)
+    sheet.addEventListener('click', (e)=>{
+      const inner = e.target.closest('.sheet__inner'); const isClose = e.target.closest('#sheetClose');
+      if(!inner && !isClose) closeMenu();
+    });
+    // chiudi con ESC
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
 
-    /* ========== Link esterni fix (niente rimbalzo) ========== */
+    // Chiudi overlay quando clicchi un link del menu
+    sheet.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
+
+    /* ========== Link esterni fix ========== */
     (function(){
       document.querySelectorAll('a[href^="http"]').forEach(a=>{
         try{ const u=new URL(a.getAttribute('href'), location.href); if(u.origin!==location.origin){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); } }catch{}
@@ -545,7 +598,6 @@
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
     /* ========== Live Shots (UNICO carosello) ========== */
-    // AGGIORNA QUI le immagini "Live Shots"
     const liveImages = [
       'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
       'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
@@ -567,90 +619,113 @@
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
     })();
 
-    /* ========== POSTER base (verrà sovrascritto dal PROSSIMO evento) ========== */
+    /* ========== POSTER data & RENDER con nomi rimbalzanti ========== */
     const posterData = {
       venue: '17/19 URBAN BISTROT',
       series: 'ELECTRO TECHNO NIGHT',
       date:   'WEDNESDAY 03/09',
       tagline:'TECHNO • ELECTRO • VINYL',
       curatedBy:'CURATED BY RICCARDO BATTAGLIA',
-      origin: { x: 48, y: 56 },
-      artists: [
-        { name:'DANIELE PAVONI',  x: 12, y: 80 },
-        { name:'MIN-ED',          x: 60, y: 74 },
-        { name:'LORENZO PALAZZI', x: 66, y: 44 }
-      ],
       logos:[ { text:'CASAMIGOS' }, { text:'FUNKTION-ONE' }, { text:'TMAG' }, { text:'ORGANICS' } ]
     };
 
-    function renderPoster(){
+    const posterCanvas = document.getElementById('posterCanvas');
+    let bounceRAF = null, bouncers = [];
+
+    function setPosterTexts(p){
       const set = (id,txt)=>{ const el=document.getElementById(id); if(el) el.textContent=(txt||'').toUpperCase(); };
-      set('posterVenue', posterData.venue);
-      set('posterSeries',posterData.series);
-      set('posterDate',  posterData.date);
-      set('posterTagline', posterData.tagline);
-      set('posterCurated', posterData.curatedBy);
-      const svg = document.getElementById('posterSvg');
-      const canvas = document.getElementById('posterCanvas');
-      const logosWrap = document.getElementById('posterLogos');
-      svg.innerHTML=''; canvas.querySelectorAll('.artist').forEach(n=>n.remove()); logosWrap.innerHTML='';
-      // origine
-      const originDot = document.createElementNS('http://www.w3.org/2000/svg','circle');
-      originDot.setAttribute('cx', posterData.origin.x);
-      originDot.setAttribute('cy', posterData.origin.y);
-      originDot.setAttribute('r', '0.8'); originDot.setAttribute('fill','currentColor'); svg.appendChild(originDot);
-      // linee + label (accorciate per non toccare il testo)
-      (posterData.artists||[]).forEach((a,i)=>{
-        const dx = a.x - posterData.origin.x, dy = a.y - posterData.origin.y;
-        const f = 0.975; const endX = posterData.origin.x + dx * f; const endY = posterData.origin.y + dy * f;
-        const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-        line.setAttribute('x1', posterData.origin.x); line.setAttribute('y1', posterData.origin.y);
-        line.setAttribute('x2', endX); line.setAttribute('y2', endY);
-        line.setAttribute('stroke','currentColor'); line.style.strokeDasharray='120'; line.style.strokeDashoffset='120'; line.style.animation=`lineDraw .9s ease forwards ${i*0.08}s`;
-        svg.appendChild(line);
-        const end = document.createElementNS('http://www.w3.org/2000/svg','rect');
-        end.setAttribute('x', endX-0.6); end.setAttribute('y', endY-0.6); end.setAttribute('width','1.2'); end.setAttribute('height','1.2'); end.setAttribute('fill','currentColor'); svg.appendChild(end);
-        const label = document.createElement('div'); label.className = 'artist'; label.style.left = a.x + '%'; label.style.top  = a.y + '%';
-        label.innerHTML = `<span class="dot"></span>${a.name}`; canvas.appendChild(label);
-      });
-      // sponsor
-      (posterData.logos||[]).forEach(L=>{
+      set('posterVenue', p.venue);
+      set('posterSeries',p.series);
+      set('posterDate',  p.date);
+      set('posterTagline', p.tagline);
+      set('posterCurated', p.curatedBy);
+      const logosWrap = document.getElementById('posterLogos'); logosWrap.innerHTML='';
+      (p.logos||[]).forEach(L=>{
         if(L.src){ const img=new Image(); img.src=L.src; img.alt=L.alt||'logo'; img.style.maxHeight='14px'; img.style.opacity='.9'; logosWrap.appendChild(img); }
         else if(L.text){ const s=document.createElement('span'); s.textContent=L.text; s.style.fontWeight='900'; s.style.fontSize='.72rem'; s.style.letterSpacing='.12em'; logosWrap.appendChild(s); }
       });
     }
-    renderPoster();
 
-    /* ========== DATI EVENTI (AGGIORNA SOLO QUI) ========== */
-    // Schema evento:
-    // {
-    //   dateISO: 'YYYY-MM-DD',
-    //   dow: 'LUN/MAR/MER/GIO/VEN/SAB/DOM' (opzionale, calcolato se mancante),
-    //   venue: '17/19 URBAN BISTROT',
-    //   title: 'Titolo/tema serata',
-    //   genres: ['TECHNO','ELECTRO','VINYL'],
-    //   start: '22:30',
-    //   curatedBy: 'Riccardo Battaglia',
-    //   headliner: 'NOME DJ',
-    //   guests: ['OSPITE 1','OSPITE 2'],
-    //   sponsors: [{text:'CASAMIGOS'},{src:'https://…',alt:'…'}],
-    //   poster:{ origin:{x:48,y:56}, positions:[{x:12,y:80},{x:60,y:74},{x:66,y:44}] }
-    // }
+    function clearBouncers(){
+      cancelAnimationFrame(bounceRAF);
+      bouncers.forEach(b=> b.el.remove());
+      bouncers = [];
+    }
+
+    function initBouncers(names){
+      clearBouncers();
+      const rect = posterCanvas.getBoundingClientRect();
+      names.forEach((name, idx)=>{
+        const el = document.createElement('div');
+        el.className = 'bouncer';
+        el.innerHTML = `<span class="dot"></span>${name}`;
+        posterCanvas.appendChild(el);
+        // misura
+        el.style.transform = 'translate(0,0)';
+        const w = el.offsetWidth || 80;
+        const h = el.offsetHeight || 28;
+        // pos iniziale random senza uscire
+        const x = Math.random() * Math.max(1, rect.width - w);
+        const y = Math.random() * Math.max(1, rect.height - h);
+        // velocità pseudo-random (px/s)
+        const speed = 80 + (idx*12) + Math.random()*40; // 80–140
+        const angle = Math.random() * Math.PI * 2;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        bouncers.push({ el, x, y, w, h, vx, vy });
+      });
+      let last = performance.now();
+      const tick = (now)=>{
+        const dt = (now - last) / 1000; last = now;
+        const W = posterCanvas.clientWidth, H = posterCanvas.clientHeight;
+        bouncers.forEach(b=>{
+          let nx = b.x + b.vx * dt;
+          let ny = b.y + b.vy * dt;
+          // rimbalzo ai bordi
+          if(nx <= 0){ nx = 0; b.vx *= -1; }
+          if(ny <= 0){ ny = 0; b.vy *= -1; }
+          if(nx + b.w >= W){ nx = W - b.w; b.vx *= -1; }
+          if(ny + b.h >= H){ ny = H - b.h; b.vy *= -1; }
+          b.x = nx; b.y = ny;
+          b.el.style.transform = `translate(${nx}px, ${ny}px)`;
+        });
+        bounceRAF = requestAnimationFrame(tick);
+      };
+      bounceRAF = requestAnimationFrame(tick);
+      // ricalcola su resize
+      window.addEventListener('resize', ()=> {
+        // niente da fare qui: i limiti sono letti ogni frame
+      }, { passive:true });
+    }
+
+    function bindPosterFromEvent(ev){
+      const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
+      posterData.venue    = (ev.venue||'17/19 URBAN BISTROT').toUpperCase();
+      posterData.series   = (ev.title||'').toUpperCase();
+      posterData.date     = formatPosterDate(ev.dateISO);
+      posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
+      posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Riccardo Battaglia')).toUpperCase();
+      posterData.logos    = (ev.sponsors || []).map(s => s.src ? {src:s.src, alt:s.alt||'logo'} : {text:(s.text||'').toUpperCase()});
+      setPosterTexts(posterData);
+      initBouncers(names.slice(0,3));
+    }
+
+    /* ========== DATI EVENTI (FINO A 7) ========== */
+    // comingSoon: true  --> mostra "COMING SOON" e disabilita CTA
     const events = [
       {
-        dateISO:'2025-09-03',
+        dateISO:'2025-09-03', comingSoon:false,
         venue:'17/19 URBAN BISTROT',
         title:'Electro Techno • Vinyl Only',
         genres:['TECHNO','ELECTRO','VINYL'],
         start:'22:30',
         curatedBy:'Riccardo Battaglia',
-        headliner:'DANIELE PAVONI',
-        guests:['MIN-ED','LORENZO PALAZZI'],
-        sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}],
-        poster:{ origin:{x:48,y:56}, positions:[{x:12,y:80},{x:60,y:74},{x:66,y:44}] }
+        headliner:'HEADLINER',
+        guests:['GUEST1','GUEST2'],
+        sponsors:[{text:'ELETTRONICA'},{text:'HOUSE'},{text:'RAZZI'},{text:'BIRRA PERONI'}]
       },
       {
-        dateISO:'2025-09-05',
+        dateISO:'2025-09-05', comingSoon:false,
         venue:'17/19 URBAN BISTROT',
         title:'Acid District',
         genres:['ACID','TECHNO','VINYL'],
@@ -658,11 +733,10 @@
         curatedBy:'Riccardo Battaglia',
         headliner:'ALBA NERA',
         guests:['RBN','GIO BERLIN'],
-        sponsors:[{text:'CASAMIGOS'}],
-        poster:{ origin:{x:52,y:58}, positions:[{x:20,y:70},{x:68,y:60},{x:72,y:32}] }
+        sponsors:[{text:'CASAMIGOS'}]
       },
       {
-        dateISO:'2025-09-07',
+        dateISO:'2025-09-07', comingSoon:false,
         venue:'17/19 URBAN BISTROT',
         title:'Minimal Sunday',
         genres:['MINIMAL','DEEP','VINYL'],
@@ -670,8 +744,45 @@
         curatedBy:'Riccardo Battaglia',
         headliner:'MARCO VOSS',
         guests:['LIVIA FERRO'],
-        sponsors:[{text:'ORGANICS'}],
-        poster:{ origin:{x:44,y:54}, positions:[{x:18,y:76},{x:66,y:42},{x:70,y:70}] }
+        sponsors:[{text:'ORGANICS'}]
+      },
+      {
+        dateISO:'2025-09-12', comingSoon:true,
+        venue:'17/19 URBAN BISTROT',
+        title:'Friday Deep Cuts',
+        genres:['DEEP','MINIMAL','VINYL'],
+        start:'22:30',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'TBA',
+        guests:[]
+      },
+      {
+        dateISO:'2025-09-14', comingSoon:true,
+        venue:'17/19 URBAN BISTROT',
+        title:'Sunday Grooves',
+        genres:['HOUSE','MINIMAL'],
+        start:'18:00',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'TBA'
+      },
+      {
+        dateISO:'2025-09-20', comingSoon:false,
+        venue:'17/19 URBAN BISTROT',
+        title:'Electro Romance',
+        genres:['ELECTRO','TECHNO'],
+        start:'22:30',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'VALE C.',
+        guests:['M.A.D.']
+      },
+      {
+        dateISO:'2025-09-27', comingSoon:true,
+        venue:'17/19 URBAN BISTROT',
+        title:'Vinyl Marathon',
+        genres:['TECHNO','HOUSE'],
+        start:'22:00',
+        curatedBy:'Riccardo Battaglia',
+        headliner:'TBA'
       }
     ];
 
@@ -690,51 +801,58 @@
                        .sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
       return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
     }
-    function bindPosterFromEvent(ev){
-      const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
-      const pos = (ev.poster && ev.poster.positions) || [];
-      const origin = (ev.poster && ev.poster.origin) || {x:48,y:56};
-      posterData.venue    = (ev.venue||'17/19 URBAN BISTROT').toUpperCase();
-      posterData.series   = (ev.title||'').toUpperCase();
-      posterData.date     = formatPosterDate(ev.dateISO);
-      posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
-      posterData.curatedBy= ('CURATED BY ' + (ev.curatedBy || 'RICCARDO BATTAGLIA')).toUpperCase();
-      posterData.origin   = origin;
-      posterData.artists  = names.slice(0,3).map((n,i)=> ({ name:n, x: pos[i]?.x ?? (22 + i*26), y: pos[i]?.y ?? (45 + i*18) }));
-      posterData.logos    = (ev.sponsors || []).map(s => s.src ? {src:s.src, alt:s.alt||'logo'} : {text:(s.text||'').toUpperCase()});
-      renderPoster();
-    }
 
-    // Render lista eventi
+    // Render lista eventi (3 visibili, poi espandi fino a 7)
+    let eventsExpanded = false;
     function renderEvents(){
       const list = document.getElementById('eventsList'); if(!list) return;
       list.innerHTML='';
-      const sorted = [...events].sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
-      sorted.forEach(ev=>{
+      const sorted = [...events].sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO)).slice(0,7);
+      const toShow = eventsExpanded ? sorted : sorted.slice(0,3);
+      toShow.forEach(ev=>{
         const d = new Date(ev.dateISO + 'T12:00:00');
         const day = String(d.getUTCDate()).padStart(2,'0');
         const mon = toMonShort(d);
-        const dow = (ev.dow || toItDowShort(d)).slice(0,3).toUpperCase();
+        const dow = toItDowShort(d).slice(0,3).toUpperCase();
         const guests = ev.guests && ev.guests.length ? ` • Guests: ${ev.guests.join(', ')}` : '';
         const el = document.createElement('div'); el.className='event';
-        el.innerHTML = `
-          <div class="event__date">
-            <div class="event__dow">${dow}</div>
-            <div class="event__day">${day} ${mon}</div>
-          </div>
-          <div>
-            <strong>${ev.title}</strong>
-            <div class="event__meta">Start ${ev.start} • ${ev.genres.join(' / ')}${guests}</div>
-          </div>
-          <a class="pill pill--ghost event__cta" href="https://wa.me/393298252092?text=Lista%20${encodeURIComponent(ev.title)}" target="_blank" rel="noopener">Entra in lista</a>
-        `;
+        if(ev.comingSoon){
+          el.innerHTML = `
+            <div class="event__date">
+              <div class="event__dow">${dow}</div>
+              <div class="event__day">${day} ${mon}</div>
+            </div>
+            <div>
+              <strong>${ev.title}</strong>
+              <div class="event__meta">COMING SOON</div>
+            </div>
+            <span class="pill pill--ghost pill--disabled event__cta">Coming Soon</span>
+          `;
+        }else{
+          el.innerHTML = `
+            <div class="event__date">
+              <div class="event__dow">${dow}</div>
+              <div class="event__day">${day} ${mon}</div>
+            </div>
+            <div>
+              <strong>${ev.title}</strong>
+              <div class="event__meta">Start ${ev.start} • ${ev.genres.join(' / ')}${guests}</div>
+            </div>
+            <a class="pill pill--ghost event__cta" href="https://wa.me/393298252092?text=Lista%20${encodeURIComponent(ev.title)}" target="_blank" rel="noopener">Entra in lista</a>
+          `;
+        }
         list.appendChild(el);
       });
+      // bottone mostra altri / meno
+      const btn = document.getElementById('eventsMoreBtn');
+      if(sorted.length <= 3){ btn.style.display = 'none'; }
+      else { btn.style.display = 'inline-flex'; btn.textContent = eventsExpanded ? 'Mostra meno' : 'Mostra altri'; }
     }
 
     // Init
     renderEvents();
     bindPosterFromEvent(pickNextEvent());
+    document.getElementById('eventsMoreBtn').addEventListener('click', ()=>{ eventsExpanded = !eventsExpanded; renderEvents(); });
 
     /* ========== Gallery (con crediti) ========== */
     const galleryData = [
