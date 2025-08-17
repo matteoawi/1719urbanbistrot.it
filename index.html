@@ -157,12 +157,13 @@
     }
 
     /* ===== Hero ===== */
-    .hero{padding:52px 0 20px}
+    /* AUMENTATA distanza header/poster: modifica qui il top se vuoi */
+    .hero{padding:96px 0 24px}
     .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:800;color:var(--muted);background:var(--chip)}
     h1{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
     .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.18rem);margin:8px 0 14px}
 
-    /* ===== Media frame (riusato per Live Shots) ===== */
+    /* ===== Media frame ===== */
     .hero-media{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--chip);margin-top:14px}
     @media (min-width:768px){ .hero-media{aspect-ratio:16/9;margin-top:18px} }
     .slide{position:absolute;inset:0;opacity:0;transition:opacity .35s}
@@ -177,13 +178,6 @@
     .block-title h3{font-family:'Montserrat',system-ui,sans-serif;font-size:1rem;margin:0;letter-spacing:.02em}
     .meta{color:var(--muted);font-size:.95rem}
 
-    /* ===== Time grid ===== */
-    .time-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-    @media (max-width:480px){ .time-grid{grid-template-columns:1fr} }
-    .row{display:flex;align-items:center;gap:10px;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--chip)}
-    .row .l{display:flex;align-items:center;gap:10px}
-    .i{width:28px;height:28px;display:inline-grid;place-items:center}
-
     /* ===== Menu (locale) — Accordion ===== */
     .badge{display:inline-block;background:var(--accent);color:var(--accent-fg);padding:6px 10px;border-radius:999px;font-size:.75rem;font-weight:900}
     details.menu-acc{border:1px solid var(--line);border-radius:16px;background:color-mix(in oklab, var(--bg) 96%, transparent);padding:12px}
@@ -195,6 +189,7 @@
     .menu-sum .chev{margin-left:auto;transition:transform .2s}
     details[open] .menu-sum .chev{transform:rotate(180deg)}
     .menu-body{padding:8px 4px 2px}
+    .group-title{margin:8px 0 4px;font-weight:800}
     .menu-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
     .menu-item:last-child{border-bottom:0}
     .price{color:var(--accent);font-weight:800}
@@ -281,8 +276,8 @@
     </div>
   </header>
 
-  <!-- Fullscreen Site Menu -->
-  <div class="sheet" id="sheet" role="dialog" aria-hidden="true" aria-modal="true" aria-label="menu sito">
+  <!-- Fullscreen Site Menu (ID univoco per evitare conflitti) -->
+  <div class="sheet" id="siteMenu" role="dialog" aria-hidden="true" aria-modal="true" aria-label="menu sito">
     <div class="sheet__panel">
       <button class="sheet__close" id="sheetClose" aria-label="Chiudi menu">×</button>
       <div class="sheet__inner">
@@ -425,47 +420,11 @@
     </div>
   </section>
 
-  <!-- Menu (locale) - Accordion -->
+  <!-- Menu (locale) - Title + Accordion (render da JS) -->
   <section id="menu">
     <div class="container">
-      <details class="menu-acc reveal">
-        <summary class="menu-sum">
-          <span class="badge">BREAKFAST</span>
-          <h3>Colazioni</h3>
-          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <div class="menu-body">
-          <div class="menu-item"><div>Cornetto Artigianale <span class="meta">crema / marmellata / vuoto</span></div><div class="price">€2</div></div>
-          <div class="menu-item"><div>Avocado Toast <span class="meta">uovo poché, lime</span></div><div class="price">€9</div></div>
-          <div class="menu-item"><div>Pancake Stack <span class="meta">acero, frutti rossi</span></div><div class="price">€8</div></div>
-        </div>
-      </details>
-
-      <details class="menu-acc reveal">
-        <summary class="menu-sum">
-          <span class="badge">LUNCH</span>
-          <h3>Pranzo</h3>
-          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <div class="menu-body">
-          <div class="menu-item"><div>Caesar Salad <span class="meta">pollo, crostini</span></div><div class="price">€12</div></div>
-          <div class="menu-item"><div>Club Sandwich <span class="meta">tacchino, bacon</span></div><div class="price">€13</div></div>
-          <div class="menu-item"><div>Pasta del Giorno <span class="meta">chiedi allo staff</span></div><div class="price">€14</div></div>
-        </div>
-      </details>
-
-      <details class="menu-acc reveal">
-        <summary class="menu-sum">
-          <span class="badge">DINNER</span>
-          <h3>Cena</h3>
-          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <div class="menu-body">
-          <div class="menu-item"><div>Polpo Grigliato <span class="meta">patate, olive</span></div><div class="price">€18</div></div>
-          <div class="menu-item"><div>Black Burger <span class="meta">cheddar, bacon</span></div><div class="price">€16</div></div>
-          <div class="menu-item"><div>Risotto Techno <span class="meta">nero di seppia</span></div><div class="price">€17</div></div>
-        </div>
-      </details>
+      <div class="block-title" style="margin-bottom:6px"><h3>Il nostro menù</h3></div>
+      <div id="menuAccordions" class="grid" style="gap:12px"></div>
     </div>
   </section>
 
@@ -580,36 +539,37 @@
     const onS = () => { header.classList.toggle('header--solid', window.scrollY > 8); };
     window.addEventListener('scroll', onS, {passive:true}); onS();
 
-    /* ========== Fullscreen site menu ========== */
-    const sheet = document.getElementById('sheet');
+    /* ========== Fullscreen site menu (robusto) ========== */
+    const siteMenu = document.getElementById('siteMenu');
     const sheetClose = document.getElementById('sheetClose');
+    const panel = siteMenu.querySelector('.sheet__panel');
+    const inner = siteMenu.querySelector('.sheet__inner');
     const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
 
     const openMenu = ()=>{
-      sheet.classList.add('active');
-      sheet.setAttribute('aria-hidden','false');
+      siteMenu.classList.add('active');
+      siteMenu.setAttribute('aria-hidden','false');
       document.body.classList.add('menu-open');
     };
     const closeMenu = ()=>{
-      sheet.classList.remove('active');
-      sheet.setAttribute('aria-hidden','true');
+      siteMenu.classList.remove('active');
+      siteMenu.setAttribute('aria-hidden','true');
       document.body.classList.remove('menu-open');
     };
 
-    toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> sheet.classList.contains('active') ? closeMenu() : openMenu()));
+    toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> siteMenu.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', closeMenu);
 
-    // chiudi cliccando nell'area libera (fuori dal contenuto centrale)
-    sheet.addEventListener('click', (e)=>{
-      const clickedInside = e.target.closest('.sheet__inner') || e.target.closest('#sheetClose');
-      if(!clickedInside) closeMenu();
+    // chiudi clic nell’area libera (panel intero, NON dentro inner)
+    panel.addEventListener('click', (e)=>{
+      if(!inner.contains(e.target)) closeMenu();
     });
-
-    // chiudi con ESC
+    // evita che i click dentro i contenuti chiudano il menu
+    inner.addEventListener('click', (e)=> e.stopPropagation());
+    // ESC
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-
-    // chiudi quando clicchi un link del menu
-    sheet.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
+    // link del menu → chiudi
+    siteMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
 
     /* ========== Link esterni fix ========== */
     (function(){
@@ -653,7 +613,7 @@
     document.getElementById('themeToggleM').addEventListener('click', cycleTheme);
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
-    /* ========== Live Shots (UNICO carosello) ========== */
+    /* ========== Live Shots ========== */
     const liveImages = [
       'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
       'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
@@ -675,7 +635,7 @@
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
     })();
 
-    /* ========== POSTER data & RENDER con nomi rimbalzanti ========== */
+    /* ========== POSTER ========== */
     const posterData = {
       venue: '17/19 URBAN BISTROT',
       series: 'ELECTRO TECHNO NIGHT',
@@ -781,7 +741,122 @@
       initBouncers(names.slice(0,3));
     }
 
-    /* ========== DATI EVENTI (FINO A 7) ========== */
+    /* ========== MENU DATA (EDITA QUI) ========== */
+    const menuData = [
+      {
+        badge:'BREAKFAST', title:'Colazioni',
+        items:[
+          { name:'Cornetto Artigianale', desc:"crema / marmellata / vuoto", price:'€2' },
+          { name:'Avocado Toast', desc:"uovo poché, lime", price:'€9' },
+          { name:'Pancake Stack', desc:"acero, frutti rossi", price:'€8' },
+          { name:'Yogurt Bowl', desc:"granola, miele, frutta", price:'€6' },
+        ]
+      },
+      {
+        badge:'LUNCH', title:'Pranzo',
+        items:[
+          { name:'Caesar Salad', desc:"pollo, crostini", price:'€12' },
+          { name:'Club Sandwich', desc:"tacchino, bacon", price:'€13' },
+          { name:'Pasta del Giorno', desc:"chiedi allo staff", price:'€14' },
+          { name:'Tataki di Tonno', desc:"sesamo, agrumi", price:'€16' },
+        ]
+      },
+      {
+        badge:'DINNER', title:'Cena',
+        items:[
+          { name:'Polpo Grigliato', desc:"patate, olive", price:'€18' },
+          { name:'Black Burger', desc:"cheddar, bacon", price:'€16' },
+          { name:'Risotto Techno', desc:"nero di seppia", price:'€17' },
+          { name:'Tagliata di Manzo', desc:"rucola, scaglie", price:'€20' },
+        ]
+      },
+      {
+        badge:'DRINKS', title:'Drinks',
+        groups:[
+          {
+            title:'Cocktail Signature',
+            items:[
+              { name:'Neon Spritz', desc:"bitter, agrumi, metodo classico", price:'€10' },
+              { name:'Vinyl Sour', desc:"whisky, albume, limone", price:'€11' },
+              { name:'Acid Groove', desc:"gin, lime, basilico", price:'€10' },
+              { name:'Electro Mule', desc:"vodka, ginger beer, lime", price:'€9' },
+            ]
+          },
+          {
+            title:'Vini al Calice',
+            items:[
+              { name:'Frascati Superiore DOC', desc:"bianco", price:'€6' },
+              { name:'Cesanese del Piglio DOCG', desc:"rosso", price:'€7' },
+              { name:'Rosé Lazio', desc:"rosato", price:'€6' },
+            ]
+          },
+          {
+            title:'Birre',
+            items:[
+              { name:'Lager alla Spina', desc:"0.4L", price:'€6' },
+              { name:'IPA Artigianale', desc:"bottiglia", price:'€7' },
+            ]
+          },
+          {
+            title:'Analcolici',
+            items:[
+              { name:'Virgin Mojito', desc:"lime, menta, soda", price:'€7' },
+              { name:'Club Mate', desc:"bottiglia", price:'€4' },
+            ]
+          }
+        ]
+      }
+    ];
+
+    function renderMenu(){
+      const wrap = document.getElementById('menuAccordions');
+      wrap.innerHTML = '';
+      menuData.forEach(cat=>{
+        const details = document.createElement('details');
+        details.className = 'menu-acc reveal';
+        const sum = document.createElement('summary');
+        sum.className = 'menu-sum';
+        sum.innerHTML = `
+          <span class="badge">${cat.badge}</span>
+          <h3>${cat.title}</h3>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        `;
+        details.appendChild(sum);
+
+        const body = document.createElement('div');
+        body.className = 'menu-body';
+
+        if(cat.items){
+          cat.items.forEach(it=>{
+            const row = document.createElement('div');
+            row.className = 'menu-item';
+            row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||''}</span></div><div class="price">${it.price||''}</div>`;
+            body.appendChild(row);
+          });
+        }
+        if(cat.groups){
+          cat.groups.forEach(gr=>{
+            const gt = document.createElement('div');
+            gt.className = 'group-title';
+            gt.textContent = gr.title;
+            body.appendChild(gt);
+            gr.items.forEach(it=>{
+              const row = document.createElement('div');
+              row.className = 'menu-item';
+              row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||''}</span></div><div class="price">${it.price||''}</div>`;
+              body.appendChild(row);
+            });
+          });
+        }
+
+        details.appendChild(body);
+        wrap.appendChild(details);
+      });
+      // re-bind reveal animation on new nodes
+      document.querySelectorAll('.reveal:not(.active)').forEach(el=>io.observe(el));
+    }
+
+    /* ========== EVENTI ========== */
     const events = [
       {
         dateISO:'2025-09-03', comingSoon:false,
@@ -863,11 +938,7 @@
       return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
     }
 
-    // Render eventi (3 visibili, poi espandi fino a 7) – bottone "Prenota"
     let eventsExpanded = false;
-    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
-    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
-
     function renderEvents(){
       const list = document.getElementById('eventsList'); if(!list) return;
       list.innerHTML='';
@@ -914,6 +985,7 @@
     }
 
     // Init
+    renderMenu();
     renderEvents();
     bindPosterFromEvent(pickNextEvent());
     document.getElementById('eventsMoreBtn').addEventListener('click', ()=>{ eventsExpanded = !eventsExpanded; renderEvents(); });
