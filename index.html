@@ -231,6 +231,17 @@
     .bouncer{position:absolute;display:inline-block;padding:.16em .4em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;user-select:none;will-change:transform;box-shadow:0 0 0 1px var(--line) inset}
     .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:8px;vertical-align:middle}
     .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:10px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center}
+    /* Interazioni drag per i nomi "bouncer" */
+.bouncer{
+  cursor: grab;
+  touch-action: none; /* evita lo scroll durante il drag */
+  transition: box-shadow .18s ease;
+}
+.bouncer.bouncer--dragging{
+  cursor: grabbing;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent),
+              0 8px 22px rgba(0,0,0,.25);
+}
 
     /* === FIX MOBILE OVERFLOW === */
 html,body{max-width:100%; overflow-x:hidden;}            /* guardrail generale */
@@ -626,43 +637,211 @@ html,body{max-width:100%; overflow-x:hidden;}            /* guardrail generale *
 
     function clearBouncers(){ cancelAnimationFrame(bounceRAF); bouncers.forEach(b=> b.el.remove()); bouncers = []; }
 
-    function initBouncers(names){
-      clearBouncers();
-      const rect = posterCanvas.getBoundingClientRect();
-      names.forEach((name, idx)=>{
-        const el = document.createElement('div');
-        el.className = 'bouncer';
-        el.innerHTML = `<span class="dot"></span>${name}`;
-        posterCanvas.appendChild(el);
-        el.style.transform = 'translate(0,0)';
-        const w = el.offsetWidth || 80;
-        const h = el.offsetHeight || 28;
-        const x = Math.random() * Math.max(1, rect.width - w);
-        const y = Math.random() * Math.max(1, rect.height - h);
-        const speed = 80 + (idx*12) + Math.random()*40;
-        const angle = Math.random() * Math.PI * 2;
-        const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed;
-        bouncers.push({ el, x, y, w, h, vx, vy });
-      });
-      let last = performance.now();
-      const tick = (now)=>{
-        const dt = (now - last) / 1000; last = now;
-        const W = posterCanvas.clientWidth, H = posterCanvas.clientHeight;
-        bouncers.forEach(b=>{
-          let nx = b.x + b.vx * dt;
-          let ny = b.y + b.vy * dt;
-          if(nx <= 0){ nx = 0; b.vx *= -1; }
-          if(ny <= 0){ ny = 0; b.vy *= -1; }
-          if(nx + b.w >= W){ nx = W - b.w; b.vx *= -1; }
-          if(ny + b.h >= H){ ny = H - b.h; b.vy *= -1; }
-          b.x = nx; b.y = ny;
-          b.el.style.transform = `translate(${nx}px, ${ny}px)`;
-        });
-        bounceRAF = requestAnimationFrame(tick);
-      };
-      bounceRAF = requestAnimationFrame(tick);
+ function initBouncers(names){
+  clearBouncers();
+  const rect = posterCanvas.getBoundingClientRect();
+
+  // crea elementi
+  names.forEach((name, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'bouncer';
+    el.setAttribute('role','button');
+    el.setAttribute('aria-label', `DJ ${name}`);
+    el.innerHTML = `<span class="dot"></span>${name}`;
+    posterCanvas.appendChild(el);
+
+    // posizioni e velocità iniziali
+    el.style.transform = 'translate(0,0)';
+    const w = el.offsetWidth  || 80;
+    const h = el.offsetHeight || 28;
+    const x = Math.random() * Math.max(1, rect.width  - w);
+    const y = Math.random() * Math.max(1, rect.height - h);
+
+    const speed = 80 + (idx*12) + Math.random()*40;
+    const angle = Math.random() * Math.PI * 2;
+    const vx = Math.cos(angle) * speed;
+    const vy = Math.sin(angle) * speed;
+
+    const b = { el, x, y, w, h, vx, vy, dragging:false, trace:[] };
+    bouncers.push(b);
+    enableBouncerInteractions(b);
+  });
+
+  // loop animazione con muri + collisioni + drag/throw
+  let last = performance.now();
+  const tick = (now)=>{
+    const dt = Math.min(0.033, (now - last) / 1000); // cap per evitare salti
+    last = now;
+
+    const W = posterCanvas.clientWidth;
+    const H = posterCanvas.clientHeight;
+
+    // update posizione (muri)
+    for(const b of bouncers){
+      if(!b.dragging){
+        b.x += b.vx * dt;
+        b.y += b.vy * dt;
+
+        // rimbalzi sui bordi
+        if(b.x <= 0){ b.x = 0; b.vx *= -1; }
+        if(b.y <= 0){ b.y = 0; b.vy *= -1; }
+        if(b.x + b.w >= W){ b.x = W - b.w; b.vx *= -1; }
+        if(b.y + b.h >= H){ b.y = H - b.h; b.vy *= -1; }
+
+        // lieve attrito per stabilità
+        b.vx *= 0.999;
+        b.vy *= 0.999;
+
+        b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+      }
     }
+
+    // collisioni pairwise rettangolari semplici
+    for(let i=0;i<bouncers.length;i++){
+      const a = bouncers[i];
+      for(let j=i+1;j<bouncers.length;j++){
+        const c = bouncers[j];
+        if(rectOverlap(a,c)){
+          resolveRectCollision(a,c,W,H);
+        }
+      }
+    }
+
+    bounceRAF = requestAnimationFrame(tick);
+  };
+  bounceRAF = requestAnimationFrame(tick);
+
+  // clamp su resize
+  window.addEventListener('resize', clampAllBouncersToCanvas, {passive:true});
+}
+function rectOverlap(a,b){
+  return a.x < b.x + b.w && a.x + a.w > b.x &&
+         a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
+function resolveRectCollision(a,b,W,H){
+  // niente spintoni se uno è in drag: chi trascina "vince"
+  const aFree = !a.dragging, bFree = !b.dragging;
+
+  const overlapX = Math.min(a.x+a.w, b.x+b.w) - Math.max(a.x, b.x);
+  const overlapY = Math.min(a.y+a.h, b.y+b.h) - Math.max(a.y, b.y);
+
+  // separazione lungo l’asse di minor penetrazione
+  if(overlapX < overlapY){
+    const dir = (a.x + a.w/2) < (b.x + b.w/2) ? -1 : 1;
+    const push = overlapX/2;
+
+    if(aFree) a.x += dir * push;
+    if(bFree) b.x -= dir * push;
+
+    // scambio/inversione velocità lungo X per un effetto "palla elastica"
+    const avx = a.vx, bvx = b.vx;
+    if(aFree) a.vx = bvx;
+    if(bFree) b.vx = avx;
+  }else{
+    const dir = (a.y + a.h/2) < (b.y + b.h/2) ? -1 : 1;
+    const push = overlapY/2;
+
+    if(aFree) a.y += dir * push;
+    if(bFree) b.y -= dir * push;
+
+    const avy = a.vy, bvy = b.vy;
+    if(aFree) a.vy = b.vy;
+    if(bFree) b.vy = avy;
+  }
+
+  // clamp in canvas
+  a.x = Math.max(0, Math.min(W - a.w, a.x));
+  a.y = Math.max(0, Math.min(H - a.h, a.y));
+  b.x = Math.max(0, Math.min(W - b.w, b.x));
+  b.y = Math.max(0, Math.min(H - b.h, b.y));
+
+  a.el.style.transform = `translate(${a.x}px, ${a.y}px)`;
+  b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+}
+
+function enableBouncerInteractions(b){
+  const getRect = ()=> posterCanvas.getBoundingClientRect();
+
+  const onDown = (e)=>{
+    e.preventDefault();
+    b.dragging = true;
+    b.el.classList.add('bouncer--dragging');
+    b.el.setPointerCapture?.(e.pointerId);
+
+    // porta sopra
+    posterCanvas.appendChild(b.el);
+
+    const r = getRect();
+    b.offsetX = (e.clientX - r.left) - b.x;
+    b.offsetY = (e.clientY - r.top)  - b.y;
+
+    // ferma durante il drag
+    b.vx = 0; b.vy = 0;
+    b.trace = [];
+  };
+
+  const onMove = (e)=>{
+    if(!b.dragging) return;
+    const r = getRect();
+    const W = posterCanvas.clientWidth, H = posterCanvas.clientHeight;
+
+    const px = (e.clientX - r.left) - b.offsetX;
+    const py = (e.clientY - r.top)  - b.offsetY;
+
+    b.x = Math.max(0, Math.min(W - b.w, px));
+    b.y = Math.max(0, Math.min(H - b.h, py));
+    b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+
+    // tieni 6 campioni per stimare la velocità di lancio
+    const t = performance.now();
+    b.trace.push({x:b.x,y:b.y,t});
+    if(b.trace.length > 6) b.trace.shift();
+  };
+
+  const onUp = (e)=>{
+    if(!b.dragging) return;
+    b.el.releasePointerCapture?.(e.pointerId);
+    b.el.classList.remove('bouncer--dragging');
+    b.dragging = false;
+
+    // calcolo "throw" dalla coda dei movimenti (ultimo ~100ms)
+    if(b.trace.length >= 2){
+      const a = b.trace[0];
+      const z = b.trace[b.trace.length-1];
+      const dt = Math.max(0.016, (z.t - a.t)/1000);
+      const scale = 1.1; // più alto = più "lancio"
+      let vx = (z.x - a.x)/dt * scale;
+      let vy = (z.y - a.y)/dt * scale;
+
+      // cap velocità
+      const max = 640;
+      const s = Math.hypot(vx,vy);
+      if(s > max){ vx *= max/s; vy *= max/s; }
+
+      // se rilascio "molle", dai una spintarella
+      if(s < 60){
+        const ang = Math.random()*Math.PI*2;
+        vx = Math.cos(ang)*120; vy = Math.sin(ang)*120;
+      }
+      b.vx = vx; b.vy = vy;
+    }
+  };
+
+  b.el.addEventListener('pointerdown', onDown);
+  b.el.addEventListener('pointermove', onMove);
+  b.el.addEventListener('pointerup', onUp);
+  b.el.addEventListener('pointercancel', onUp);
+}
+
+function clampAllBouncersToCanvas(){
+  const W = posterCanvas.clientWidth, H = posterCanvas.clientHeight;
+  for(const b of bouncers){
+    b.x = Math.max(0, Math.min(W - b.w, b.x));
+    b.y = Math.max(0, Math.min(H - b.h, b.y));
+    b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+  }
+}
 
     function formatPosterDate(iso){
       const d = new Date(iso + 'T12:00:00Z');
