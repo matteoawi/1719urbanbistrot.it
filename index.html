@@ -551,7 +551,6 @@
     });
     // chiudi con ESC
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-
     // Chiudi overlay quando clicchi un link del menu
     sheet.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
 
@@ -692,10 +691,29 @@
         bounceRAF = requestAnimationFrame(tick);
       };
       bounceRAF = requestAnimationFrame(tick);
-      // ricalcola su resize
-      window.addEventListener('resize', ()=> {
-        // niente da fare qui: i limiti sono letti ogni frame
-      }, { passive:true });
+    }
+
+    /* ====== Helpers date & WhatsApp ====== */
+    function formatPosterDate(iso){
+      const d = new Date(iso + 'T12:00:00Z');
+      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+      const dd = String(d.getUTCDate()).padStart(2,'0');
+      const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+      return `${days[d.getUTCDay()]} ${dd}/${mm}`;
+    }
+    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
+    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
+    function formatLongIt(iso){
+      const d = new Date(iso + 'T12:00:00'); // locale (Roma)
+      return d.toLocaleDateString('it-IT', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+    }
+    function buildWaText(ev){
+      const when = formatLongIt(ev.dateISO);
+      const start = ev.start ? ` (start ${ev.start})` : '';
+      return `Ciao 17/19 Urban Bistrot, vorrei entrare in lista per "${ev.title}" di ${when}${start}. Nome: ____ • Persone: ____`;
+    }
+    function waUrlFromEvent(ev){
+      return `https://wa.me/393298252092?text=${encodeURIComponent(buildWaText(ev))}`;
     }
 
     function bindPosterFromEvent(ev){
@@ -720,9 +738,9 @@
         genres:['TECHNO','ELECTRO','VINYL'],
         start:'22:30',
         curatedBy:'Riccardo Battaglia',
-        headliner:'HEADLINER',
-        guests:['GUEST1','GUEST2'],
-        sponsors:[{text:'ELETTRONICA'},{text:'HOUSE'},{text:'RAZZI'},{text:'BIRRA'}]
+        headliner:'DANIELE PAVONI',
+        guests:['MIN-ED','LORENZO PALAZZI'],
+        sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}]
       },
       {
         dateISO:'2025-09-05', comingSoon:false,
@@ -786,15 +804,6 @@
       }
     ];
 
-    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
-    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
-    function formatPosterDate(iso){
-      const d = new Date(iso + 'T12:00:00Z');
-      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
-      const dd = String(d.getUTCDate()).padStart(2,'0');
-      const mm = String(d.getUTCMonth()+1).padStart(2,'0');
-      return `${days[d.getUTCDay()]} ${dd}/${mm}`;
-    }
     function pickNextEvent(){
       const today = new Date(); today.setHours(0,0,0,0);
       const up = events.filter(e=>!isNaN(new Date(e.dateISO)) && new Date(e.dateISO) >= today)
@@ -802,7 +811,7 @@
       return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
     }
 
-    // Render lista eventi (3 visibili, poi espandi fino a 7)
+    // Render lista eventi (3 visibili, poi espandi fino a 7) con messaggio WhatsApp automatico
     let eventsExpanded = false;
     function renderEvents(){
       const list = document.getElementById('eventsList'); if(!list) return;
@@ -829,6 +838,7 @@
             <span class="pill pill--ghost pill--disabled event__cta">Coming Soon</span>
           `;
         }else{
+          const wa = waUrlFromEvent(ev);
           el.innerHTML = `
             <div class="event__date">
               <div class="event__dow">${dow}</div>
@@ -838,7 +848,7 @@
               <strong>${ev.title}</strong>
               <div class="event__meta">Start ${ev.start} • ${ev.genres.join(' / ')}${guests}</div>
             </div>
-            <a class="pill pill--ghost event__cta" href="https://wa.me/393298252092?text=Lista%20${encodeURIComponent(ev.title)}" target="_blank" rel="noopener">Entra in lista</a>
+            <a class="pill pill--ghost event__cta" href="${wa}" target="_blank" rel="noopener">Entra in lista</a>
           `;
         }
         list.appendChild(el);
