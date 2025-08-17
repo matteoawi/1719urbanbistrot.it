@@ -46,7 +46,7 @@
     body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
     img{max-width:100%;display:block}
     .container{max-width:var(--max);margin-inline:auto;padding-inline:var(--pad)}
-    section{padding:72px 0}
+    section{padding:20px 0}
     .grid{display:grid;gap:16px}
     .grid-2{grid-template-columns:1fr}
     .grid-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -118,7 +118,7 @@
       z-index:1000;
       touch-action:manipulation;
     }
-    .sheet__inner{ display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99); }
+    .sheet__inner{ display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99); overflow: auto;}
     .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
     .sheet__list a{ display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:#fff;font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em; }
     .sheet__list a:hover{ background:rgba(255,255,255,.08); }
@@ -488,7 +488,7 @@ html,body{max-width:100%; overflow-x:hidden;}            /* guardrail generale *
       <div class="card reveal">
         <div class="block-title">
           <h3>Dove siamo</h3>
-          <a class="pill pill--accent" href="https://www.google.it/maps/place/17%2F19+Cocktail+Bar/@41.9226318,12.5118941,16z" target="_blank" rel="noopener">Apri su Google Maps</a>
+          <a class="pill pill--accent" href="https://maps.app.goo.gl/DH48FCh9wvF6mF8p6" target="_blank" rel="noopener">Apri su Google Maps</a>
         </div>
         <div class="map">
           <iframe title="Mappa 17/19 Urban Bistrot" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
@@ -604,7 +604,7 @@ html,body{max-width:100%; overflow-x:hidden;}            /* guardrail generale *
       date:   'WEDNESDAY 03/09',
       tagline:'TECHNO • ELECTRO • VINYL',
       curatedBy:'CURATED BY RICCARDO BATTAGLIA',
-      logos:[ { text:'CASAMIGOS' }, { text:'FUNKTION-ONE' }, { text:'TMAG' }, { text:'ORGANICS' } ]
+      logos:[ { text:'BIRRA PERONI' }, { text:'RAZZI' }, { text:'ANTI SANTA SANTA CLUB' }, { text:'ELETTRONICA' } ]
     };
 
     const posterCanvas = document.getElementById('posterCanvas');
@@ -782,15 +782,95 @@ html,body{max-width:100%; overflow-x:hidden;}            /* guardrail generale *
     }
 
     /* ========== EVENTI ========== */
-    const events = [
-      { dateISO:'2025-09-03', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Electro Techno • Vinyl Only', genres:['TECHNO','ELECTRO','VINYL'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'DANIELE PAVONI', guests:['MIN-ED','LORENZO PALAZZI'], sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}] },
-      { dateISO:'2025-09-05', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Acid District', genres:['ACID','TECHNO','VINYL'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'ALBA NERA', guests:['RBN','GIO BERLIN'], sponsors:[{text:'CASAMIGOS'}] },
-      { dateISO:'2025-09-07', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Minimal Sunday', genres:['MINIMAL','DEEP','VINYL'], start:'18:00', curatedBy:'Riccardo Battaglia', headliner:'MARCO VOSS', guests:['LIVIA FERRO'], sponsors:[{text:'ORGANICS'}] },
-      { dateISO:'2025-09-12', comingSoon:true,  venue:'17/19 URBAN BISTROT', title:'Friday Deep Cuts', genres:['DEEP','MINIMAL','VINYL'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'TBA', guests:[] },
-      { dateISO:'2025-09-14', comingSoon:true,  venue:'17/19 URBAN BISTROT', title:'Sunday Grooves', genres:['HOUSE','MINIMAL'], start:'18:00', curatedBy:'Riccardo Battaglia', headliner:'TBA' },
-      { dateISO:'2025-09-20', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Electro Romance', genres:['ELECTRO','TECHNO'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'VALE C.', guests:['M.A.D.'] },
-      { dateISO:'2025-09-27', comingSoon:true,  venue:'17/19 URBAN BISTROT', title:'Vinyl Marathon', genres:['TECHNO','HOUSE'], start:'22:00', curatedBy:'Riccardo Battaglia', headliner:'TBA' }
-    ];
+   const events = [
+  {
+    dateISO: '2025-09-03',
+    comingSoon: false,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Electro Techno • Vinyl Only',
+    genres: ['TECHNO', 'ELECTRO', 'VINYL'],
+    start: '22:30',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'HEADLINER',
+    guests: ['GUEST1', 'GUEST2'],
+    sponsors: [
+      { text: 'SPONSOR1' },
+      { text: 'SPONSOR2' },
+      { text: 'ADJECTIVE1' },
+      { text: 'ADJECTIVE2' },
+    ],
+  },
+  {
+    dateISO: '2025-09-05',
+    comingSoon: false,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Acid District',
+    genres: ['ACID', 'TECHNO', 'VINYL'],
+    start: '22:30',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'ALBA NERA',
+    guests: ['RBN', 'GIO BERLIN'],
+    sponsors: [
+      { text: 'CASAMIGOS' },
+    ],
+  },
+  {
+    dateISO: '2025-09-07',
+    comingSoon: false,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Minimal Sunday',
+    genres: ['MINIMAL', 'DEEP', 'VINYL'],
+    start: '18:00',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'MARCO VOSS',
+    guests: ['LIVIA FERRO'],
+    sponsors: [
+      { text: 'ORGANICS' },
+    ],
+  },
+  {
+    dateISO: '2025-09-12',
+    comingSoon: true,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Friday Deep Cuts',
+    genres: ['DEEP', 'MINIMAL', 'VINYL'],
+    start: '22:30',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'TBA',
+    guests: [],
+  },
+  {
+    dateISO: '2025-09-14',
+    comingSoon: true,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Sunday Grooves',
+    genres: ['HOUSE', 'MINIMAL'],
+    start: '18:00',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'TBA',
+  },
+  {
+    dateISO: '2025-09-20',
+    comingSoon: true,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Electro Romance',
+    genres: ['ELECTRO', 'TECHNO'],
+    start: '22:30',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'VALE C.',
+    guests: ['M.A.D.'],
+  },
+  {
+    dateISO: '2025-09-27',
+    comingSoon: true,
+    venue: '17/19 URBAN BISTROT',
+    title: 'Vinyl Marathon',
+    genres: ['TECHNO', 'HOUSE'],
+    start: '22:00',
+    curatedBy: 'Riccardo Battaglia',
+    headliner: 'TBA',
+  },
+];
 
     function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
     function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
