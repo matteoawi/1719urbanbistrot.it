@@ -14,7 +14,10 @@
 
   <style>
     /* ================= THEME TOKENS ================= */
-    :root{
+        :root{
+      --menu-blur: 14px;     /* aumenta/diminuisci la sfocatura del menu */
+      --menu-dim: 0.62;      /* intensità scurimento sfondo dietro il menu */
+
       /* Light (default) */
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
       --accent:#ff1f3d; --accent-fg:#ffffff;
@@ -97,11 +100,45 @@
     .menu-toggle span::after{position:absolute;top:6px}
 
     /* ===== Fullscreen Site Menu (overlay) ===== */
-    .sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.2s;z-index:120}
-    .sheet.active{opacity:1;pointer-events:auto}
+    body.menu-open{ overflow:hidden; } /* blocca lo scroll sotto il menu */
+    body.menu-open > :not(.sheet){
+      filter: blur(calc(var(--menu-blur) * .6)) saturate(1.06);
+      transition: filter .25s ease;
+      transform: translateZ(0); /* evita artefatti su mobile */
+    }
+
+        .sheet{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,var(--menu-dim));
+      opacity:0; pointer-events:none; z-index:120;
+      transition:opacity .25s ease;
+      backdrop-filter: blur(var(--menu-blur)) saturate(120%);
+      -webkit-backdrop-filter: blur(var(--menu-blur)) saturate(120%); /* Safari */
+    }
+
+    .sheet.active{ opacity:1; pointer-events:auto; }
     .sheet__panel{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;align-items:start}
     .sheet__close{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--chip);color:var(--chip-fg);font-size:20px;font-weight:900;display:grid;place-items:center;cursor:pointer}
-    .sheet__inner{display:grid;place-items:center;height:100%;padding:28px}
+    .sheet__inner{display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99);}
+    .sheet.active .sheet__inner{
+  opacity:1; transform: translateY(0) scale(1);
+  transition: opacity .25s ease .06s, transform .25s ease .06s;
+}
+.sheet.active .sheet__list a{
+  animation: menuStagger .28s ease both;
+}
+.sheet.active .sheet__list li:nth-child(1) a{ animation-delay:.05s }
+.sheet.active .sheet__list li:nth-child(2) a{ animation-delay:.09s }
+.sheet.active .sheet__list li:nth-child(3) a{ animation-delay:.13s }
+.sheet.active .sheet__list li:nth-child(4) a{ animation-delay:.17s }
+.sheet.active .sheet__list li:nth-child(5) a{ animation-delay:.21s }
+.sheet.active .sheet__list li:nth-child(6) a{ animation-delay:.25s }
+
+@keyframes menuStagger{
+  from{ opacity:0; transform: translateY(6px) }
+  to  { opacity:1; transform: translateY(0) }
+}
+
     .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
     .sheet__list a{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:var(--fg);font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em}
     .sheet__list a:hover{background:color-mix(in oklab, var(--chip) 92%, transparent)}
@@ -540,8 +577,18 @@
     const sheet = document.getElementById('sheet');
     const sheetClose = document.getElementById('sheetClose');
     const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
-    const openMenu = ()=>sheet.classList.add('active');
-    const closeMenu = ()=>sheet.classList.remove('active');
+    const openMenu = ()=>{
+  sheet.classList.add('active');
+  sheet.setAttribute('aria-hidden','false');
+  document.body.classList.add('menu-open');
+};
+
+    const closeMenu = ()=>{
+  sheet.classList.remove('active');
+  sheet.setAttribute('aria-hidden','true');
+  document.body.classList.remove('menu-open');
+};
+
     toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> sheet.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', closeMenu);
     // chiudi cliccando dove non ci sono scritte (fuori contenuto centrale)
