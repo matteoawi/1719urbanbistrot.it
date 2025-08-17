@@ -14,11 +14,9 @@
   <style>
     /* ================= THEME TOKENS ================= */
     :root{
-      /* controlli menu overlay */
-      --menu-blur: 18px;   /* intensità sfocatura overlay/menu */
-      --menu-dim: 0.68;    /* oscuramento sfondo dietro al menu */
+      --menu-blur: 18px;
+      --menu-dim: 0.68;
 
-      /* Light (default) */
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
       --accent:#ff1f3d; --accent-fg:#ffffff;
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
@@ -67,7 +65,6 @@
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
     .brand img{height:48px;width:auto}
     @media (min-width:768px){ .brand img{ height:56px } }
-    /* Logo swap */
     .logo-dark{display:none}
     .logo-light{display:inline}
     html[data-theme="dark"] .logo-light{display:none}
@@ -99,11 +96,11 @@
     .menu-toggle span::before{position:absolute;top:-6px}
     .menu-toggle span::after{position:absolute;top:6px}
 
-    /* ===== Fullscreen Site Menu (overlay) ===== */
+    /* ===== Fullscreen Site Menu ===== */
     .sheet{
       position:fixed; inset:0;
       background:rgba(0,0,0,var(--menu-dim));
-      opacity:0; pointer-events:none; z-index:999; /* ↑ sopra tutto */
+      opacity:0; pointer-events:none; z-index:999;
       transition:opacity .25s ease;
       backdrop-filter: blur(var(--menu-blur)) saturate(120%);
       -webkit-backdrop-filter: blur(var(--menu-blur)) saturate(120%);
@@ -118,25 +115,16 @@
       color:#fff; font-size:24px; font-weight:900; display:grid; place-items:center; cursor:pointer;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      z-index:1000; /* ↑ sopra link */
+      z-index:1000;
       touch-action:manipulation;
     }
-    .sheet__inner{
-      display:grid; place-items:center; height:100%; padding:28px;
-      opacity:.0; transform: translateY(6px) scale(.99);
-    }
+    .sheet__inner{ display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99); }
     .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
-    .sheet__list a{
-      display:block;padding:10px 14px;border-radius:14px;text-decoration:none;
-      color:#fff; font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em;
-    }
+    .sheet__list a{ display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:#fff;font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em; }
     .sheet__list a:hover{ background:rgba(255,255,255,.08); }
     .sheet__cta{display:inline-flex;margin-top:18px}
 
-    .sheet.active .sheet__inner{
-      opacity:1; transform: translateY(0) scale(1);
-      transition: opacity .25s ease .06s, transform .25s ease .06s;
-    }
+    .sheet.active .sheet__inner{ opacity:1; transform: translateY(0) scale(1); transition: opacity .25s ease .06s, transform .25s ease .06s; }
     .sheet.active .sheet__list a{ animation: menuStagger .28s ease both; }
     .sheet.active .sheet__list li:nth-child(1) a{ animation-delay:.05s }
     .sheet.active .sheet__list li:nth-child(2) a{ animation-delay:.09s }
@@ -144,18 +132,10 @@
     .sheet.active .sheet__list li:nth-child(4) a{ animation-delay:.17s }
     .sheet.active .sheet__list li:nth-child(5) a{ animation-delay:.21s }
     .sheet.active .sheet__list li:nth-child(6) a{ animation-delay:.25s }
-
-    @keyframes menuStagger{
-      from{ opacity:0; transform: translateY(6px) }
-      to  { opacity:1; transform: translateY(0) }
-    }
+    @keyframes menuStagger{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 
     body.menu-open{ overflow:hidden; }
-    body.menu-open > :not(.sheet){
-      filter: blur(calc(var(--menu-blur) * .6)) saturate(1.06);
-      transition: filter .25s ease;
-      transform: translateZ(0);
-    }
+    body.menu-open > :not(.sheet){ filter: blur(calc(var(--menu-blur) * .6)) saturate(1.06); transition: filter .25s ease; transform: translateZ(0); }
 
     /* ===== Hero ===== */
     .hero{padding:96px 0 24px}
@@ -163,7 +143,6 @@
     h1{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
     .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.18rem);margin:8px 0 14px}
 
-    /* ===== Media frame ===== */
     .hero-media{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--chip);margin-top:14px}
     @media (min-width:768px){ .hero-media{aspect-ratio:16/9;margin-top:18px} }
     .slide{position:absolute;inset:0;opacity:0;transition:opacity .35s}
@@ -178,6 +157,9 @@
     .block-title h3{font-family:'Montserrat',system-ui,sans-serif;font-size:1rem;margin:0;letter-spacing:.02em}
     .meta{color:var(--muted);font-size:.95rem}
 
+    /* ===== Colonna destra hero: stack di card ===== */
+    .hero-right{display:grid;gap:12px}
+
     /* ===== Mini time cards ===== */
     .time-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
     .time-card{
@@ -187,7 +169,6 @@
     }
     .time-card .l{display:flex;align-items:center;gap:8px}
     .time-card .i{display:grid;place-items:center;width:28px;height:28px;border-radius:10px;background:var(--chip);border:1px solid var(--line)}
-    .time-note{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
 
     /* ===== Menu (locale) — Accordion ===== */
     .badge{display:inline-block;background:var(--accent);color:var(--accent-fg);padding:6px 10px;border-radius:999px;font-size:.75rem;font-weight:900}
@@ -205,11 +186,8 @@
     .menu-item:last-child{border-bottom:0}
     .price{color:var(--accent);font-weight:800}
 
-    /* ===== Events (nuovo layout) ===== */
-    .event{
-      display:grid;gap:10px;align-items:start;
-      border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab, var(--bg) 96%, transparent)
-    }
+    /* ===== Events ===== */
+    .event{display:grid;gap:10px;align-items:start;border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab, var(--bg) 96%, transparent)}
     .event__title{font-weight:900}
     .event__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .event__date{min-width:66px;text-align:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--chip)}
@@ -273,25 +251,19 @@
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contatti</a></li>
           <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
-          <li class="only-desktop">
-            <button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button>
-          </li>
-          <li class="only-desktop">
-            <button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button>
-          </li>
+          <li class="only-desktop"><button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button></li>
+          <li class="only-desktop"><button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button></li>
         </ul>
 
         <div class="only-mobile" style="gap:8px;align-items:center">
           <button id="themeToggleM" class="toggle" aria-label="Tema: automatico"></button>
-          <button class="menu-toggle" id="menuToggle" aria-label="Apri/chiudi menu">
-            <span></span>
-          </button>
+          <button class="menu-toggle" id="menuToggle" aria-label="Apri/chiudi menu"><span></span></button>
         </div>
       </nav>
     </div>
   </header>
 
-  <!-- Fullscreen Site Menu (ID univoco per evitare conflitti) -->
+  <!-- Fullscreen Site Menu -->
   <div class="sheet" id="siteMenu" role="dialog" aria-hidden="true" aria-modal="true" aria-label="menu sito">
     <div class="sheet__panel">
       <button class="sheet__close" id="sheetClose" type="button" aria-label="Chiudi menu">×</button>
@@ -309,9 +281,10 @@
     </div>
   </div>
 
-  <!-- Hero: Poster -->
+  <!-- Hero: Poster + Orari + About card -->
   <section class="hero">
     <div class="container grid grid-2">
+      <!-- Colonna sinistra: poster -->
       <div class="reveal">
         <div class="poster-frame">
           <div class="poster-inner">
@@ -324,11 +297,7 @@
             </div>
             <div class="poster-canvas" id="posterCanvas">
               <svg class="poster-svg" id="posterSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                    <path d="M 10 0 L 0 0 0 10" stroke="currentColor" stroke-width="0.4" opacity="0.35"/>
-                  </pattern>
-                </defs>
+                <defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" stroke="currentColor" stroke-width="0.4" opacity="0.35"/></pattern></defs>
                 <rect x="0" y="0" width="100" height="100" fill="url(#grid)"></rect>
               </svg>
             </div>
@@ -344,80 +313,73 @@
         </span>
       </div>
 
-      <!-- ORARI UNIFICATI: una card + 4 mini-card su due righe -->
-      <aside class="card reveal" aria-label="Orari e Apertura">
-        <div class="block-title"><h3>Orari & Apertura</h3><span class="meta">Servizio</span></div>
-
-        <div class="time-cards">
-          <!-- Colazioni -->
-          <div class="time-card">
-            <div class="l">
-              <span class="i" aria-hidden="true">
-                <!-- coffee cup -->
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v4M10 2v4M14 2v4"/>
-                </svg>
-              </span>
-              <strong>Colazioni</strong>
+      <!-- Colonna destra: orari + about -->
+      <div class="hero-right">
+        <!-- Orari (senza “Apertura settimanale”) -->
+        <aside class="card reveal" aria-label="Orari e Servizio">
+          <div class="block-title"><h3>Orari & Apertura</h3><span class="meta">Servizio</span></div>
+          <div class="time-cards">
+            <div class="time-card">
+              <div class="l">
+                <span class="i" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v4M10 2v4M14 2v4"/>
+                  </svg>
+                </span>
+                <strong>Colazioni</strong>
+              </div>
+              <strong>08:00–12:00</strong>
             </div>
-            <strong>08:00–12:00</strong>
-          </div>
-
-          <!-- Pranzo (SVG migliorato: forchetta + coltello) -->
-          <div class="time-card">
-            <div class="l">
-              <span class="i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 3v7a2 2 0 0 0 2 2v9" />
-                  <path d="M8 3v7a2 2 0 0 1-2 2" />
-                  <path d="M12 3v18" />
-                  <path d="M15.5 3.5c2 2 2 6.5 0 8.5L12 12" />
-                </svg>
-              </span>
-              <strong>Pranzo</strong>
+            <div class="time-card">
+              <div class="l">
+                <span class="i" aria-hidden="true">
+                  <!-- forchetta/coltello -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 3v7a2 2 0 0 0 2 2v9"/><path d="M8 3v7a2 2 0 0 1-2 2"/><path d="M12 3v18"/><path d="M15.5 3.5c2 2 2 6.5 0 8.5L12 12"/>
+                  </svg>
+                </span>
+                <strong>Pranzo</strong>
+              </div>
+              <strong>12:00–15:00</strong>
             </div>
-            <strong>12:00–15:00</strong>
-          </div>
-
-          <!-- Cena (SVG migliorato: cloche) -->
-          <div class="time-card">
-            <div class="l">
-              <span class="i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 7a6 6 0 0 0-6 6h12a6 6 0 0 0-6-6Z"/>
-                  <path d="M12 5v2"/><path d="M4 19h16"/>
-                </svg>
-              </span>
-              <strong>Cena</strong>
+            <div class="time-card">
+              <div class="l">
+                <span class="i" aria-hidden="true">
+                  <!-- cloche -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 7a6 6 0 0 0-6 6h12a6 6 0 0 0-6-6Z"/><path d="M12 5v2"/><path d="M4 19h16"/>
+                  </svg>
+                </span>
+                <strong>Cena</strong>
+              </div>
+              <strong>19:00–23:30</strong>
             </div>
-            <strong>19:00–23:30</strong>
-          </div>
-
-          <!-- DJ Set -->
-          <div class="time-card">
-            <div class="l">
-              <span class="i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M14 10h.01"/><path d="M10 14h.01"/>
-                </svg>
-              </span>
-              <strong>DJ Set</strong>
+            <div class="time-card">
+              <div class="l">
+                <span class="i" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M14 10h.01"/><path d="M10 14h.01"/>
+                  </svg>
+                </span>
+                <strong>DJ Set</strong>
+              </div>
+              <strong>22:00–02:00</strong>
             </div>
-            <strong>22:00–02:00</strong>
           </div>
+        </aside>
+
+        <!-- About spostato qui (mantiene ancora #about) -->
+        <div id="about" class="card reveal">
+          <div class="block-title"><h3>Urban Bistrot</h3></div>
+          <p style="margin:0">
+            Specialty coffee, cucina contemporanea e serate <strong>vinyl only</strong>. Line-up a cura di <strong>Riccardo Battaglia</strong>.
+          </p>
         </div>
-
-        <!-- Nota apertura settimanale (unifica e fa sparire la card “per giorno”) -->
-        <div class="time-note">
-          <div class="meta">Apertura settimanale</div>
-          <div><strong>Lunedì:</strong> Chiuso</div>
-          <div class="meta">Mar–Gio 08:00–01:00 • Ven–Sab 08:00–02:00 • Dom 08:00–01:00</div>
-        </div>
-      </aside>
+      </div>
     </div>
   </section>
 
-  <!-- Live Shots -->
+  <!-- Live Shots (resta sotto la card About dell’hero) -->
   <section id="live">
     <div class="container">
       <div class="block-title" style="margin-bottom:14px"><h3>Live Shots</h3></div>
@@ -427,22 +389,7 @@
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about">
-    <div class="container grid grid-2">
-      <div class="card reveal">
-        <div class="block-title"><h3>Urban Bistrot</h3></div>
-        <p style="margin:0">
-          Specialty coffee, cucina contemporanea e serate <strong>vinyl only</strong>.
-          Line-up a cura di <strong>Riccardo Battaglia</strong>.
-        </p>
-      </div>
-
-      <!-- RIMOSSA la vecchia card “Orari di apertura” come richiesto -->
-    </div>
-  </section>
-
-  <!-- Menu (locale) - Title + Accordion (render da JS) -->
+  <!-- Menu (locale) -->
   <section id="menu">
     <div class="container">
       <div class="block-title" style="margin-bottom:6px"><h3>Il nostro menù</h3></div>
@@ -561,36 +508,22 @@
     const onS = () => { header.classList.toggle('header--solid', window.scrollY > 8); };
     window.addEventListener('scroll', onS, {passive:true}); onS();
 
-    /* ========== Fullscreen site menu (robusto) ========== */
+    /* ========== Fullscreen site menu ========== */
     const siteMenu = document.getElementById('siteMenu');
     const sheetClose = document.getElementById('sheetClose');
     const panel = siteMenu.querySelector('.sheet__panel');
     const inner = siteMenu.querySelector('.sheet__inner');
     const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
 
-    const openMenu = ()=>{
-      siteMenu.classList.add('active');
-      siteMenu.setAttribute('aria-hidden','false');
-      document.body.classList.add('menu-open');
-    };
-    const closeMenu = ()=>{
-      siteMenu.classList.remove('active');
-      siteMenu.setAttribute('aria-hidden','true');
-      document.body.classList.remove('menu-open');
-    };
+    const openMenu = ()=>{ siteMenu.classList.add('active'); siteMenu.setAttribute('aria-hidden','false'); document.body.classList.add('menu-open'); };
+    const closeMenu = ()=>{ siteMenu.classList.remove('active'); siteMenu.setAttribute('aria-hidden','true'); document.body.classList.remove('menu-open'); };
 
     toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> siteMenu.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', (e)=>{ e.stopPropagation(); closeMenu(); });
 
-    // chiudi clic nell’area libera (panel intero, NON dentro inner)
-    panel.addEventListener('click', (e)=>{
-      if(!inner.contains(e.target)) closeMenu();
-    });
-    // evita che i click dentro i contenuti chiudano il menu
+    panel.addEventListener('click', (e)=>{ if(!inner.contains(e.target)) closeMenu(); });
     inner.addEventListener('click', (e)=> e.stopPropagation());
-    // ESC
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-    // link del menu → chiudi
     siteMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
 
     /* ========== Link esterni fix ========== */
@@ -608,25 +541,14 @@
       }, true);
     })();
 
-    /* ========== Theme toggle (Auto → Light → Dark) ========== */
+    /* ========== Theme toggle ========== */
     const THEME_KEY = 'theme-1719';
     const root = document.documentElement;
     function applyTheme(mode){ root.setAttribute('data-theme', mode); localStorage.setItem(THEME_KEY, mode); paintToggleIcon(mode); }
     function paintToggleIcon(mode){
-      const svgAuto = `
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <circle cx="12" cy="12" r="5" fill="currentColor" opacity=".9"/>
-          <text x="12" y="22" text-anchor="middle" font-size="7" font-family="monospace" fill="currentColor" opacity=".9">AUTO</text>
-        </svg>`;
-      const svgSun = `
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
-        </svg>`;
-      const svgMoon = `
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>`;
+      const svgAuto = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor" opacity=".9"/><text x="12" y="22" text-anchor="middle" font-size="7" font-family="monospace" fill="currentColor" opacity=".9">AUTO</text></svg>`;
+      const svgSun = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
+      const svgMoon = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
       const icon = mode==='auto' ? svgAuto : mode==='light' ? svgSun : svgMoon;
       document.querySelectorAll('#themeToggle,#themeToggleM').forEach(btn=>btn.innerHTML = icon);
     }
@@ -684,11 +606,7 @@
       });
     }
 
-    function clearBouncers(){
-      cancelAnimationFrame(bounceRAF);
-      bouncers.forEach(b=> b.el.remove());
-      bouncers = [];
-    }
+    function clearBouncers(){ cancelAnimationFrame(bounceRAF); bouncers.forEach(b=> b.el.remove()); bouncers = []; }
 
     function initBouncers(names){
       clearBouncers();
@@ -728,7 +646,6 @@
       bounceRAF = requestAnimationFrame(tick);
     }
 
-    /* ====== Helpers date & WhatsApp ====== */
     function formatPosterDate(iso){
       const d = new Date(iso + 'T12:00:00Z');
       const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
@@ -747,9 +664,7 @@
       const start = ev.start ? ` (start ${ev.start})` : '';
       return `Ciao 17/19 Urban Bistrot, vorrei prenotare un tavolo per "${ev.title}" di ${when}${start}. Nome: ____ • Persone: ____`;
     }
-    function waUrlFromEvent(ev){
-      return `https://wa.me/393298252092?text=${encodeURIComponent(buildWaText(ev))}`;
-    }
+    function waUrlFromEvent(ev){ return `https://wa.me/393298252092?text=${encodeURIComponent(buildWaText(ev))}`; }
 
     function bindPosterFromEvent(ev){
       const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
@@ -765,69 +680,45 @@
 
     /* ========== MENU DATA (EDITA QUI) ========== */
     const menuData = [
-      {
-        badge:'BREAKFAST', title:'Colazioni',
-        items:[
-          { name:'Cornetto Artigianale', desc:"crema / marmellata / vuoto", price:'€2' },
-          { name:'Avocado Toast', desc:"uovo poché, lime", price:'€9' },
-          { name:'Pancake Stack', desc:"acero, frutti rossi", price:'€8' },
-          { name:'Yogurt Bowl', desc:"granola, miele, frutta", price:'€6' },
-        ]
-      },
-      {
-        badge:'LUNCH', title:'Pranzo',
-        items:[
-          { name:'Caesar Salad', desc:"pollo, crostini", price:'€12' },
-          { name:'Club Sandwich', desc:"tacchino, bacon", price:'€13' },
-          { name:'Pasta del Giorno', desc:"chiedi allo staff", price:'€14' },
-          { name:'Tataki di Tonno', desc:"sesamo, agrumi", price:'€16' },
-        ]
-      },
-      {
-        badge:'DINNER', title:'Cena',
-        items:[
-          { name:'Polpo Grigliato', desc:"patate, olive", price:'€18' },
-          { name:'Black Burger', desc:"cheddar, bacon", price:'€16' },
-          { name:'Risotto Techno', desc:"nero di seppia", price:'€17' },
-          { name:'Tagliata di Manzo', desc:"rucola, scaglie", price:'€20' },
-        ]
-      },
-      {
-        badge:'DRINKS', title:'Drinks',
-        groups:[
-          {
-            title:'Cocktail Signature',
-            items:[
-              { name:'Neon Spritz', desc:"bitter, agrumi, metodo classico", price:'€10' },
-              { name:'Vinyl Sour', desc:"whisky, albume, limone", price:'€11' },
-              { name:'Acid Groove', desc:"gin, lime, basilico", price:'€10' },
-              { name:'Electro Mule', desc:"vodka, ginger beer, lime", price:'€9' },
-            ]
-          },
-          {
-            title:'Vini al Calice',
-            items:[
-              { name:'Frascati Superiore DOC', desc:"bianco", price:'€6' },
-              { name:'Cesanese del Piglio DOCG', desc:"rosso", price:'€7' },
-              { name:'Rosé Lazio', desc:"rosato", price:'€6' },
-            ]
-          },
-          {
-            title:'Birre',
-            items:[
-              { name:'Lager alla Spina', desc:"0.4L", price:'€6' },
-              { name:'IPA Artigianale', desc:"bottiglia", price:'€7' },
-            ]
-          },
-          {
-            title:'Analcolici',
-            items:[
-              { name:'Virgin Mojito', desc:"lime, menta, soda", price:'€7' },
-              { name:'Club Mate', desc:"bottiglia", price:'€4' },
-            ]
-          }
-        ]
-      }
+      { badge:'BREAKFAST', title:'Colazioni', items:[
+        { name:'Cornetto Artigianale', desc:"crema / marmellata / vuoto", price:'€2' },
+        { name:'Avocado Toast', desc:"uovo poché, lime", price:'€9' },
+        { name:'Pancake Stack', desc:"acero, frutti rossi", price:'€8' },
+        { name:'Yogurt Bowl', desc:"granola, miele, frutta", price:'€6' },
+      ]},
+      { badge:'LUNCH', title:'Pranzo', items:[
+        { name:'Caesar Salad', desc:"pollo, crostini", price:'€12' },
+        { name:'Club Sandwich', desc:"tacchino, bacon", price:'€13' },
+        { name:'Pasta del Giorno', desc:"chiedi allo staff", price:'€14' },
+        { name:'Tataki di Tonno', desc:"sesamo, agrumi", price:'€16' },
+      ]},
+      { badge:'DINNER', title:'Cena', items:[
+        { name:'Polpo Grigliato', desc:"patate, olive", price:'€18' },
+        { name:'Black Burger', desc:"cheddar, bacon", price:'€16' },
+        { name:'Risotto Techno', desc:"nero di seppia", price:'€17' },
+        { name:'Tagliata di Manzo', desc:"rucola, scaglie", price:'€20' },
+      ]},
+      { badge:'DRINKS', title:'Drinks', groups:[
+        { title:'Cocktail Signature', items:[
+          { name:'Neon Spritz', desc:"bitter, agrumi, metodo classico", price:'€10' },
+          { name:'Vinyl Sour', desc:"whisky, albume, limone", price:'€11' },
+          { name:'Acid Groove', desc:"gin, lime, basilico", price:'€10' },
+          { name:'Electro Mule', desc:"vodka, ginger beer, lime", price:'€9' },
+        ]},
+        { title:'Vini al Calice', items:[
+          { name:'Frascati Superiore DOC', desc:"bianco", price:'€6' },
+          { name:'Cesanese del Piglio DOCG', desc:"rosso", price:'€7' },
+          { name:'Rosé Lazio', desc:"rosato", price:'€6' },
+        ]},
+        { title:'Birre', items:[
+          { name:'Lager alla Spina', desc:"0.4L", price:'€6' },
+          { name:'IPA Artigianale', desc:"bottiglia", price:'€7' },
+        ]},
+        { title:'Analcolici', items:[
+          { name:'Virgin Mojito', desc:"lime, menta, soda", price:'€7' },
+          { name:'Club Mate', desc:"bottiglia", price:'€4' },
+        ]}
+      ]}
     ];
 
     function renderMenu(){
@@ -838,11 +729,7 @@
         details.className = 'menu-acc reveal';
         const sum = document.createElement('summary');
         sum.className = 'menu-sum';
-        sum.innerHTML = `
-          <span class="badge">${cat.badge}</span>
-          <h3>${cat.title}</h3>
-          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        `;
+        sum.innerHTML = `<span class="badge">${cat.badge}</span><h3>${cat.title}</h3><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
         details.appendChild(sum);
 
         const body = document.createElement('div');
@@ -870,87 +757,21 @@
             });
           });
         }
-
         details.appendChild(body);
         wrap.appendChild(details);
       });
-      // re-bind reveal animation on new nodes
       document.querySelectorAll('.reveal:not(.active)').forEach(el=>io.observe(el));
     }
 
     /* ========== EVENTI ========== */
     const events = [
-      {
-        dateISO:'2025-09-03', comingSoon:false,
-        venue:'17/19 URBAN BISTROT',
-        title:'Electro Techno • Vinyl Only',
-        genres:['TECHNO','ELECTRO','VINYL'],
-        start:'22:30',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'DANIELE PAVONI',
-        guests:['MIN-ED','LORENZO PALAZZI'],
-        sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}]
-      },
-      {
-        dateISO:'2025-09-05', comingSoon:false,
-        venue:'17/19 URBAN BISTROT',
-        title:'Acid District',
-        genres:['ACID','TECHNO','VINYL'],
-        start:'22:30',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'ALBA NERA',
-        guests:['RBN','GIO BERLIN'],
-        sponsors:[{text:'CASAMIGOS'}]
-      },
-      {
-        dateISO:'2025-09-07', comingSoon:false,
-        venue:'17/19 URBAN BISTROT',
-        title:'Minimal Sunday',
-        genres:['MINIMAL','DEEP','VINYL'],
-        start:'18:00',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'MARCO VOSS',
-        guests:['LIVIA FERRO'],
-        sponsors:[{text:'ORGANICS'}]
-      },
-      {
-        dateISO:'2025-09-12', comingSoon:true,
-        venue:'17/19 URBAN BISTROT',
-        title:'Friday Deep Cuts',
-        genres:['DEEP','MINIMAL','VINYL'],
-        start:'22:30',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'TBA',
-        guests:[]
-      },
-      {
-        dateISO:'2025-09-14', comingSoon:true,
-        venue:'17/19 URBAN BISTROT',
-        title:'Sunday Grooves',
-        genres:['HOUSE','MINIMAL'],
-        start:'18:00',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'TBA'
-      },
-      {
-        dateISO:'2025-09-20', comingSoon:false,
-        venue:'17/19 URBAN BISTROT',
-        title:'Electro Romance',
-        genres:['ELECTRO','TECHNO'],
-        start:'22:30',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'VALE C.',
-        guests:['M.A.D.']
-      },
-      {
-        dateISO:'2025-09-27', comingSoon:true,
-        venue:'17/19 URBAN BISTROT',
-        title:'Vinyl Marathon',
-        genres:['TECHNO','HOUSE'],
-        start:'22:00',
-        curatedBy:'Riccardo Battaglia',
-        headliner:'TBA'
-      }
+      { dateISO:'2025-09-03', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Electro Techno • Vinyl Only', genres:['TECHNO','ELECTRO','VINYL'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'DANIELE PAVONI', guests:['MIN-ED','LORENZO PALAZZI'], sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}] },
+      { dateISO:'2025-09-05', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Acid District', genres:['ACID','TECHNO','VINYL'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'ALBA NERA', guests:['RBN','GIO BERLIN'], sponsors:[{text:'CASAMIGOS'}] },
+      { dateISO:'2025-09-07', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Minimal Sunday', genres:['MINIMAL','DEEP','VINYL'], start:'18:00', curatedBy:'Riccardo Battaglia', headliner:'MARCO VOSS', guests:['LIVIA FERRO'], sponsors:[{text:'ORGANICS'}] },
+      { dateISO:'2025-09-12', comingSoon:true,  venue:'17/19 URBAN BISTROT', title:'Friday Deep Cuts', genres:['DEEP','MINIMAL','VINYL'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'TBA', guests:[] },
+      { dateISO:'2025-09-14', comingSoon:true,  venue:'17/19 URBAN BISTROT', title:'Sunday Grooves', genres:['HOUSE','MINIMAL'], start:'18:00', curatedBy:'Riccardo Battaglia', headliner:'TBA' },
+      { dateISO:'2025-09-20', comingSoon:false, venue:'17/19 URBAN BISTROT', title:'Electro Romance', genres:['ELECTRO','TECHNO'], start:'22:30', curatedBy:'Riccardo Battaglia', headliner:'VALE C.', guests:['M.A.D.'] },
+      { dateISO:'2025-09-27', comingSoon:true,  venue:'17/19 URBAN BISTROT', title:'Vinyl Marathon', genres:['TECHNO','HOUSE'], start:'22:00', curatedBy:'Riccardo Battaglia', headliner:'TBA' }
     ];
 
     function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
@@ -977,13 +798,11 @@
 
         const el = document.createElement('div'); el.className='event';
 
-        // titolo serata in alto
         const title = document.createElement('div');
         title.className = 'event__title';
         title.innerHTML = `<strong>${ev.title}</strong>`;
         el.appendChild(title);
 
-        // riga con calendario + pulsante prenota
         const top = document.createElement('div');
         top.className = 'event__top';
 
@@ -1007,18 +826,13 @@
         top.appendChild(cta);
         el.appendChild(top);
 
-        // sotto: tutti i testi in orizzontale
         const info = document.createElement('div');
         info.className = 'event__info';
         if(ev.comingSoon){
           info.innerHTML = `<span>COMING SOON</span>`;
         }else{
           const guests = ev.guests && ev.guests.length ? `Guests: ${ev.guests.join(', ')}` : null;
-          const parts = [
-            ev.start ? `Start ${ev.start}` : null,
-            ...(ev.genres||[]),
-            guests
-          ].filter(Boolean);
+          const parts = [ ev.start ? `Start ${ev.start}` : null, ...(ev.genres||[]), guests ].filter(Boolean);
           info.innerHTML = parts.map(t=>`<span>${t}</span>`).join('');
         }
         el.appendChild(info);
