@@ -9,14 +9,14 @@
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <!-- Font: classico + geometrico -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
 
   <style>
     /* ================= THEME TOKENS ================= */
-        :root{
-      --menu-blur: 14px;     /* aumenta/diminuisci la sfocatura del menu */
-      --menu-dim: 0.62;      /* intensità scurimento sfondo dietro il menu */
+    :root{
+      /* controlli menu overlay */
+      --menu-blur: 18px;   /* intensità sfocatura overlay/menu */
+      --menu-dim: 0.68;    /* oscuramento sfondo dietro al menu */
 
       /* Light (default) */
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
@@ -100,49 +100,61 @@
     .menu-toggle span::after{position:absolute;top:6px}
 
     /* ===== Fullscreen Site Menu (overlay) ===== */
-    body.menu-open{ overflow:hidden; } /* blocca lo scroll sotto il menu */
-    body.menu-open > :not(.sheet){
-      filter: blur(calc(var(--menu-blur) * .6)) saturate(1.06);
-      transition: filter .25s ease;
-      transform: translateZ(0); /* evita artefatti su mobile */
-    }
-
-        .sheet{
+    .sheet{
       position:fixed; inset:0;
       background:rgba(0,0,0,var(--menu-dim));
       opacity:0; pointer-events:none; z-index:120;
       transition:opacity .25s ease;
       backdrop-filter: blur(var(--menu-blur)) saturate(120%);
-      -webkit-backdrop-filter: blur(var(--menu-blur)) saturate(120%); /* Safari */
+      -webkit-backdrop-filter: blur(var(--menu-blur)) saturate(120%);
+      color:#fff; /* testo bianco sopra sfondo nero */
+    }
+    .sheet.active{ opacity:1; pointer-events:auto; }
+    .sheet__panel{ position:absolute; inset:0; display:grid; grid-template-rows:auto 1fr; align-items:start; }
+    .sheet__close{
+      position:absolute; top:14px; right:14px; width:42px; height:42px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08);
+      color:#fff; font-size:20px; font-weight:900; display:grid; place-items:center; cursor:pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .sheet__inner{
+      display:grid; place-items:center; height:100%; padding:28px;
+      opacity:.0; transform: translateY(6px) scale(.99);
+    }
+    .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
+    .sheet__list a{
+      display:block;padding:10px 14px;border-radius:14px;text-decoration:none;
+      color:#fff; font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em;
+    }
+    .sheet__list a:hover{ background:rgba(255,255,255,.08); }
+    .sheet__cta{display:inline-flex;margin-top:18px}
+
+    .sheet.active .sheet__inner{
+      opacity:1; transform: translateY(0) scale(1);
+      transition: opacity .25s ease .06s, transform .25s ease .06s;
+    }
+    .sheet.active .sheet__list a{ animation: menuStagger .28s ease both; }
+    .sheet.active .sheet__list li:nth-child(1) a{ animation-delay:.05s }
+    .sheet.active .sheet__list li:nth-child(2) a{ animation-delay:.09s }
+    .sheet.active .sheet__list li:nth-child(3) a{ animation-delay:.13s }
+    .sheet.active .sheet__list li:nth-child(4) a{ animation-delay:.17s }
+    .sheet.active .sheet__list li:nth-child(5) a{ animation-delay:.21s }
+    .sheet.active .sheet__list li:nth-child(6) a{ animation-delay:.25s }
+
+    @keyframes menuStagger{
+      from{ opacity:0; transform: translateY(6px) }
+      to  { opacity:1; transform: translateY(0) }
     }
 
-    .sheet.active{ opacity:1; pointer-events:auto; }
-    .sheet__panel{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;align-items:start}
-    .sheet__close{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--chip);color:var(--chip-fg);font-size:20px;font-weight:900;display:grid;place-items:center;cursor:pointer}
-    .sheet__inner{display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99);}
-    .sheet.active .sheet__inner{
-  opacity:1; transform: translateY(0) scale(1);
-  transition: opacity .25s ease .06s, transform .25s ease .06s;
-}
-.sheet.active .sheet__list a{
-  animation: menuStagger .28s ease both;
-}
-.sheet.active .sheet__list li:nth-child(1) a{ animation-delay:.05s }
-.sheet.active .sheet__list li:nth-child(2) a{ animation-delay:.09s }
-.sheet.active .sheet__list li:nth-child(3) a{ animation-delay:.13s }
-.sheet.active .sheet__list li:nth-child(4) a{ animation-delay:.17s }
-.sheet.active .sheet__list li:nth-child(5) a{ animation-delay:.21s }
-.sheet.active .sheet__list li:nth-child(6) a{ animation-delay:.25s }
-
-@keyframes menuStagger{
-  from{ opacity:0; transform: translateY(6px) }
-  to  { opacity:1; transform: translateY(0) }
-}
-
-    .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
-    .sheet__list a{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:var(--fg);font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em}
-    .sheet__list a:hover{background:color-mix(in oklab, var(--chip) 92%, transparent)}
-    .sheet__cta{display:inline-flex;margin-top:18px}
+    /* sfoca e blocca il resto quando il menu è aperto */
+    body.menu-open{ overflow:hidden; }
+    body.menu-open > :not(.sheet){
+      filter: blur(calc(var(--menu-blur) * .6)) saturate(1.06);
+      transition: filter .25s ease;
+      transform: translateZ(0);
+    }
 
     /* ===== Hero ===== */
     .hero{padding:52px 0 20px}
@@ -228,7 +240,6 @@
     .poster-head .curated{color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(.78rem,2vw,.9rem)}
     .poster-canvas{position:relative;margin-top:clamp(16px,3.2vw,26px);height:clamp(320px,56vw,480px);background:color-mix(in oklab, var(--chip) 94%, transparent);border:1px solid var(--line);border-radius:14px;overflow:hidden}
     .poster-svg{position:absolute;inset:0;color:var(--fg);z-index:0;opacity:.08}
-    /* Bouncers (nomi che rimbalzano) */
     .bouncer{position:absolute;display:inline-block;padding:.16em .4em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;user-select:none;will-change:transform;box-shadow:0 0 0 1px var(--line) inset}
     .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:8px;vertical-align:middle}
     .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:10px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center}
@@ -255,7 +266,6 @@
           <li class="only-desktop">
             <button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button>
           </li>
-          <!-- Apre overlay full-screen anche da desktop -->
           <li class="only-desktop">
             <button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button>
           </li>
@@ -272,7 +282,7 @@
   </header>
 
   <!-- Fullscreen Site Menu -->
-  <div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet" id="sheet" role="dialog" aria-hidden="true" aria-modal="true" aria-label="menu sito">
     <div class="sheet__panel">
       <button class="sheet__close" id="sheetClose" aria-label="Chiudi menu">×</button>
       <div class="sheet__inner">
@@ -303,7 +313,6 @@
               <div class="curated" id="posterCurated"></div>
             </div>
             <div class="poster-canvas" id="posterCanvas">
-              <!-- tenue griglia di sfondo opzionale -->
               <svg class="poster-svg" id="posterSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
                   <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -312,7 +321,6 @@
                 </defs>
                 <rect x="0" y="0" width="100" height="100" fill="url(#grid)"></rect>
               </svg>
-              <!-- nomi che rimbalzano saranno iniettati qui -->
             </div>
             <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
           </div>
@@ -384,7 +392,7 @@
     </div>
   </section>
 
-  <!-- Live Shots (unico carosello immagini) -->
+  <!-- Live Shots -->
   <section id="live">
     <div class="container">
       <div class="block-title" style="margin-bottom:14px"><h3>Live Shots</h3></div>
@@ -504,7 +512,6 @@
       <div class="events-more">
         <button id="eventsMoreBtn" class="pill pill--ghost" type="button">Mostra altri</button>
       </div>
-      <!-- AGGIORNA SOLO l'array 'events' nello script. Il poster si sincronizza con il PROSSIMO evento -->
     </div>
   </section>
 
@@ -577,28 +584,31 @@
     const sheet = document.getElementById('sheet');
     const sheetClose = document.getElementById('sheetClose');
     const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
-    const openMenu = ()=>{
-  sheet.classList.add('active');
-  sheet.setAttribute('aria-hidden','false');
-  document.body.classList.add('menu-open');
-};
 
+    const openMenu = ()=>{
+      sheet.classList.add('active');
+      sheet.setAttribute('aria-hidden','false');
+      document.body.classList.add('menu-open');
+    };
     const closeMenu = ()=>{
-  sheet.classList.remove('active');
-  sheet.setAttribute('aria-hidden','true');
-  document.body.classList.remove('menu-open');
-};
+      sheet.classList.remove('active');
+      sheet.setAttribute('aria-hidden','true');
+      document.body.classList.remove('menu-open');
+    };
 
     toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> sheet.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', closeMenu);
-    // chiudi cliccando dove non ci sono scritte (fuori contenuto centrale)
+
+    // chiudi cliccando nell'area libera (fuori dal contenuto centrale)
     sheet.addEventListener('click', (e)=>{
-      const inner = e.target.closest('.sheet__inner'); const isClose = e.target.closest('#sheetClose');
-      if(!inner && !isClose) closeMenu();
+      const clickedInside = e.target.closest('.sheet__inner') || e.target.closest('#sheetClose');
+      if(!clickedInside) closeMenu();
     });
+
     // chiudi con ESC
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-    // Chiudi overlay quando clicchi un link del menu
+
+    // chiudi quando clicchi un link del menu
     sheet.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
 
     /* ========== Link esterni fix ========== */
@@ -706,15 +716,12 @@
         el.className = 'bouncer';
         el.innerHTML = `<span class="dot"></span>${name}`;
         posterCanvas.appendChild(el);
-        // misura
         el.style.transform = 'translate(0,0)';
         const w = el.offsetWidth || 80;
         const h = el.offsetHeight || 28;
-        // pos iniziale random senza uscire
         const x = Math.random() * Math.max(1, rect.width - w);
         const y = Math.random() * Math.max(1, rect.height - h);
-        // velocità pseudo-random (px/s)
-        const speed = 80 + (idx*12) + Math.random()*40; // 80–140
+        const speed = 80 + (idx*12) + Math.random()*40;
         const angle = Math.random() * Math.PI * 2;
         const vx = Math.cos(angle) * speed;
         const vy = Math.sin(angle) * speed;
@@ -727,7 +734,6 @@
         bouncers.forEach(b=>{
           let nx = b.x + b.vx * dt;
           let ny = b.y + b.vy * dt;
-          // rimbalzo ai bordi
           if(nx <= 0){ nx = 0; b.vx *= -1; }
           if(ny <= 0){ ny = 0; b.vy *= -1; }
           if(nx + b.w >= W){ nx = W - b.w; b.vx *= -1; }
@@ -751,13 +757,13 @@
     function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
     function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
     function formatLongIt(iso){
-      const d = new Date(iso + 'T12:00:00'); // locale (Roma)
+      const d = new Date(iso + 'T12:00:00');
       return d.toLocaleDateString('it-IT', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
     }
     function buildWaText(ev){
       const when = formatLongIt(ev.dateISO);
       const start = ev.start ? ` (start ${ev.start})` : '';
-      return `Ciao 17/19 Urban Bistrot, vorrei entrare in lista per "${ev.title}" di ${when}${start}. Nome: ____ • Persone: ____`;
+      return `Ciao 17/19 Urban Bistrot, vorrei prenotare un tavolo per "${ev.title}" di ${when}${start}. Nome: ____ • Persone: ____`;
     }
     function waUrlFromEvent(ev){
       return `https://wa.me/393298252092?text=${encodeURIComponent(buildWaText(ev))}`;
@@ -776,7 +782,6 @@
     }
 
     /* ========== DATI EVENTI (FINO A 7) ========== */
-    // comingSoon: true  --> mostra "COMING SOON" e disabilita CTA
     const events = [
       {
         dateISO:'2025-09-03', comingSoon:false,
@@ -785,9 +790,9 @@
         genres:['TECHNO','ELECTRO','VINYL'],
         start:'22:30',
         curatedBy:'Riccardo Battaglia',
-        headliner:'HEADLINER',
-        guests:['GUEST-1','GUEST-2'],
-        sponsors:[{text:'ELETTRONICA'},{text:'VINILE'},{text:'SOUND'},{text:'COCKTAIL'}]
+        headliner:'DANIELE PAVONI',
+        guests:['MIN-ED','LORENZO PALAZZI'],
+        sponsors:[{text:'CASAMIGOS'},{text:'FUNKTION-ONE'},{text:'TMAG'},{text:'ORGANICS'}]
       },
       {
         dateISO:'2025-09-05', comingSoon:false,
@@ -858,8 +863,11 @@
       return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
     }
 
-    // Render lista eventi (3 visibili, poi espandi fino a 7) con messaggio WhatsApp automatico
+    // Render eventi (3 visibili, poi espandi fino a 7) – bottone "Prenota"
     let eventsExpanded = false;
+    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
+    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
+
     function renderEvents(){
       const list = document.getElementById('eventsList'); if(!list) return;
       list.innerHTML='';
@@ -895,12 +903,11 @@
               <strong>${ev.title}</strong>
               <div class="event__meta">Start ${ev.start} • ${ev.genres.join(' / ')}${guests}</div>
             </div>
-            <a class="pill pill--ghost event__cta" href="${wa}" target="_blank" rel="noopener">Entra in lista</a>
+            <a class="pill pill--ghost event__cta" href="${wa}" target="_blank" rel="noopener">Prenota</a>
           `;
         }
         list.appendChild(el);
       });
-      // bottone mostra altri / meno
       const btn = document.getElementById('eventsMoreBtn');
       if(sorted.length <= 3){ btn.style.display = 'none'; }
       else { btn.style.display = 'inline-flex'; btn.textContent = eventsExpanded ? 'Mostra meno' : 'Mostra altri'; }
