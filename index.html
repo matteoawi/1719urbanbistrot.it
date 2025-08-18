@@ -159,6 +159,19 @@
       from{ box-shadow: 0 0 0 1px rgba(255,31,61,.26) inset, 0 4px 14px rgba(255,31,61,.18) }
       to  { box-shadow: 0 0 0 1px rgba(255,31,61,.36) inset, 0 8px 22px rgba(255,31,61,.24) }
     }
+          /* Micro-animazione quando si fa upvote su una card */
+      @keyframes cardPopShake{
+        0%   { transform: scale(1) translateX(0) rotate(0); }
+        12%  { transform: scale(1.03) translateX(-1.5px) rotate(-0.3deg); }
+        24%  { transform: scale(1.03) translateX(1.5px)  rotate(0.3deg); }
+        36%  { transform: scale(1.02) translateX(-1px)   rotate(-0.2deg); }
+        48%  { transform: scale(1.02) translateX(1px)    rotate(0.2deg); }
+        60%  { transform: scale(1.01) translateX(0.5px)  rotate(0); }
+        100% { transform: scale(1) translateX(0) rotate(0); }
+      }
+      .event{ will-change: transform; }
+      .event--burst{ animation: cardPopShake .6s cubic-bezier(.2,.8,.2,1); }
+
     .vote-badge{position:absolute; top:8px; right:8px; font-weight:900; background:color-mix(in oklab, var(--bg) 92%, transparent); border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:.9rem; display:inline-flex; align-items:center; gap:6px}
     .icon{width:16px; height:16px; display:inline-block; vertical-align:middle}
     .share-pop{ position:absolute; z-index:50; background:color-mix(in oklab, var(--bg) 96%, transparent); border:1px solid var(--line); border-radius:10px; padding:8px; display:none; gap:6px; }
@@ -240,6 +253,7 @@
       opacity:0;
       pointer-events:none;
       transition:opacity .18s ease, transform .18s ease;
+      flex-direction: column;
     }
     .toast.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0) }
     .toast .meta{ opacity:.95 }
@@ -306,17 +320,18 @@
     </div>
   </div>
 
-  <!-- Toast Interazioni ridisegnata (persistente, stile card) -->
   <div id="tipsToast" class="toast" role="region" aria-live="polite" aria-label="Interazioni">
-    <div style="display:flex;align-items:center;gap:8px">
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-      <strong>Interazioni</strong>
-    </div>
-    <div class="meta">
-      Doppio tap su un <span class="k">nome</span> nel poster per mandargli un 🚀 • Doppio tap su una <span class="k">card evento</span> per l’upvote 🔥
-    </div>
-    <button class="x" aria-label="Chiudi">Chiudi</button>
+  <div style="display:flex;align-items:center;gap:8px">
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
+    <strong>Interazioni</strong>
   </div>
+  <div class="meta">
+    Dove vedi una freccia puoi fare un <strong>doppio tap</strong> e interagire con l’evento.<br/>
+    Tante interazioni = tanto supporto!
+  </div>
+  <button class="x" aria-label="Chiudi">Chiudi</button>
+</div>
+
 
   <!-- Hero: Poster + Orari + About card -->
   <section class="hero">
@@ -643,18 +658,26 @@
     document.getElementById('themeToggleM')?.addEventListener('click', cycleTheme);
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
-    // Toast: persistente, stile card, toggle con i bottoni; niente auto-hide
-    const toast = document.getElementById('tipsToast');
-    function toggleToast(){
-      if(toast.classList.contains('show')){
-        toast.classList.remove('show');
-      } else {
+  // Toast: stile card, con auto-hide a 10s (riarmato a ogni apertura)
+      const toast = document.getElementById('tipsToast');
+      let toastTimer = null;
+      function openToast(){
         toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(()=> toast.classList.remove('show'), 10000);
       }
-    }
-    document.getElementById('tipsBtn')?.addEventListener('click', toggleToast);
-    document.getElementById('tipsBtnM')?.addEventListener('click', toggleToast);
-    toast.querySelector('.x').addEventListener('click', ()=> toast.classList.remove('show'));
+      function closeToast(){
+        toast.classList.remove('show');
+        clearTimeout(toastTimer);
+      }
+      function toggleToast(){
+        if(toast.classList.contains('show')) closeToast();
+        else openToast();
+      }
+      document.getElementById('tipsBtn')?.addEventListener('click', toggleToast);
+      document.getElementById('tipsBtnM')?.addEventListener('click', toggleToast);
+      toast.querySelector('.x').addEventListener('click', closeToast);
+
 
     /* ================= Live Shots ================= */
     const liveImages = [
@@ -1281,14 +1304,20 @@
         actions.appendChild(shareBtn);
         el.appendChild(actions);
 
-        // Double-tap sulla card (toggle flame)
+
+        // Double-tap sulla card (toggle flame) + animazione satisfying
         makeDoubleTap(el, ()=>{
           const my = Store.toggleFlame({eid, ctx:{eid, title:ev.title, dateISO:ev.dateISO}});
           el.classList.toggle('event--voted', !!my);
           vb.querySelector('.n').textContent = Store.getFlameCount(eid); // numero aggregato
-          el.style.transform='scale(1.02)'; setTimeout(()=>el.style.transform='', 120);
+          if(my){                    // anima solo quando il voto è attivato
+            el.classList.remove('event--burst');
+            void el.offsetWidth;     // reflow per riarmare l’animazione
+            el.classList.add('event--burst');
+          }
           renderTotals();
         });
+
 
         list.appendChild(el);
       });
