@@ -1201,13 +1201,11 @@
     /* ========== EVENTI ========== */
     // booking per evento: 'open' | 'closed' | 'soon'
     const events = [
-      { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'Electro Techno • Vinyl Only', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'HEADLINER', guests: ['GUEST1', 'GUEST2'], sponsors: [{text:'CASAMIGOS'},{text:'ORGANICS'}] },
-      { dateISO: '2025-09-05', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'Acid District', genres: ['ACID', 'TECHNO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'ALBA NERA', guests: ['RBN', 'GIO BERLIN'], sponsors: [{text:'CASAMIGOS'}] },
-      { dateISO: '2025-09-07', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'Minimal Sunday', genres: ['MINIMAL', 'DEEP', 'VINYL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'MARCO VOSS', guests: ['LIVIA FERRO'] , sponsors:[{text:'ORGANICS'}]},
-      { dateISO: '2025-09-12', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Friday Deep Cuts', genres: ['DEEP', 'MINIMAL', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', guests: [], sponsors:[] },
-      { dateISO: '2025-09-14', booking:'closed',venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',   genres: ['HOUSE', 'MINIMAL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', sponsors:[] },
-      { dateISO: '2025-09-20', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'Electro Romance',  genres: ['ELECTRO', 'TECHNO'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'VALE C.', guests: ['M.A.D.'], sponsors:[] },
-      { dateISO: '2025-09-27', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Vinyl Marathon',   genres: ['TECHNO', 'HOUSE'], start: '22:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', sponsors:[] }
+      { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [], sponsors: [{text:'All night long'}] },
+      { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Acid District', genres: ['ACID', 'TECHNO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'ALBA NERA', guests: ['RBN', 'GIO BERLIN'], sponsors: [{text:'CASAMIGOS'}] },
+      { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Minimal Sunday', genres: ['MINIMAL', 'DEEP', 'VINYL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'MARCO VOSS', guests: ['LIVIA FERRO'] , sponsors:[{text:'ORGANICS'}]},
+      { dateISO: '2025-09-06',  booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'New Season', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [], sponsors: [{text:'All night long'}] },
+      { dateISO: '2025-09-07', booking:'soon',venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',   genres: ['HOUSE', 'MINIMAL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', sponsors:[] },
     ];
 
     function pickNextEvent(){
