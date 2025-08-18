@@ -441,22 +441,9 @@
 
   <!-- MUSICA -->
   <section id="music">
-    <div class="container grid grid-2">
       <div class="card reveal">
-        <div class="block-title"><h3>Musica • Vinyl Only</h3></div>
-        <p style="margin-top:6px">Vibe tra <strong>Roma</strong> e <strong>Berlino</strong>: groove ipnotici, minimal, acid ed electro. <strong>Solo vinile</strong>.</p>
-        <ul style="margin:12px 0 0 18px;line-height:1.7">
-          <li>Estetica raw, attitudine club</li>
-          <li>Electro / techno / house essenziale</li>
-          <li>Set estesi, warm-up &amp; closing</li>
-        </ul>
-        <p class="meta" style="margin-top:10px">Manifesto: profondità, dinamica, eleganza.</p>
-      </div>
-
-      <div class="card reveal">
-        <div class="block-title"><h3>Resident &amp; Guests</h3></div>
-        <p><strong>Resident</strong>: Riccardo Battaglia</p>
-        <p><strong>Guests</strong>: selezione romano-berlinese, special set a sorpresa.</p>
+        <div class="block-title"><h3>Resident</h3></div>
+        <p> Riccardo Battaglia</p>
         <div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px">
           <div class="block-title" style="margin:0"><h3>Impianto</h3><span class="meta">setup</span></div>
           <ul style="margin:8px 0 0 18px;line-height:1.7">
@@ -466,7 +453,7 @@
           </ul>
         </div>
         <p style="margin-top:12px">
-          <a class="pill pill--ghost" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20proporre%20un%20DJ%20set" target="_blank" rel="noopener">Booking / Proposte</a>
+          <a class="pill pill--ghost" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20proporre%20una%20collaborazione" target="_blank" rel="noopener">Booking / Proposte</a>
         </p>
       </div>
     </div>
@@ -1200,13 +1187,18 @@
 
     /* ========== EVENTI ========== */
     // booking per evento: 'open' | 'closed' | 'soon'
-    const events = [
-      { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [], sponsors: [{text:'All night long'}] },
-      { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Acid District', genres: ['ACID', 'TECHNO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'ALBA NERA', guests: ['RBN', 'GIO BERLIN'], sponsors: [{text:'CASAMIGOS'}] },
-      { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Minimal Sunday', genres: ['MINIMAL', 'DEEP', 'VINYL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'MARCO VOSS', guests: ['LIVIA FERRO'] , sponsors:[{text:'ORGANICS'}]},
-      { dateISO: '2025-09-06',  booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'New Season', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [], sponsors: [{text:'All night long'}] },
-      { dateISO: '2025-09-07', booking:'soon',venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',   genres: ['HOUSE', 'MINIMAL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', sponsors:[] },
-    ];
+const events = [
+  { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season',       genres: ['TECHNO','ELECTRO','VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [],           sponsors: [{text:''}] },
+
+  { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+
+  { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+
+  { dateISO: '2025-09-06', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+
+  { dateISO: '2025-09-07', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',    genres: ['HOUSE','MINIMAL'],          start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA',                 guests: [],         sponsors: [] },
+];
+
 
     function pickNextEvent(){
       const today = new Date(); today.setHours(0,0,0,0);
