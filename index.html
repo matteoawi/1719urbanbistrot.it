@@ -246,8 +246,25 @@
       user-select:none; -webkit-user-select:none; touch-action:manipulation;
     }
     .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:2px;vertical-align:middle}
-    .bouncer .rc{display:inline-flex; align-items:center; gap:6px; padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent); font-weight:900}
-    .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:10px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center; user-select:none; -webkit-user-select:none}
+.bouncer .rc{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line);
+  background:color-mix(in oklab, var(--bg) 96%, transparent);
+  font-weight:900;
+  margin-left:auto;                /* spinge il contatore a destra */
+  white-space:nowrap;              /* evita ritorni a capo strani   */
+}
+.bouncer .lbl{ min-width:0; overflow:hidden; text-overflow:ellipsis; }
+
+    /* i loghi stanno sotto al canvas, non sopra */
+.poster-logos{
+  position:relative;               /* ← non più absolute */
+  padding:10px 0;
+  border-top:none;                 /* ← niente bordo superiore */
+  display:flex; gap:12px; justify-content:center; align-items:center;
+  flex-wrap:wrap; row-gap:6px;
+}
+
 
     /* === Rocket trail + shake === */
     .poster-canvas canvas.trail{ position:absolute; inset:0; pointer-events:none; z-index:1 }
@@ -297,6 +314,11 @@
     @media (min-width:768px){ .counters{ grid-template-columns:1fr 1fr } }
     .counter-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; font-weight:900 }
     .counter-row .big{ font-size:1.4rem; display:flex; align-items:center; gap:8px }
+    /* disabilita selezione sui nomi del poster e sui loghi */
+.bouncer, .bouncer *, .poster-logos, .poster-logos *{
+  user-select:none; -webkit-user-select:none;
+}
+
   </style>
 </head>
 <body>
@@ -599,10 +621,14 @@
     const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
     const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
     const slug = s=>String(s||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-    const SVG = {
-      rocket: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c3.5 2.4 6 7 6 10a6 6 0 1 1-12 0c0-3 2.5-7.6 6-10Z" fill="currentColor"/><path d="M7.5 13.5l-3 3 3.8-.6.6 3.8 3-3" fill="currentColor" opacity=".6"/></svg>`,
-      flame:  `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.5 6 7 8.5 7 12a5 5 0 0 0 10 0c0-3.5-1.5-6-5-10Z" fill="currentColor"/></svg>`
-    };
+  const SVG = {
+  // upvote arrow stile Reddit (triangolo rivolto in su)
+  rocket: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3l8 8h-5v10H9V11H4l8-8z" fill="currentColor"/>
+  </svg>`,
+  flame:  `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.5 6 7 8.5 7 12a5 5 0 0 0 10 0c0-3.5-1.5-6-5-10Z" fill="currentColor"/></svg>`
+};
+
 
     /* ========== Scroll reveal ========== */
     const reveals = document.querySelectorAll('.reveal');
@@ -690,7 +716,7 @@
     /* ===================== PERSISTENZA (local + Google Apps Script) ===================== */
     const PERSIST_REMOTE = {
       enabled: true,
-      endpoint: 'https://script.google.com/macros/s/AKfycbxzKJ9Sk7stt13vhfBPWxp2zEKZOOwDCUzlRjHlvJC83RSsO4jInf1Xv6xxPc356Dhm/execc?key=eventreactions1719'
+      endpoint: 'https://script.google.com/macros/s/AKfycbxzKJ9Sk7stt13vhfBPWxp2zEKZOOwDCUzlRjHlvJC83RSsO4jInf1Xv6xxPc356Dhm/exec?key=eventreactions1719'
       
     };
 
