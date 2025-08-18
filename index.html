@@ -594,78 +594,6 @@
   </a>
 
   <script>
-/*
-========================================
-  GOOGLE APPS SCRIPT (Code.gs) — incolla in Apps Script
-  - Crea uno Sheet vuoto, prendi l'ID del foglio, mettilo in SHEET_ID
-  - Distribuisci come "Applicazione web" (Chiunque) e usa l'URL /exec
-  - SECRET deve combaciare con il ?key=... che metti in PERSIST_REMOTE.endpoint
-----------------------------------------
-const SHEET_ID = 'INSERISCI_ID_DEL_TUO_FOGLIO';
-const SHEET_NAME = 'db';
-const CELL = 'A1';
-const SECRET = 'eventreactions1719';
-
-function _open() {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-  if (!sh.getRange(CELL).getValue()) {
-    sh.getRange(CELL).setValue(JSON.stringify({ rocketsByName:{}, flamesByEvent:{}, totals:{rockets:0,flames:0} }));
-  }
-  return sh;
-}
-function _read() {
-  const sh = _open();
-  const raw = sh.getRange(CELL).getValue();
-  try { return JSON.parse(raw); } catch(e){ return { rocketsByName:{}, flamesByEvent:{}, totals:{rockets:0,flames:0} }; }
-}
-function _save(obj) {
-  const sh = _open();
-  sh.getRange(CELL).setValue(JSON.stringify(obj));
-}
-function _deny() {
-  return ContentService.createTextOutput('forbidden').setMimeType(ContentService.MimeType.TEXT);
-}
-function _applyAction(data, e) {
-  const act = (e.parameter.action||'').toLowerCase();
-  if (act === 'incrocket') {
-    const name = String(e.parameter.name||'').toUpperCase();
-    if (!name) return data;
-    data.rocketsByName[name] = (data.rocketsByName[name]||0) + 1;
-  } else if (act === 'toggleflame') {
-    const eid = String(e.parameter.eid||'');
-    const on  = Number(e.parameter.on||0) ? 1 : 0;
-    if (!eid) return data;
-    const prev = data.flamesByEvent[eid]||0;
-    if (prev && !on) data.flamesByEvent[eid] = 0;
-    else if (!prev && on) data.flamesByEvent[eid] = 1;
-  }
-  data.totals = {
-    rockets: Object.values(data.rocketsByName).reduce((a,b)=>a+b,0),
-    flames:  Object.values(data.flamesByEvent).reduce((a,b)=>a+b,0)
-  };
-  return data;
-}
-function doGet(e) {
-  if ((e.parameter.key||'') !== SECRET) return _deny();
-  let data = _read();
-  if (e.parameter.action) { data = _applyAction(data, e); _save(data); }
-  const payload = JSON.stringify(data);
-  const cb = e.parameter.callback;
-  if (cb) return ContentService.createTextOutput(`${cb}(${payload})`).setMimeType(ContentService.MimeType.JAVASCRIPT);
-  return ContentService.createTextOutput(payload).setMimeType(ContentService.MimeType.JSON);
-}
-function doPost(e) {
-  if ((e.parameter.key||'') !== SECRET) return _deny();
-  try {
-    const body = e.postData && e.postData.contents || '{}';
-    const next = JSON.parse(body);
-    if (next && typeof next === 'object') _save(next);
-  } catch(_) {}
-  return ContentService.createTextOutput('ok').setMimeType(ContentService.MimeType.TEXT);
-}
-========================================
-*/
 
     /* ========== Config ========== */
     const BOOKING_ENABLED = true; // <— metti false per disattivare tutti i pulsanti "Prenota"
@@ -762,7 +690,7 @@ function doPost(e) {
     /* ===================== PERSISTENZA (local + Google Apps Script con JSONP+Beacon) ===================== */
     const PERSIST_REMOTE = {
       enabled: true,
-      endpoint: 'https://script.google.com/macros/s/AKfycbxzKJ9Sk7stt13vhfBPWxp2zEKZOOwDCUzlRjHlvJC83RSsO4jInf1Xv6xxPc356Dhm/exec?key=eventreactions1719' // /exec + ?key=SECRET
+      endpoint: 'https://script.google.com/macros/s/AKfycbzrpUpPkAGMi9EiThY1CXmBpnIVyk0QTltULcyV_3zhZObWgtSECqMEdcSMcRM9LVBq/exec?key=eventreactions1719'
     };
 
     const Store = {
