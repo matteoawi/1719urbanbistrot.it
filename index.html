@@ -221,15 +221,41 @@
     .counter-row .big{ font-size:1.4rem; display:flex; align-items:center; gap:8px }
 
     /* Toast (banner) */
-    .toast{
-      position:fixed; left:50%; top:calc(var(--header-h) + 8px); transform:translateX(-50%) translateY(-8px);
-      background:color-mix(in oklab, var(--bg) 96%, transparent);
-      border:1px solid var(--line); border-radius:12px; padding:10px 12px;
-      font-weight:800; box-shadow:0 10px 22px rgba(0,0,0,.18); z-index:1100;
-      display:flex; align-items:center; gap:10px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
-    }
-    .toast.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0) }
-    .toast .x{ margin-left:6px; border:1px solid var(--line); background:var(--chip); color:var(--chip-fg); border-radius:8px; padding:2px 6px; font-weight:900; cursor:pointer }
+    
+ .toast{
+  position:fixed;
+  left:50%;
+  top:calc(var(--header-h) + 10px);
+  transform:translateX(-50%) translateY(-6px);
+  width:min(var(--max), calc(100% - 24px));
+  background:color-mix(in oklab, var(--bg) 98%, transparent);
+  border:1px solid var(--line);
+  border-left:6px solid var(--accent);
+  border-radius:14px;
+  padding:12px 14px;
+  box-shadow:0 12px 28px rgba(0,0,0,.18);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  z-index:1100;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+}
+.toast.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0) }
+.toast .meta{ opacity:.9 }
+.toast .x{
+  margin-left:auto;
+  border:1px solid var(--line);
+  background:transparent;
+  padding:4px 8px;
+  border-radius:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+.toast svg{ opacity:.9 }
+
   </style>
 </head>
 <body>
@@ -524,27 +550,27 @@
     const SHOW_SPONSORS_IN_CARD = false; // true per mostrare testo sponsor nelle card evento
     const PERSIST_REMOTE = {
       enabled: true,
-      // ⬇️ Sostituisci con il TUO URL /exec (deve terminare con ?key=eventreactions1719)
-      endpoint: 'https://script.google.com/macros/s/AKfycbxOkUMQfVzkjpOc-INWxR6A70X0yEtdP3DfSNRmjqiX4ZB7akiyMGG8IbZtP8V1_TtW/exec?key=eventreactions1719'
+      endpoint: 'https://script.google.com/macros/s/AKfycbxHBT_b9EDlgeY2jkKUm6x465LILVB_8clMbJupcH4RE9uOsX8Rvb4Rhx4dTPbm1vKp/exec?key=eventreactions1719'
     };
 
     /* ================= TUNABLES (modifica qui) ================= */
-    const PHYS = {
-      base: 36,              // velocità base px/s (più basso = più lento)
-      rand: 16,              // random sulla velocità iniziale
-      damping: 0.997,        // attrito per frame (0.99–0.998)
-      restitution: 0.90,     // rimbalzo tra etichette
-      wallRestitution: 0.88, // rimbalzo pareti
-      min: 16,               // velocità minima px/s
-      max: 140,              // velocità massima px/s
-      measureEvery: 12,      // ricalcolo dimensioni ogni N frame
-      pad: 2,                // padding collisione (anticipo contatto)
-      sepBias: 2.5,          // spinta extra per separare
-      nudge: 10,             // piccola spinta ortogonale
-      boostMax: 4.5,         // intensità massima boost
-      burstMs: 900,          // durata “burst” collisioni dopo razzo
-      randomResolveMod: 4    // risolvi collisione 1 volta ogni N frame con overlap
-    };
+ const PHYS = {
+  base: 42,              // ↑ leggerissimamente più veloce
+  rand: 18,
+  damping: 0.996,        // un filo meno attrito
+  restitution: 0.92,     // rimbalzo un po’ più “elastico”
+  wallRestitution: 0.90,
+  min: 18,
+  max: 160,
+  measureEvery: 12,
+  pad: -6,               // <— consente PIÙ sovrapposizione prima della risoluzione
+  sepBias: 1.2,          // <— meno separazione “secca” (si vedono sovrapposti di più)
+  nudge: 8,              // piccola spinta tangenziale anti-incastro
+  boostMax: 4.5,
+  burstMs: 900,
+  randomResolveMod: 4
+};
+
 
     /* ================= Utils & SVGs ================= */
     const $ = (s, r=document)=>r.querySelector(s);
@@ -668,29 +694,55 @@
         if(this.logQueue.length>30) this.remotePush(); // se cresce troppo, spingi subito
       },
       // JSONP GET (merge)
-      async remotePull(){
-        if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
-        return new Promise((resolve)=>{
-          const cb = 'CB_' + Math.random().toString(36).slice(2);
-          window[cb] = (B)=>{
-            try{
-              const A = this.state;
-              const merged = JSON.parse(JSON.stringify(A));
-              for(const k in (B.rocketsByName||{})){ merged.rocketsByName[k] = Math.max(A.rocketsByName[k]||0, B.rocketsByName[k]||0); }
-              for(const k in (B.flamesByEvent||{})){ merged.flamesByEvent[k] = Math.max(A.flamesByEvent[k]||0, B.flamesByEvent[k]||0); }
-              merged.totals = {
-                rockets: Object.values(merged.rocketsByName).reduce((a,b)=>a+b,0),
-                flames:  Object.values(merged.flamesByEvent).reduce((a,b)=>a+b,0)
-              };
-              this.state = merged; this.save();
-            }finally{ delete window[cb]; s.remove(); resolve(); }
+      remotePull(){
+  if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
+  return new Promise((resolve)=>{
+    const cb = 'CB_' + Math.random().toString(36).slice(2);
+    window[cb] = (B)=>{
+      try{
+        const A = this.state;
+        const merged = JSON.parse(JSON.stringify(A));
+
+        // 1) Rockets: merge "a massimo" (conteggio cumulativo globale)
+        if (B && B.rocketsByName) {
+          for(const k in B.rocketsByName){
+            merged.rocketsByName[k] = Math.max(A.rocketsByName[k]||0, B.rocketsByName[k]||0);
+          }
+        }
+
+        // 2) Flames: NON importare la mappa per-evento (mantieni i tuoi toggle locali)
+        //    ma aggiorna comunque i totali globali per i counters, se presenti.
+        if (B && B.totals) {
+          if (typeof B.totals.rockets === 'number') merged.totals.rockets = B.totals.rockets;
+          if (typeof B.totals.flames  === 'number') merged.totals.flames  = B.totals.flames;
+        } else {
+          // fallback sicuro: ricalcola totali dai dati locali
+          merged.totals = {
+            rockets: Object.values(merged.rocketsByName||{}).reduce((a,b)=>a+b,0),
+            flames:  Object.values(merged.flamesByEvent||{}).reduce((a,b)=>a+(b?1:0),0)
           };
-          const s = document.createElement('script');
-          s.src = PERSIST_REMOTE.endpoint + '&callback=' + cb;
-          s.onerror = ()=>{ delete window[cb]; s.remove(); resolve(); };
-          document.head.appendChild(s);
-        });
-      },
+        }
+
+        // Applica lo stato e salva SOLO in localStorage (niente push per evitare loop)
+        this.state = merged;
+        try{ localStorage.setItem(this.key, JSON.stringify(this.state)); }catch{}
+
+        // Aggiorna UI se la funzione esiste
+        if (typeof renderTotals === 'function') renderTotals();
+
+      }finally{
+        delete window[cb];
+        s.remove();
+        resolve();
+      }
+    };
+    const s = document.createElement('script');
+    s.src = PERSIST_REMOTE.endpoint + '&callback=' + cb;
+    s.onerror = ()=>{ delete window[cb]; s.remove(); resolve(); };
+    document.head.appendChild(s);
+  });
+},
+
       // sendBeacon POST (state + logs)
       async remotePush(){
         if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
@@ -941,45 +993,62 @@
       return c;
     }
 
-    function resolveCollisions(){
-      for(let i=0;i<bouncers.length;i++){
-        for(let j=i+1;j<bouncers.length;j++){
-          const a=bouncers[i], b=bouncers[j];
+   function resolveCollisions(){
+  for(let i=0;i<bouncers.length;i++){
+    for(let j=i+1;j<bouncers.length;j++){
+      const a=bouncers[i], b=bouncers[j];
 
-          if (a.x < b.x + b.w + PHYS.pad &&
-              a.x + a.w + PHYS.pad > b.x &&
-              a.y < b.y + b.h + PHYS.pad &&
-              a.y + a.h + PHYS.pad > b.y){
+      if (a.x < b.x + b.w + PHYS.pad &&
+          a.x + a.w + PHYS.pad > b.x &&
+          a.y < b.y + b.h + PHYS.pad &&
+          a.y + a.h + PHYS.pad > b.y){
 
-            const axRight = a.x + a.w, bxRight = b.x + b.w;
-            const ayBottom = a.y + a.h, byBottom = b.y + b.h;
-            const ovx1 = axRight - b.x, ovx2 = bxRight - a.x;
-            const ovy1 = ayBottom - b.y, ovy2 = byBottom - a.y;
-            const overlapX = (ovx1 < ovx2) ?  ovx1 : -ovx2;
-            const overlapY = (ovy1 < ovy2) ?  ovy1 : -ovy2;
+        // Penetrazione su X/Y
+        const axR = a.x + a.w, bxR = b.x + b.w;
+        const ayB = a.y + a.h, byB = b.y + b.h;
+        const ovx1 = axR - b.x, ovx2 = bxR - a.x;
+        const ovy1 = ayB - b.y, ovy2 = byB - a.y;
 
-            if (Math.abs(overlapX) < Math.abs(overlapY)){
-              const push = Math.sign(overlapX) * (Math.abs(overlapX)/2 + PHYS.sepBias);
-              a.x -= push; b.x += push;
-              const vxA = a.vx, vxB = b.vx;
-              a.vx = -vxA * PHYS.restitution;
-              b.vx = -vxB * PHYS.restitution;
-              a.vy += (Math.random()-0.5) * PHYS.nudge;
-              b.vy -= (Math.random()-0.5) * PHYS.nudge;
-            } else {
-              const push = Math.sign(overlapY) * (Math.abs(overlapY)/2 + PHYS.sepBias);
-              a.y -= push; b.y += push;
-              const vyA = a.vy, vyB = b.vy;
-              a.vy = -vyA * PHYS.restitution;
-              b.vy = -vyB * PHYS.restitution;
-              a.vx += (Math.random()-0.5) * PHYS.nudge;
-              b.vx -= (Math.random()-0.5) * PHYS.nudge;
-            }
-            limitVel(a); limitVel(b);
-          }
+        // scegli asse di minima penetrazione → normale
+        const absX = Math.min(ovx1, ovx2);
+        const absY = Math.min(ovy1, ovy2);
+        let nx=0, ny=0, push=0;
+
+        if (absX < absY){
+          nx = (ovx1 < ovx2) ?  1 : -1;
+          push = (absX/2 + PHYS.sepBias);
+          a.x -= nx*push; b.x += nx*push;
+        } else {
+          ny = (ovy1 < ovy2) ?  1 : -1;
+          push = (absY/2 + PHYS.sepBias);
+          a.y -= ny*push; b.y += ny*push;
         }
+
+        // impulso elastico 1D lungo la normale (rimbalzo opposto su ENTRAMBI)
+        const e = PHYS.restitution;
+        const rvx = b.vx - a.vx;
+        const rvy = b.vy - a.vy;
+        const vr  = rvx*nx + rvy*ny; // velocità relativa lungo n
+
+        // se si stanno avvicinando (vr < 0), applica impulso
+        if (vr < 0){
+          const j = -(1+e)*vr/2;       // masse = 1 → divide per 1+1
+          a.vx -= j*nx; a.vy -= j*ny;
+          b.vx += j*nx; b.vy += j*ny;
+
+          // piccola spinta tangenziale random per evitare sticking
+          const tx = ny, ty = -nx;     // tangente ortogonale a n
+          const kick = (Math.random()-0.5)*PHYS.nudge;
+          a.vx += tx*kick; a.vy += ty*kick;
+          b.vx -= tx*kick; b.vy -= ty*kick;
+        }
+
+        limitVel(a); limitVel(b);
       }
     }
+  }
+}
+
 
     function formatPosterDate(iso){
       const d = new Date(iso + 'T12:00:00Z');
