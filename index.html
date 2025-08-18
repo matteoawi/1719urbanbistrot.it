@@ -7,6 +7,12 @@
   <meta name="description" content="17/19 Urban Bistrot Roma. DJ set in vinile curated by Riccardo Battaglia. Colazioni, pranzi, cene e cocktail signature." />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
+  <!-- favicon: evita 404 -->
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0b'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Montserrat,Arial' font-size='28' fill='%23fff'%3E17%2F19%3C/text%3E%3C/svg%3E" />
+  <!-- (opzionale) favicon dal logo -->
+  <link rel="icon" type="image/svg+xml" href="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logobianco.svg?v=1755104086">
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
@@ -21,11 +27,6 @@
       --accent:#ff1f3d; --accent-fg:#ffffff;
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
       --radius:16px; --pad:clamp(16px,4vw,32px); --max:1120px;
-
-      /* reactions palette */
-      --fire:#ff6a00;
-      --fire-2:#ff1f3d;
-      --rocket:#ff1f3d;
     }
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
@@ -92,7 +93,7 @@
     .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:800;background:var(--chip);color:var(--chip-fg)}
     .pill--accent{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
     .pill--ghost{background:transparent}
-    .pill--disabled{opacity:.5;pointer-events:none}
+    .pill--disabled{opacity:.55;pointer-events:none}
     .pill:where(:hover,:focus-visible){transform:translateY(-1px);transition:transform .15s ease}
 
     .toggle{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--chip-fg);display:grid;place-items:center;cursor:pointer}
@@ -200,27 +201,29 @@
     .event__day{font-size:1.4rem;font-weight:900;line-height:1}
     .event__info{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.95rem}
     .event__names{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; user-select:none; -webkit-user-select:none}
+    .event__sponsors{position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:6px; user-select:none; -webkit-user-select:none}
+    .s-chip{display:inline-flex;align-items:center;gap:6px;padding:.2rem .5rem;border:1px dashed var(--line);border-radius:12px;font-weight:800;letter-spacing:.04em;background:color-mix(in oklab, var(--bg) 98%, transparent)}
     .events-more{display:flex;justify-content:center;margin-top:10px}
 
-    /* Flame state */
-    .event--flamed{
-      border-color: color-mix(in oklab, var(--fire) 70%, transparent);
-      box-shadow: 0 0 0 1px color-mix(in oklab, var(--fire) 40%, transparent) inset,
-                  0 6px 18px rgba(255,106,0,.25), 0 0 22px rgba(255,31,61,.15);
-      animation: flamePulse 1.2s ease-in-out infinite alternate;
+    /* Evento votato (freccia su) */
+    .event--voted{
+      border-color: color-mix(in oklab, var(--accent) 65%, transparent);
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent) inset,
+                  0 6px 18px rgba(255,31,61,.22);
+      animation: upPulse 1.2s ease-in-out infinite alternate;
     }
-    @keyframes flamePulse{
-      from{ box-shadow: 0 0 0 1px rgba(255,106,0,.35) inset, 0 4px 14px rgba(255,106,0,.18), 0 0 16px rgba(255,31,61,.12) }
-      to  { box-shadow: 0 0 0 1px rgba(255,31,61,.45) inset, 0 8px 22px rgba(255,31,61,.24), 0 0 24px rgba(255,106,0,.18) }
+    @keyframes upPulse{
+      from{ box-shadow: 0 0 0 1px rgba(255,31,61,.26) inset, 0 4px 14px rgba(255,31,61,.18) }
+      to  { box-shadow: 0 0 0 1px rgba(255,31,61,.36) inset, 0 8px 22px rgba(255,31,61,.24) }
     }
-    .flame-badge{
+    .vote-badge{
       position:absolute; top:8px; right:8px; font-weight:900;
       background:color-mix(in oklab, var(--bg) 92%, transparent);
       border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:.9rem; display:inline-flex; align-items:center; gap:6px
     }
     .icon{ width:16px; height:16px; display:inline-block; vertical-align:middle }
 
-    /* Name chips (headliner/guests) — no hearts, solo contorno */
+    /* Name chips (headliner/guests) */
     .name-chip{
       display:inline-flex; align-items:center; gap:6px;
       padding:.18rem .46rem; border:1px dashed var(--line); border-radius:12px;
@@ -244,41 +247,20 @@
       padding:.16em .44em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;will-change:transform;
       box-shadow:0 0 0 1px var(--line) inset;background:color-mix(in oklab, var(--bg) 96%, transparent);
       user-select:none; -webkit-user-select:none; touch-action:manipulation;
+      z-index:2;
     }
     .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:2px;vertical-align:middle}
-.bouncer .rc{
-  display:inline-flex; align-items:center; gap:6px;
-  padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line);
-  background:color-mix(in oklab, var(--bg) 96%, transparent);
-  font-weight:900;
-  margin-left:auto;                /* spinge il contatore a destra */
-  white-space:nowrap;              /* evita ritorni a capo strani   */
-}
-.bouncer .lbl{ min-width:0; overflow:hidden; text-overflow:ellipsis; }
+    .bouncer .rc{display:inline-flex; align-items:center; gap:6px; padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent); font-weight:900}
 
-    /* i loghi stanno sotto al canvas, non sopra */
-.poster-logos{
-  position:relative;               /* ← non più absolute */
-  padding:10px 0;
-  border-top:none;                 /* ← niente bordo superiore */
-  display:flex; gap:12px; justify-content:center; align-items:center;
-  flex-wrap:wrap; row-gap:6px;
-}
-
-
-    /* === Rocket trail + shake === */
+    /* === trail === */
     .poster-canvas canvas.trail{ position:absolute; inset:0; pointer-events:none; z-index:1 }
-    .bouncer{ z-index:2 }
-    .bouncer.rocket{ box-shadow:0 0 0 1px var(--accent) inset, 0 0 16px rgba(255,31,61,.75) }
-    .bouncer.rocket .dot{ background:var(--accent) }
-    .poster-canvas.shake{ animation:canvasShake .45s ease both }
-    @keyframes canvasShake{
-      0%{ transform:translate(0,0) rotate(0) }
-      20%{ transform:translate(-2px,2px) rotate(-.3deg) }
-      40%{ transform:translate(2px,-2px) rotate(.3deg) }
-      60%{ transform:translate(-2px,1px) rotate(-.2deg) }
-      80%{ transform:translate(1px,-1px) rotate(.2deg) }
-      100%{ transform:translate(0,0) rotate(0) }
+
+    /* Bar sponsor del poster: relative, niente top border, non selezionabile */
+    .poster-logos{
+      position:relative; left:auto; right:auto; bottom:auto;
+      padding:10px 10px 0; border-top:0;
+      display:flex; gap:12px; justify-content:center; align-items:center;
+      flex-wrap:wrap; row-gap:6px; user-select:none; -webkit-user-select:none
     }
 
     /* ===== Gallery ===== */
@@ -308,17 +290,12 @@
     .poster-logos{flex-wrap:wrap; row-gap:6px;}
     @media (max-width:420px){ .time-cards{grid-template-columns:1fr;} }
 
-    /* ===== Community Counters (spostabile dove vuoi) ===== */
+    /* ===== Community Counters ===== */
     #community{ padding-top:8px }
     .counters{ display:grid; grid-template-columns:1fr; gap:12px }
     @media (min-width:768px){ .counters{ grid-template-columns:1fr 1fr } }
     .counter-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; font-weight:900 }
     .counter-row .big{ font-size:1.4rem; display:flex; align-items:center; gap:8px }
-    /* disabilita selezione sui nomi del poster e sui loghi */
-.bouncer, .bouncer *, .poster-logos, .poster-logos *{
-  user-select:none; -webkit-user-select:none;
-}
-
   </style>
 </head>
 <body>
@@ -338,7 +315,7 @@
           <li><a href="#events">Eventi</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contatti</a></li>
-          <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
+          <li><a class="pill pill--accent" id="navBooking" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
           <li class="only-desktop"><button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button></li>
           <li class="only-desktop"><button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button></li>
         </ul>
@@ -364,7 +341,7 @@
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contatti</a></li>
         </ul>
-        <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
+        <a class="pill pill--accent sheet__cta" id="sheetBooking" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
       </div>
     </div>
   </div>
@@ -384,6 +361,7 @@
               <div class="curated" id="posterCurated"></div>
             </div>
             <div class="poster-canvas" id="posterCanvas" aria-label="bouncer nomi"></div>
+            <!-- sponsor/adjective poster -->
             <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
           </div>
         </div>
@@ -522,8 +500,8 @@
       <aside class="card reveal" id="interactionsInfo" style="margin-bottom:10px">
         <div class="block-title"><h3>Come funziona</h3><span class="meta">interazioni</span></div>
         <ul style="margin:0 0 0 18px; line-height:1.6">
-          <li><strong>Doppio tap su un nome nel poster</strong> → lancia un <em>razzo</em> (counter globale).</li>
-          <li><strong>Doppio tap su una card evento</strong> → accendi/spegni la <em>fiamma</em> (counter globale).</li>
+          <li><strong>Doppio tap su un nome nel poster</strong> → aggiungi un <em>upvote</em> (freccia su) a quel nome (counter globale).</li>
+          <li><strong>Doppio tap su una card evento</strong> → accendi/spegni l’<em>upvote</em> dell’evento (counter globale).</li>
         </ul>
       </aside>
 
@@ -571,27 +549,27 @@
     </div>
   </section>
 
-  <!-- Community Counters (spostabile) -->
+  <!-- Community Counters -->
   <section id="community">
     <div class="container">
       <div class="block-title" style="margin-bottom:8px"><h3>Community Counters</h3><span class="meta">reazioni live</span></div>
       <div class="counters">
-        <!-- Card A: Rockets -->
+        <!-- Card A: Upvotes nomi -->
         <div class="card">
           <div class="counter-row">
             <span style="display:inline-flex;align-items:center;gap:8px">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c3.5 2.4 6 7 6 10a6 6 0 1 1-12 0c0-3 2.5-7.6 6-10Z" fill="currentColor"/><path d="M7.5 13.5l-3 3 3.8-.6.6 3.8 3-3" fill="currentColor" opacity=".6"/></svg>
-              Razzi (nomi)
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
+              Upvotes (nomi)
             </span>
             <span class="big" id="totalRockets">0</span>
           </div>
         </div>
-        <!-- Card B: Flames -->
+        <!-- Card B: Upvotes eventi -->
         <div class="card">
           <div class="counter-row">
             <span style="display:inline-flex;align-items:center;gap:8px">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.5 6 7 8.5 7 12a5 5 0 0 0 10 0c0-3.5-1.5-6-5-10Z" fill="currentColor"/></svg>
-              Fiamme (eventi)
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
+              Upvotes (eventi)
             </span>
             <span class="big" id="totalFlames">0</span>
           </div>
@@ -616,19 +594,90 @@
   </a>
 
   <script>
+/*
+========================================
+  GOOGLE APPS SCRIPT (Code.gs) — incolla in Apps Script
+  - Crea uno Sheet vuoto, prendi l'ID del foglio, mettilo in SHEET_ID
+  - Distribuisci come "Applicazione web" (Chiunque) e usa l'URL /exec
+  - SECRET deve combaciare con il ?key=... che metti in PERSIST_REMOTE.endpoint
+----------------------------------------
+const SHEET_ID = 'INSERISCI_ID_DEL_TUO_FOGLIO';
+const SHEET_NAME = 'db';
+const CELL = 'A1';
+const SECRET = 'eventreactions1719';
+
+function _open() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+  if (!sh.getRange(CELL).getValue()) {
+    sh.getRange(CELL).setValue(JSON.stringify({ rocketsByName:{}, flamesByEvent:{}, totals:{rockets:0,flames:0} }));
+  }
+  return sh;
+}
+function _read() {
+  const sh = _open();
+  const raw = sh.getRange(CELL).getValue();
+  try { return JSON.parse(raw); } catch(e){ return { rocketsByName:{}, flamesByEvent:{}, totals:{rockets:0,flames:0} }; }
+}
+function _save(obj) {
+  const sh = _open();
+  sh.getRange(CELL).setValue(JSON.stringify(obj));
+}
+function _deny() {
+  return ContentService.createTextOutput('forbidden').setMimeType(ContentService.MimeType.TEXT);
+}
+function _applyAction(data, e) {
+  const act = (e.parameter.action||'').toLowerCase();
+  if (act === 'incrocket') {
+    const name = String(e.parameter.name||'').toUpperCase();
+    if (!name) return data;
+    data.rocketsByName[name] = (data.rocketsByName[name]||0) + 1;
+  } else if (act === 'toggleflame') {
+    const eid = String(e.parameter.eid||'');
+    const on  = Number(e.parameter.on||0) ? 1 : 0;
+    if (!eid) return data;
+    const prev = data.flamesByEvent[eid]||0;
+    if (prev && !on) data.flamesByEvent[eid] = 0;
+    else if (!prev && on) data.flamesByEvent[eid] = 1;
+  }
+  data.totals = {
+    rockets: Object.values(data.rocketsByName).reduce((a,b)=>a+b,0),
+    flames:  Object.values(data.flamesByEvent).reduce((a,b)=>a+b,0)
+  };
+  return data;
+}
+function doGet(e) {
+  if ((e.parameter.key||'') !== SECRET) return _deny();
+  let data = _read();
+  if (e.parameter.action) { data = _applyAction(data, e); _save(data); }
+  const payload = JSON.stringify(data);
+  const cb = e.parameter.callback;
+  if (cb) return ContentService.createTextOutput(`${cb}(${payload})`).setMimeType(ContentService.MimeType.JAVASCRIPT);
+  return ContentService.createTextOutput(payload).setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e) {
+  if ((e.parameter.key||'') !== SECRET) return _deny();
+  try {
+    const body = e.postData && e.postData.contents || '{}';
+    const next = JSON.parse(body);
+    if (next && typeof next === 'object') _save(next);
+  } catch(_) {}
+  return ContentService.createTextOutput('ok').setMimeType(ContentService.MimeType.TEXT);
+}
+========================================
+*/
+
+    /* ========== Config ========== */
+    const BOOKING_ENABLED = true; // <— metti false per disattivare tutti i pulsanti "Prenota"
+
     /* ========== Utils & SVGs ========== */
     const $ = (s, r=document)=>r.querySelector(s);
     const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
     const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
     const slug = s=>String(s||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-  const SVG = {
-  // upvote arrow stile Reddit (triangolo rivolto in su)
-  rocket: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 3l8 8h-5v10H9V11H4l8-8z" fill="currentColor"/>
-  </svg>`,
-  flame:  `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.5 6 7 8.5 7 12a5 5 0 0 0 10 0c0-3.5-1.5-6-5-10Z" fill="currentColor"/></svg>`
-};
-
+    const SVG = {
+      up: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>`
+    };
 
     /* ========== Scroll reveal ========== */
     const reveals = document.querySelectorAll('.reveal');
@@ -648,13 +697,10 @@
     const panel = siteMenu.querySelector('.sheet__panel');
     const inner = siteMenu.querySelector('.sheet__inner');
     const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
-
     const openMenu = ()=>{ siteMenu.classList.add('active'); siteMenu.setAttribute('aria-hidden','false'); document.body.classList.add('menu-open'); };
     const closeMenu = ()=>{ siteMenu.classList.remove('active'); siteMenu.setAttribute('aria-hidden','true'); document.body.classList.remove('menu-open'); };
-
     toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> siteMenu.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', (e)=>{ e.stopPropagation(); closeMenu(); });
-
     panel.addEventListener('click', (e)=>{ if(!inner.contains(e.target)) closeMenu(); });
     inner.addEventListener('click', (e)=> e.stopPropagation());
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
@@ -713,15 +759,14 @@
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
     })();
 
-    /* ===================== PERSISTENZA (local + Google Apps Script) ===================== */
+    /* ===================== PERSISTENZA (local + Google Apps Script con JSONP+Beacon) ===================== */
     const PERSIST_REMOTE = {
       enabled: true,
-      endpoint: 'https://script.google.com/macros/s/AKfycbxzKJ9Sk7stt13vhfBPWxp2zEKZOOwDCUzlRjHlvJC83RSsO4jInf1Xv6xxPc356Dhm/exec?key=eventreactions1719'
-      
+      endpoint: 'https://script.google.com/macros/s/AKfycbxzKJ9Sk7stt13vhfBPWxp2zEKZOOwDCUzlRjHlvJC83RSsO4jInf1Xv6xxPc356Dhm/exec?key=eventreactions1719' // /exec + ?key=SECRET
     };
 
     const Store = {
-      key:'1719-reactions-v2',
+      key:'1719-reactions-v3',
       state:{ rocketsByName:{}, flamesByEvent:{}, totals:{rockets:0, flames:0} },
       loaded:false,
       load(){
@@ -748,49 +793,56 @@
       getRockets(name){ return this.state.rocketsByName[String(name).toUpperCase()]||0; },
       totals(){ return this.state.totals; },
 
+      // --- JSONP (GET) ---
       async remotePull(){
         if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
-        try{
-          const r = await fetch(PERSIST_REMOTE.endpoint, {method:'GET'});
-          if(!r.ok) return;
-          const B = await r.json();
-          const A = this.state;
-          const merged = JSON.parse(JSON.stringify(A));
-          // rockets
-          for(const k in (B.rocketsByName||{})){
-            merged.rocketsByName[k] = Math.max(A.rocketsByName[k]||0, B.rocketsByName[k]||0);
-          }
-          // flames
-          for(const k in (B.flamesByEvent||{})){
-            merged.flamesByEvent[k] = Math.max(A.flamesByEvent[k]||0, B.flamesByEvent[k]||0);
-          }
-          merged.totals = {
-            rockets: Object.values(merged.rocketsByName).reduce((a,b)=>a+b,0),
-            flames:  Object.values(merged.flamesByEvent).reduce((a,b)=>a+b,0)
+        return new Promise((resolve)=>{
+          const cb = 'CB_' + Math.random().toString(36).slice(2);
+          window[cb] = (B)=>{
+            try{
+              const A = this.state;
+              const merged = JSON.parse(JSON.stringify(A));
+              for(const k in (B.rocketsByName||{})){
+                merged.rocketsByName[k] = Math.max(A.rocketsByName[k]||0, B.rocketsByName[k]||0);
+              }
+              for(const k in (B.flamesByEvent||{})){
+                merged.flamesByEvent[k] = Math.max(A.flamesByEvent[k]||0, B.flamesByEvent[k]||0);
+              }
+              merged.totals = {
+                rockets: Object.values(merged.rocketsByName).reduce((a,b)=>a+b,0),
+                flames:  Object.values(merged.flamesByEvent).reduce((a,b)=>a+b,0)
+              };
+              this.state = merged; this.save();
+            }finally{ delete window[cb]; s.remove(); resolve(); }
           };
-          this.state = merged; this.save();
-        }catch(e){ /* silenzio */ }
+          const s = document.createElement('script');
+          s.src = PERSIST_REMOTE.endpoint + '&callback=' + cb;
+          s.onerror = ()=>{ delete window[cb]; s.remove(); resolve(); };
+          document.head.appendChild(s);
+        });
       },
+
+      // --- sendBeacon (POST) ---
       async remotePush(){
         if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
         try{
-          await fetch(PERSIST_REMOTE.endpoint, {
-            method:'POST',
-            headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // niente preflight
-            body: JSON.stringify(this.state)
-          });
-        }catch(e){ /* silenzio */ }
+          const blob = new Blob([JSON.stringify(this.state)], {type:'text/plain;charset=utf-8'});
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(PERSIST_REMOTE.endpoint, blob);
+          } else {
+            fetch(PERSIST_REMOTE.endpoint, { method:'POST', body: blob, mode:'no-cors' }).catch(()=>{});
+          }
+        }catch(e){}
       },
       remotePushDebounced: (()=>{ let t; return function(){ clearTimeout(t); t=setTimeout(()=>this.remotePush(), 600); }; })()
     };
     Store.load();
-    Store.remotePull(); // se abilitato
+    Store.remotePull();
 
     /* ========== Double-tap stable handler (no raddoppi) ========== */
     function makeDoubleTap(el, handler, threshold=300, moveTol=18){
       let lastTime=0, lastX=0, lastY=0;
       el.addEventListener('pointerdown', (e)=>{
-        // blocca selezione testo / emulazioni click
         if(e.pointerType!=='mouse') e.preventDefault();
         e.stopPropagation();
         const now = performance.now();
@@ -804,18 +856,17 @@
           lastTime = now; lastX = x; lastY = y;
         }
       }, {passive:false});
-      // previeni il dblclick nativo che può ri-fare l'azione
       el.addEventListener('dblclick', (e)=>{ e.preventDefault(); e.stopPropagation(); }, {passive:false});
     }
 
-    /* ========== POSTER / BOUNCER ========== */
+    /* ========== Poster / Bouncers con upvote su nomi ========== */
     const posterData = {
       venue: '17/19 URBAN BISTROT',
       series: 'ELECTRO TECHNO NIGHT',
       date:   'WEDNESDAY 03/09',
       tagline:'TECHNO • ELECTRO • VINYL',
       curatedBy:'CURATED BY RICCARDO BATTAGLIA',
-      logos:[ { text:'BIRRA PERONI' }, { text:'RAZZI' }, { text:'ANTI SANTA SANTA CLUB' }, { text:'ELETTRONICA' } ]
+      logos:[ { text:'BIRRA PERONI' }, { text:'UPVOTES' }, { text:'ANTI SANTA' }, { text:'ELETTRONICA' } ]
     };
 
     const posterCanvas = document.getElementById('posterCanvas');
@@ -832,7 +883,7 @@
       const logosWrap = document.getElementById('posterLogos'); logosWrap.innerHTML='';
       (p.logos||[]).forEach(L=>{
         if(L.src){ const img=new Image(); img.src=L.src; img.alt=L.alt||'logo'; img.style.maxHeight='14px'; img.style.opacity='.9'; logosWrap.appendChild(img); }
-        else if(L.text){ const s=document.createElement('span'); s.textContent=L.text; s.style.fontWeight='900'; s.style.fontSize='.72rem'; s.style.letterSpacing='.12em'; logosWrap.appendChild(s); }
+        else if(L.text){ const s=document.createElement('span'); s.textContent=L.text; s.className='s-chip'; logosWrap.appendChild(s); }
       });
     }
 
@@ -855,9 +906,7 @@
         window.addEventListener('resize', resize);
       }
     }
-
     function easeInOutCubic(t){ return t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
-
     function clearBouncers(){
       cancelAnimationFrame(bounceRAF);
       bouncers.forEach(b=> b.el.remove());
@@ -865,15 +914,14 @@
       if(trailCtx){ trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height); }
     }
 
-    function triggerRocket(targetEl){
+    function triggerUpvote(targetEl){
       const b = bouncers.find(x=>x.el===targetEl); if(!b) return;
       const name = targetEl.dataset.name || '';
       const now = performance.now();
-      const DUR = 1500, BOOST = 7.5;
-      b.rocket = {start:now, end:now+DUR, max:BOOST};
-      targetEl.classList.add('rocket');
+      const DUR = 1200, BOOST = 7.0;
+      b.boost = {start:now, end:now+DUR, max:BOOST};
 
-      // counter 🚀
+      // counter (nella chip)
       const n = Store.incRocket(name);
       const cnt = targetEl.querySelector('.rc .n');
       if(cnt) cnt.textContent = n;
@@ -881,13 +929,13 @@
       // piccolo surge sugli altri
       bouncers.forEach(o=>{
         if(o===b) return;
-        o.surgeUntil = now + 550;
-        o.surgeFactor = 1.4 + Math.random()*0.4;
+        o.surgeUntil = now + 450;
+        o.surgeFactor = 1.35 + Math.random()*0.35;
       });
 
-      // canvas shake
-      posterCanvas.classList.remove('shake'); void posterCanvas.offsetWidth; posterCanvas.classList.add('shake');
-      setTimeout(()=> targetEl.classList.remove('rocket'), DUR+80);
+      // micro anim
+      targetEl.style.transform += ' scale(1.06)';
+      setTimeout(()=> targetEl.style.transform = targetEl.style.transform.replace(' scale(1.06)',''), 140);
       renderTotals();
     }
 
@@ -898,7 +946,7 @@
         const el = document.createElement('div');
         el.className = 'bouncer';
         el.dataset.name = name.toUpperCase();
-        el.innerHTML = `<span class="dot"></span><span class="lbl">${name}</span><span class="rc">${SVG.rocket}<span class="n">${Store.getRockets(name)}</span></span>`;
+        el.innerHTML = `<span class="dot"></span><span class="lbl">${name}</span><span class="rc">${SVG.up}<span class="n">${Store.getRockets(name)}</span></span>`;
         posterCanvas.appendChild(el);
         el.style.transform = 'translate(0,0)';
 
@@ -911,10 +959,10 @@
         const vx = Math.cos(angle) * speed;
         const vy = Math.sin(angle) * speed;
 
-        const B = { el, x, y, w, h, vx, vy, rocket:null, surgeUntil:0, surgeFactor:1 };
+        const B = { el, x, y, w, h, vx, vy, boost:null, surgeUntil:0, surgeFactor:1 };
         bouncers.push(B);
 
-        makeDoubleTap(el, (e)=>triggerRocket(el));
+        makeDoubleTap(el, ()=>triggerUpvote(el));
       });
 
       let last = performance.now();
@@ -922,7 +970,7 @@
         const dt = (now - last) / 1000; last = now;
         const W = posterCanvas.clientWidth, H = posterCanvas.clientHeight;
 
-        // fade-out lento trail
+        // fade-out trail
         if(trailCtx && (trailCanvas.width!==W || trailCanvas.height!==H)){ trailCanvas.width=W; trailCanvas.height=H; }
         if(trailCtx){
           trailCtx.save(); trailCtx.globalCompositeOperation = 'destination-out';
@@ -932,21 +980,21 @@
         bouncers.forEach(b=>{
           let factor = 1;
           if(b.surgeUntil && now < b.surgeUntil) factor *= b.surgeFactor; else b.surgeUntil = 0;
-          if(b.rocket && now < b.rocket.end){
-            const t = (now - b.rocket.start) / (b.rocket.end - b.rocket.start);
-            const e = easeInOutCubic(clamp(t,0,1)); factor *= (1 + e*(b.rocket.max - 1));
+          if(b.boost && now < b.boost.end){
+            const t = (now - b.boost.start) / (b.boost.end - b.boost.start);
+            const e = easeInOutCubic(clamp(t,0,1)); factor *= (1 + e*(b.boost.max - 1));
             if(trailCtx){
               const cx = b.x + b.w/2, cy = b.y + b.h/2;
               trailCtx.save();
               trailCtx.globalCompositeOperation = 'lighter';
-              trailCtx.shadowColor = 'rgba(255,31,61,.7)'; trailCtx.shadowBlur = 18;
-              trailCtx.fillStyle = 'rgba(255,31,61,.75)'; const r = 3 + 6*e;
+              trailCtx.shadowColor = 'rgba(255,31,61,.7)'; trailCtx.shadowBlur = 16;
+              trailCtx.fillStyle = 'rgba(255,31,61,.7)'; const r = 2 + 5*e;
               trailCtx.beginPath(); trailCtx.arc(cx, cy, r, 0, Math.PI*2); trailCtx.fill();
               trailCtx.restore();
             }
-          }else if(b.rocket && now >= b.rocket.end){ b.rocket = null; }
+          }else if(b.boost && now >= b.boost.end){ b.boost = null; }
 
-          // fisica + rimbalzi
+          // rimbalzi
           let nx = b.x + b.vx * dt * factor;
           let ny = b.y + b.vy * dt * factor;
           if(nx <= 0){ nx = 0; b.vx *= -1; }
@@ -1069,17 +1117,15 @@
 
     /* ========== EVENTI ========== */
     const events = [
-      { dateISO: '2025-09-03', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Electro Techno • Vinyl Only', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'HEADLINER', guests: ['GUEST1', 'GUEST2'] },
-      { dateISO: '2025-09-05', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Acid District', genres: ['ACID', 'TECHNO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'ALBA NERA', guests: ['RBN', 'GIO BERLIN'] },
-      { dateISO: '2025-09-07', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Minimal Sunday', genres: ['MINIMAL', 'DEEP', 'VINYL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'MARCO VOSS', guests: ['LIVIA FERRO'] },
-      { dateISO: '2025-09-12', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Friday Deep Cuts', genres: ['DEEP', 'MINIMAL', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', guests: [] },
-      { dateISO: '2025-09-14', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',   genres: ['HOUSE', 'MINIMAL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA' },
-      { dateISO: '2025-09-20', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Electro Romance',  genres: ['ELECTRO', 'TECHNO'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'VALE C.', guests: ['M.A.D.'] },
-      { dateISO: '2025-09-27', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Vinyl Marathon',   genres: ['TECHNO', 'HOUSE'], start: '22:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA' }
+      { dateISO: '2025-09-03', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Electro Techno • Vinyl Only', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'HEADLINER', guests: ['GUEST1', 'GUEST2'], sponsors: [{text:'CASAMIGOS'},{text:'ORGANICS'}] },
+      { dateISO: '2025-09-05', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Acid District', genres: ['ACID', 'TECHNO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'ALBA NERA', guests: ['RBN', 'GIO BERLIN'], sponsors: [{text:'CASAMIGOS'}] },
+      { dateISO: '2025-09-07', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Minimal Sunday', genres: ['MINIMAL', 'DEEP', 'VINYL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'MARCO VOSS', guests: ['LIVIA FERRO'] , sponsors:[{text:'ORGANICS'}]},
+      { dateISO: '2025-09-12', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Friday Deep Cuts', genres: ['DEEP', 'MINIMAL', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', guests: [], sponsors:[] },
+      { dateISO: '2025-09-14', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',   genres: ['HOUSE', 'MINIMAL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', sponsors:[] },
+      { dateISO: '2025-09-20', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Electro Romance',  genres: ['ELECTRO', 'TECHNO'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'VALE C.', guests: ['M.A.D.'], sponsors:[] },
+      { dateISO: '2025-09-27', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Vinyl Marathon',   genres: ['TECHNO', 'HOUSE'], start: '22:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', sponsors:[] }
     ];
 
-    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
-    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
     function pickNextEvent(){
       const today = new Date(); today.setHours(0,0,0,0);
       const up = events.filter(e=>!isNaN(new Date(e.dateISO)) && new Date(e.dateISO) >= today)
@@ -1087,13 +1133,15 @@
       return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
     }
     function eventId(ev){ return ev.dateISO + '::' + slug(ev.title); }
-
     function makeNameChip(name, role){
       if(!name) return null;
       const chip = document.createElement('span');
       chip.className = 'name-chip';
       chip.innerHTML = `${role==='headliner' ? '<span class="dot" style="width:8px;height:8px;border-radius:3px;background:var(--fg)"></span>' : ''}${name}`;
       return chip;
+    }
+    function makeSChip(txt){
+      const s=document.createElement('span'); s.className='s-chip'; s.textContent=txt; return s;
     }
 
     let eventsExpanded = false;
@@ -1127,10 +1175,11 @@
         top.appendChild(dateBox);
 
         let cta;
-        if(ev.comingSoon){
+        const bookingClosed = !BOOKING_ENABLED || ev.comingSoon;
+        if(bookingClosed){
           cta = document.createElement('span');
           cta.className = 'pill pill--ghost pill--disabled event__cta';
-          cta.textContent = 'Coming Soon';
+          cta.textContent = ev.comingSoon ? 'Coming Soon' : 'Prenotazioni chiuse';
         }else{
           cta = document.createElement('a');
           cta.className = 'pill pill--ghost event__cta';
@@ -1141,32 +1190,46 @@
         top.appendChild(cta);
         el.appendChild(top);
 
-        // Info row — niente nomi (evita duplicazioni), solo start+generi
+        // Info row (start+generi)
         const info = document.createElement('div');
         info.className = 'event__info';
         const parts = [ ev.start ? `Start ${ev.start}` : null, ...(ev.genres||[]) ].filter(Boolean);
         info.innerHTML = parts.map(t=>`<span>${t}</span>`).join('');
         el.appendChild(info);
 
-        // Names row (headliner + guest chips, non cliccabili)
+        // Names row
         const namesRow = document.createElement('div');
         namesRow.className = 'event__names';
         const head = makeNameChip(ev.headliner, 'headliner'); if(head) namesRow.appendChild(head);
         (ev.guests||[]).forEach(g=>{ const ch = makeNameChip(g, 'guest'); if(ch) namesRow.appendChild(ch); });
         el.appendChild(namesRow);
 
-        // Flame badge
-        const fb = document.createElement('div'); fb.className = 'flame-badge'; fb.innerHTML = `${SVG.flame}<strong class="n">${Store.getFlame(eid)}</strong>`;
-        el.appendChild(fb);
+        // Sponsors/adjectives (relative, senza bordi)
+        if (ev.sponsors && ev.sponsors.length){
+          const srow = document.createElement('div');
+          srow.className = 'event__sponsors';
+          ev.sponsors.forEach(s=>{
+            if(s.src){
+              const a=document.createElement('a'); a.href=s.href||'#'; a.target='_blank'; a.rel='noopener'; a.className='s-chip';
+              a.innerHTML = `<img src="${s.src}" alt="${s.alt||'logo'}" style="height:14px;vertical-align:middle;opacity:.9">`;
+              srow.appendChild(a);
+            }else if(s.text){
+              srow.appendChild(makeSChip(s.text));
+            }
+          });
+          el.appendChild(srow);
+        }
 
-        // apply current flame state
-        if(Store.getFlame(eid)) el.classList.add('event--flamed');
+        // Upvote badge (event)
+        const vb = document.createElement('div'); vb.className = 'vote-badge'; vb.innerHTML = `${SVG.up}<strong class="n">${Store.getFlame(eid)}</strong>`;
+        el.appendChild(vb);
+        if(Store.getFlame(eid)) el.classList.add('event--voted');
 
-        // Double-tap on card => toggle flame
-        makeDoubleTap(el, (e)=>{
+        // Double-tap sulla card
+        makeDoubleTap(el, ()=>{
           const on = Store.toggleFlame(eid);
-          el.classList.toggle('event--flamed', !!on);
-          fb.querySelector('.n').textContent = on;
+          el.classList.toggle('event--voted', !!on);
+          vb.querySelector('.n').textContent = on;
           el.style.transform='scale(1.02)'; setTimeout(()=>el.style.transform='', 120);
           renderTotals();
         });
@@ -1182,8 +1245,8 @@
     /* ===== REACTIONS TOTALS RENDER ===== */
     function renderTotals(){
       const t = Store.totals();
-      $('#totalRockets').textContent = t.rockets || 0;
-      $('#totalFlames').textContent  = t.flames  || 0;
+      $('#totalRockets').textContent = t.rockets || 0; // upvotes nomi
+      $('#totalFlames').textContent  = t.flames  || 0; // upvotes eventi
     }
 
     /* ===== Init ===== */
@@ -1196,10 +1259,19 @@
       posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Riccardo Battaglia')).toUpperCase();
       posterData.logos    = (ev.sponsors || []).map(s => s.src ? {src:s.src, alt:s.alt||'logo'} : {text:(s.text||'').toUpperCase()});
       setPosterTexts(posterData);
-      initBouncers(names.slice(0,3)); // razzi solo sul prossimo evento (nomi nel poster)
+      initBouncers(names.slice(0,3)); // upvote solo sul prossimo evento (nomi nel poster)
     }
 
     function renderEverything(){
+      // Booking ON/OFF sui pulsanti in header/sheet
+      if(!BOOKING_ENABLED){
+        const b1 = document.getElementById('navBooking');
+        const b2 = document.getElementById('sheetBooking');
+        if(b1){ b1.classList.add('pill--disabled'); b1.textContent='Prenotazioni chiuse'; b1.removeAttribute('href'); }
+        if(b2){ b2.classList.add('pill--disabled'); b2.textContent='Prenotazioni chiuse'; b2.removeAttribute('href'); }
+      }
+
+      // menu + eventi + poster
       renderMenu();
       renderEvents();
       bindPosterFromEvent(pickNextEvent());
