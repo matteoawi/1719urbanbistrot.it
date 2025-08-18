@@ -22,10 +22,9 @@
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
       --radius:16px; --pad:clamp(16px,4vw,32px); --max:1120px;
 
-      /* === Reactions palette === */
+      /* reactions palette */
       --fire:#ff6a00;
       --fire-2:#ff1f3d;
-      --heart:#ff2b77;
       --rocket:#ff1f3d;
     }
     @media (prefers-color-scheme: dark){
@@ -193,14 +192,14 @@
     .price{color:var(--accent);font-weight:800}
 
     /* ===== Events ===== */
-    .event{position:relative;display:grid;gap:10px;align-items:start;border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab, var(--bg) 96%, transparent);transition:box-shadow .2s, transform .2s, border-color .2s}
+    .event{position:relative;display:grid;gap:10px;align-items:start;border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab, var(--bg) 96%, transparent);transition:box-shadow .2s, transform .2s, border-color .2s; touch-action:manipulation; user-select:none; -webkit-user-select:none}
     .event__title{font-weight:900}
     .event__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .event__date{min-width:66px;text-align:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--chip)}
     .event__dow{font-weight:900}
     .event__day{font-size:1.4rem;font-weight:900;line-height:1}
     .event__info{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.95rem}
-    .event__names{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+    .event__names{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; user-select:none; -webkit-user-select:none}
     .events-more{display:flex;justify-content:center;margin-top:10px}
 
     /* Flame state */
@@ -217,33 +216,22 @@
     .flame-badge{
       position:absolute; top:8px; right:8px; font-weight:900;
       background:color-mix(in oklab, var(--bg) 92%, transparent);
-      border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:.9rem;
+      border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:.9rem; display:inline-flex; align-items:center; gap:6px
     }
+    .icon{ width:16px; height:16px; display:inline-block; vertical-align:middle }
 
-    /* Name chips (headliner/guests) */
+    /* Name chips (headliner/guests) — no hearts, solo contorno */
     .name-chip{
       display:inline-flex; align-items:center; gap:6px;
       padding:.18rem .46rem; border:1px dashed var(--line); border-radius:12px;
-      font-weight:800; letter-spacing:.04em; cursor:pointer; user-select:none;
-      background:color-mix(in oklab, var(--bg) 98%, transparent);
-      transition:border-color .2s, transform .12s;
-    }
-    .name-chip:hover{ transform:translateY(-1px) }
-    .name-chip .heart-count{
-      display:inline-flex; align-items:center; gap:2px;
-      font-size:.9rem; border:1px solid var(--line);
-      background:color-mix(in oklab, var(--bg) 96%, transparent);
-      padding:1px 6px; border-radius:999px;
-    }
-    .name-chip.hearted{
-      border-color: color-mix(in oklab, var(--heart) 60%, var(--line));
-      box-shadow:0 0 0 1px color-mix(in oklab, var(--heart) 40%, transparent) inset;
+      font-weight:800; letter-spacing:.04em; background:color-mix(in oklab, var(--bg) 98%, transparent);
+      user-select:none; -webkit-user-select:none; touch-action:manipulation;
     }
 
     /* ===== Poster (hero) ===== */
     .poster-frame{position:relative;border:1px solid var(--line);border-radius:20px;background:var(--bg);overflow:hidden}
     .poster-inner{position:relative;padding:clamp(18px,4vw,28px)}
-    .poster-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+    .poster-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px; user-select:none; -webkit-user-select:none}
     .poster-head .venue{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1rem)}
     .poster-head .series{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:clamp(2rem,6.5vw,3.1rem);line-height:1.05}
     .poster-head .date{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.95rem,3.5vw,1.2rem)}
@@ -251,10 +239,15 @@
     .poster-head .curated{color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(.78rem,2vw,.9rem)}
     .poster-canvas{position:relative;margin-top:clamp(16px,3.2vw,26px);height:clamp(320px,56vw,480px);background:color-mix(in oklab, var(--chip) 94%, transparent);border:1px solid var(--line);border-radius:14px;overflow:hidden}
     .poster-svg{position:absolute;inset:0;color:var(--fg);z-index:0;opacity:.08}
-    .bouncer{position:absolute;display:inline-block;padding:.16em .44em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;user-select:none;will-change:transform;box-shadow:0 0 0 1px var(--line) inset;background:color-mix(in oklab, var(--bg) 96%, transparent)}
-    .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:8px;vertical-align:middle}
-    .bouncer .mini-counter{position:absolute; top:-8px; right:-8px; font-size:.85rem; font-weight:900; background:color-mix(in oklab, var(--bg) 90%, transparent); border:1px solid var(--line); border-radius:999px; padding:2px 6px}
-    .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:10px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center}
+    .bouncer{
+      position:absolute;display:inline-flex;align-items:center;gap:10px;
+      padding:.16em .44em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;will-change:transform;
+      box-shadow:0 0 0 1px var(--line) inset;background:color-mix(in oklab, var(--bg) 96%, transparent);
+      user-select:none; -webkit-user-select:none; touch-action:manipulation;
+    }
+    .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:2px;vertical-align:middle}
+    .bouncer .rc{display:inline-flex; align-items:center; gap:6px; padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent); font-weight:900}
+    .poster-logos{position:absolute;left:0;right:0;bottom:0;padding:10px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:center;align-items:center; user-select:none; -webkit-user-select:none}
 
     /* === Rocket trail + shake === */
     .poster-canvas canvas.trail{ position:absolute; inset:0; pointer-events:none; z-index:1 }
@@ -279,7 +272,7 @@
 
     /* ===== Map ===== */
     .map{border:1px solid var(--line);border-radius:16px;overflow:hidden}
-    .map iframe{width:100%;height:320px;border:0}
+    .map iframe{width:100%;height:320px;border:0;display:block}
     @media (min-width:768px){ .map iframe{height:360px} }
 
     /* ===== Footer + FAB ===== */
@@ -303,7 +296,7 @@
     .counters{ display:grid; grid-template-columns:1fr; gap:12px }
     @media (min-width:768px){ .counters{ grid-template-columns:1fr 1fr } }
     .counter-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; font-weight:900 }
-    .counter-row .big{ font-size:1.4rem }
+    .counter-row .big{ font-size:1.4rem; display:flex; align-items:center; gap:8px }
   </style>
 </head>
 <body>
@@ -368,12 +361,7 @@
               <div class="tagline" id="posterTagline"></div>
               <div class="curated" id="posterCurated"></div>
             </div>
-            <div class="poster-canvas" id="posterCanvas">
-              <svg class="poster-svg" id="posterSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" stroke="currentColor" stroke-width="0.4" opacity="0.35"/></pattern></defs>
-                <rect x="0" y="0" width="100" height="100" fill="url(#grid)"></rect>
-              </svg>
-            </div>
+            <div class="poster-canvas" id="posterCanvas" aria-label="bouncer nomi"></div>
             <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
           </div>
         </div>
@@ -507,9 +495,16 @@
       <div class="block-title" style="margin-bottom:6px">
         <h3>Prossimi Eventi</h3>
       </div>
-      <p class="meta" style="margin:-2px 0 12px">
-        Interazione: <strong>doppio tap</strong> su un <em>nome</em> ⇒ 🚀 • su una <em>card evento</em> ⇒ 🔥 (toggle) • <strong>tap</strong> su Headliner/Guests ⇒ ❤️ (toggle).
-      </p>
+
+      <!-- Card spiegazione interazioni -->
+      <aside class="card reveal" id="interactionsInfo" style="margin-bottom:10px">
+        <div class="block-title"><h3>Come funziona</h3><span class="meta">interazioni</span></div>
+        <ul style="margin:0 0 0 18px; line-height:1.6">
+          <li><strong>Doppio tap su un nome nel poster</strong> → lancia un <em>razzo</em> (counter globale).</li>
+          <li><strong>Doppio tap su una card evento</strong> → accendi/spegni la <em>fiamma</em> (counter globale).</li>
+        </ul>
+      </aside>
+
       <div class="grid" id="eventsList" style="gap:12px"></div>
       <div class="events-more">
         <button id="eventsMoreBtn" class="pill pill--ghost" type="button">Mostra altri</button>
@@ -559,14 +554,25 @@
     <div class="container">
       <div class="block-title" style="margin-bottom:8px"><h3>Community Counters</h3><span class="meta">reazioni live</span></div>
       <div class="counters">
-        <!-- Card A: Rockets + Flames -->
+        <!-- Card A: Rockets -->
         <div class="card">
-          <div class="counter-row"><span>🚀 Razzi (nomi)</span><span class="big" id="totalRockets">0</span></div>
-          <div class="counter-row" style="margin-top:8px"><span>🔥 Fiamme (eventi)</span><span class="big" id="totalFlames">0</span></div>
+          <div class="counter-row">
+            <span style="display:inline-flex;align-items:center;gap:8px">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c3.5 2.4 6 7 6 10a6 6 0 1 1-12 0c0-3 2.5-7.6 6-10Z" fill="currentColor"/><path d="M7.5 13.5l-3 3 3.8-.6.6 3.8 3-3" fill="currentColor" opacity=".6"/></svg>
+              Razzi (nomi)
+            </span>
+            <span class="big" id="totalRockets">0</span>
+          </div>
         </div>
-        <!-- Card B: Hearts -->
+        <!-- Card B: Flames -->
         <div class="card">
-          <div class="counter-row"><span>❤️ Cuori (headliner/guests)</span><span class="big" id="totalHearts">0</span></div>
+          <div class="counter-row">
+            <span style="display:inline-flex;align-items:center;gap:8px">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.5 6 7 8.5 7 12a5 5 0 0 0 10 0c0-3.5-1.5-6-5-10Z" fill="currentColor"/></svg>
+              Fiamme (eventi)
+            </span>
+            <span class="big" id="totalFlames">0</span>
+          </div>
         </div>
       </div>
     </div>
@@ -588,11 +594,15 @@
   </a>
 
   <script>
-    /* ========== Utils ========== */
+    /* ========== Utils & SVGs ========== */
     const $ = (s, r=document)=>r.querySelector(s);
     const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
     const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
     const slug = s=>String(s||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+    const SVG = {
+      rocket: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c3.5 2.4 6 7 6 10a6 6 0 1 1-12 0c0-3 2.5-7.6 6-10Z" fill="currentColor"/><path d="M7.5 13.5l-3 3 3.8-.6.6 3.8 3-3" fill="currentColor" opacity=".6"/></svg>`,
+      flame:  `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.5 6 7 8.5 7 12a5 5 0 0 0 10 0c0-3.5-1.5-6-5-10Z" fill="currentColor"/></svg>`
+    };
 
     /* ========== Scroll reveal ========== */
     const reveals = document.querySelectorAll('.reveal');
@@ -618,6 +628,7 @@
 
     toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> siteMenu.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', (e)=>{ e.stopPropagation(); closeMenu(); });
+
     panel.addEventListener('click', (e)=>{ if(!inner.contains(e.target)) closeMenu(); });
     inner.addEventListener('click', (e)=> e.stopPropagation());
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
@@ -676,12 +687,16 @@
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
     })();
 
-    /* ===================== PERSISTENZA (local + opz. remoto) ===================== */
-    const PERSIST_REMOTE = { enabled:false, endpoint:'' /* es: 'https://tuoworker.example.workers.dev/1719' */ };
+    /* ===================== PERSISTENZA (local + Google Apps Script) ===================== */
+    const PERSIST_REMOTE = {
+      enabled: true,
+      endpoint: 'https://script.google.com/macros/s/PASTE_TUO_URL_EXEC/exec' // ← incolla qui l’URL /exec della tua Web App
+      // se usi SECRET nello script: endpoint: '.../exec?key=IL_TUO_TOKEN'
+    };
 
     const Store = {
-      key:'1719-reactions-v1',
-      state:{ rocketsByName:{}, flamesByEvent:{}, heartsByEvent:{}, totals:{rockets:0, flames:0, hearts:0} },
+      key:'1719-reactions-v2',
+      state:{ rocketsByName:{}, flamesByEvent:{}, totals:{rockets:0, flames:0} },
       loaded:false,
       load(){
         try{ const s=localStorage.getItem(this.key); if(s){ const j=JSON.parse(s); this.state={...this.state, ...j}; } }catch{}
@@ -704,27 +719,16 @@
         this.save(); return this.state.flamesByEvent[eid];
       },
       getFlame(eid){ return this.state.flamesByEvent[eid]||0; },
-      toggleHeart(eid, name){
-        const key = eid+'::'+String(name).toUpperCase();
-        const curr = this.state.heartsByEvent[key]||0;
-        const next = curr ? 0 : 1;
-        this.state.heartsByEvent[key] = next;
-        this.state.totals.hearts += next?1:-1;
-        this.save(); return next;
-      },
-      getHeart(eid,name){ return this.state.heartsByEvent[eid+'::'+String(name).toUpperCase()]||0; },
       getRockets(name){ return this.state.rocketsByName[String(name).toUpperCase()]||0; },
       totals(){ return this.state.totals; },
 
-      // ---- opzionale: sync remoto ----
       async remotePull(){
         if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
         try{
           const r = await fetch(PERSIST_REMOTE.endpoint, {method:'GET'});
           if(!r.ok) return;
-          const data = await r.json();
-          // semplice merge: somma totali e unisci massimi
-          const A = this.state, B = data||{};
+          const B = await r.json();
+          const A = this.state;
           const merged = JSON.parse(JSON.stringify(A));
           // rockets
           for(const k in (B.rocketsByName||{})){
@@ -734,15 +738,9 @@
           for(const k in (B.flamesByEvent||{})){
             merged.flamesByEvent[k] = Math.max(A.flamesByEvent[k]||0, B.flamesByEvent[k]||0);
           }
-          // hearts
-          for(const k in (B.heartsByEvent||{})){
-            merged.heartsByEvent[k] = Math.max(A.heartsByEvent[k]||0, B.heartsByEvent[k]||0);
-          }
-          // totals (ricalcolo da mappe)
           merged.totals = {
             rockets: Object.values(merged.rocketsByName).reduce((a,b)=>a+b,0),
-            flames:  Object.values(merged.flamesByEvent).reduce((a,b)=>a+b,0),
-            hearts:  Object.values(merged.heartsByEvent).reduce((a,b)=>a+b,0),
+            flames:  Object.values(merged.flamesByEvent).reduce((a,b)=>a+b,0)
           };
           this.state = merged; this.save();
         }catch(e){ /* silenzio */ }
@@ -751,7 +749,8 @@
         if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
         try{
           await fetch(PERSIST_REMOTE.endpoint, {
-            method:'POST', headers:{'Content-Type':'application/json'},
+            method:'POST',
+            headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // niente preflight
             body: JSON.stringify(this.state)
           });
         }catch(e){ /* silenzio */ }
@@ -761,18 +760,29 @@
     Store.load();
     Store.remotePull(); // se abilitato
 
-    /* ========== Helpers tap/double-tap ========== */
-    function makeDoubleTap(el, handler, threshold=280){
-      let last=0;
-      el.addEventListener('dblclick', (e)=>{ e.preventDefault(); handler(e); });
+    /* ========== Double-tap stable handler (no raddoppi) ========== */
+    function makeDoubleTap(el, handler, threshold=300, moveTol=18){
+      let lastTime=0, lastX=0, lastY=0;
       el.addEventListener('pointerdown', (e)=>{
+        // blocca selezione testo / emulazioni click
+        if(e.pointerType!=='mouse') e.preventDefault();
+        e.stopPropagation();
         const now = performance.now();
-        if(now - last < threshold){ handler(e); last=0; }
-        else { last = now; }
-      }, {passive:true});
+        const x = e.clientX, y = e.clientY;
+        const dt = now - lastTime;
+        const dist = Math.hypot(x-lastX, y-lastY);
+        if(dt < threshold && dist < moveTol){
+          lastTime = 0;
+          handler(e);
+        }else{
+          lastTime = now; lastX = x; lastY = y;
+        }
+      }, {passive:false});
+      // previeni il dblclick nativo che può ri-fare l'azione
+      el.addEventListener('dblclick', (e)=>{ e.preventDefault(); e.stopPropagation(); }, {passive:false});
     }
 
-    /* ========== POSTER ========== */
+    /* ========== POSTER / BOUNCER ========== */
     const posterData = {
       venue: '17/19 URBAN BISTROT',
       series: 'ELECTRO TECHNO NIGHT',
@@ -839,8 +849,8 @@
 
       // counter 🚀
       const n = Store.incRocket(name);
-      const badge = targetEl.querySelector('.mini-counter');
-      if(badge) badge.textContent = `🚀 ${n}`;
+      const cnt = targetEl.querySelector('.rc .n');
+      if(cnt) cnt.textContent = n;
 
       // piccolo surge sugli altri
       bouncers.forEach(o=>{
@@ -852,7 +862,7 @@
       // canvas shake
       posterCanvas.classList.remove('shake'); void posterCanvas.offsetWidth; posterCanvas.classList.add('shake');
       setTimeout(()=> targetEl.classList.remove('rocket'), DUR+80);
-      renderTotals(); // aggiorna card totali
+      renderTotals();
     }
 
     function initBouncers(names){
@@ -862,7 +872,7 @@
         const el = document.createElement('div');
         el.className = 'bouncer';
         el.dataset.name = name.toUpperCase();
-        el.innerHTML = `<span class="dot"></span>${name}<span class="mini-counter">🚀 ${Store.getRockets(name)}</span>`;
+        el.innerHTML = `<span class="dot"></span><span class="lbl">${name}</span><span class="rc">${SVG.rocket}<span class="n">${Store.getRockets(name)}</span></span>`;
         posterCanvas.appendChild(el);
         el.style.transform = 'translate(0,0)';
 
@@ -878,8 +888,7 @@
         const B = { el, x, y, w, h, vx, vy, rocket:null, surgeUntil:0, surgeFactor:1 };
         bouncers.push(B);
 
-        // Interazioni: doppio click + doppio tap
-        makeDoubleTap(el, ()=>triggerRocket(el));
+        makeDoubleTap(el, (e)=>triggerRocket(el));
       });
 
       let last = performance.now();
@@ -946,18 +955,6 @@
       return `Ciao 17/19 Urban Bistrot, vorrei prenotare un tavolo per "${ev.title}" di ${when}${start}. Nome: ____ • Persone: ____`;
     }
     function waUrlFromEvent(ev){ return `https://wa.me/393298252092?text=${encodeURIComponent(buildWaText(ev))}`; }
-
-    function bindPosterFromEvent(ev){
-      const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
-      posterData.venue    = (ev.venue||'17/19 URBAN BISTROT').toUpperCase();
-      posterData.series   = (ev.title||'').toUpperCase();
-      posterData.date     = formatPosterDate(ev.dateISO);
-      posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
-      posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Riccardo Battaglia')).toUpperCase();
-      posterData.logos    = (ev.sponsors || []).map(s => s.src ? {src:s.src, alt:s.alt||'logo'} : {text:(s.text||'').toUpperCase()});
-      setPosterTexts(posterData);
-      initBouncers(names.slice(0,3));
-    }
 
     /* ========== MENU DATA (EDITA QUI) ========== */
     const menuData = [
@@ -1046,73 +1043,30 @@
 
     /* ========== EVENTI ========== */
     const events = [
-      {
-        dateISO: '2025-09-03',
-        comingSoon: false,
-        venue: '17/19 URBAN BISTROT',
-        title: 'Electro Techno • Vinyl Only',
-        genres: ['TECHNO', 'ELECTRO', 'VINYL'],
-        start: '22:30',
-        curatedBy: 'Riccardo Battaglia',
-        headliner: 'HEADLINER',
-        guests: ['GUEST1', 'GUEST2'],
-        sponsors: [ { text: 'SPONSOR1' }, { text: 'SPONSOR2' }, { text: 'ADJECTIVE1' }, { text: 'ADJECTIVE2' } ],
-      },
-      {
-        dateISO: '2025-09-05',
-        comingSoon: false,
-        venue: '17/19 URBAN BISTROT',
-        title: 'Acid District',
-        genres: ['ACID', 'TECHNO', 'VINYL'],
-        start: '22:30',
-        curatedBy: 'Riccardo Battaglia',
-        headliner: 'ALBA NERA',
-        guests: ['RBN', 'GIO BERLIN'],
-        sponsors: [ { text: 'CASAMIGOS' } ],
-      },
-      {
-        dateISO: '2025-09-07',
-        comingSoon: false,
-        venue: '17/19 URBAN BISTROT',
-        title: 'Minimal Sunday',
-        genres: ['MINIMAL', 'DEEP', 'VINYL'],
-        start: '18:00',
-        curatedBy: 'Riccardo Battaglia',
-        headliner: 'MARCO VOSS',
-        guests: ['LIVIA FERRO'],
-        sponsors: [ { text: 'ORGANICS' } ],
-      },
+      { dateISO: '2025-09-03', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Electro Techno • Vinyl Only', genres: ['TECHNO', 'ELECTRO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'HEADLINER', guests: ['GUEST1', 'GUEST2'] },
+      { dateISO: '2025-09-05', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Acid District', genres: ['ACID', 'TECHNO', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'ALBA NERA', guests: ['RBN', 'GIO BERLIN'] },
+      { dateISO: '2025-09-07', comingSoon: false, venue: '17/19 URBAN BISTROT', title: 'Minimal Sunday', genres: ['MINIMAL', 'DEEP', 'VINYL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'MARCO VOSS', guests: ['LIVIA FERRO'] },
       { dateISO: '2025-09-12', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Friday Deep Cuts', genres: ['DEEP', 'MINIMAL', 'VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'TBA', guests: [] },
       { dateISO: '2025-09-14', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',   genres: ['HOUSE', 'MINIMAL'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA' },
       { dateISO: '2025-09-20', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Electro Romance',  genres: ['ELECTRO', 'TECHNO'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'VALE C.', guests: ['M.A.D.'] },
       { dateISO: '2025-09-27', comingSoon: true,  venue: '17/19 URBAN BISTROT', title: 'Vinyl Marathon',   genres: ['TECHNO', 'HOUSE'], start: '22:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA' }
     ];
 
+    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
+    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
     function pickNextEvent(){
       const today = new Date(); today.setHours(0,0,0,0);
       const up = events.filter(e=>!isNaN(new Date(e.dateISO)) && new Date(e.dateISO) >= today)
                        .sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
       return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
     }
-
     function eventId(ev){ return ev.dateISO + '::' + slug(ev.title); }
 
-    function makeNameChip(name, role, evID){
+    function makeNameChip(name, role){
       if(!name) return null;
       const chip = document.createElement('span');
       chip.className = 'name-chip';
-      chip.dataset.name = name;
-      chip.dataset.event = evID;
-      const count = Store.getHeart(evID, name);
-      chip.innerHTML = `${role==='headliner' ? '<span class="dot" style="width:8px;height:8px;border-radius:3px;background:var(--fg);margin-right:6px"></span>' : ''}${name} <span class="heart-count">❤️ ${count}</span>`;
-      if(count) chip.classList.add('hearted');
-      chip.addEventListener('click', ()=>{
-        const on = Store.toggleHeart(evID, name);
-        const hc = chip.querySelector('.heart-count');
-        hc.textContent = `❤️ ${on?1:0}`;
-        chip.classList.toggle('hearted', !!on);
-        renderTotals();
-      });
+      chip.innerHTML = `${role==='headliner' ? '<span class="dot" style="width:8px;height:8px;border-radius:3px;background:var(--fg)"></span>' : ''}${name}`;
       return chip;
     }
 
@@ -1129,8 +1083,7 @@
         const dow = toItDowShort(d).slice(0,3).toUpperCase();
         const eid = eventId(ev);
 
-        const el = document.createElement('div'); el.className='event';
-        el.dataset.eid = eid;
+        const el = document.createElement('div'); el.className='event'; el.dataset.eid = eid;
 
         // Title
         const title = document.createElement('div');
@@ -1162,38 +1115,32 @@
         top.appendChild(cta);
         el.appendChild(top);
 
-        // Info row
+        // Info row — niente nomi (evita duplicazioni), solo start+generi
         const info = document.createElement('div');
         info.className = 'event__info';
-        if(ev.comingSoon){
-          info.innerHTML = `<span>COMING SOON</span>`;
-        }else{
-          const guestsTxt = ev.guests && ev.guests.length ? `Guests: ${ev.guests.join(', ')}` : null;
-          const parts = [ ev.start ? `Start ${ev.start}` : null, ...(ev.genres||[]), guestsTxt ].filter(Boolean);
-          info.innerHTML = parts.map(t=>`<span>${t}</span>`).join('');
-        }
+        const parts = [ ev.start ? `Start ${ev.start}` : null, ...(ev.genres||[]) ].filter(Boolean);
+        info.innerHTML = parts.map(t=>`<span>${t}</span>`).join('');
         el.appendChild(info);
 
-        // Names row (headliner + guest chips)
+        // Names row (headliner + guest chips, non cliccabili)
         const namesRow = document.createElement('div');
         namesRow.className = 'event__names';
-        const head = makeNameChip(ev.headliner, 'headliner', eid); if(head) namesRow.appendChild(head);
-        (ev.guests||[]).forEach(g=>{ const ch = makeNameChip(g, 'guest', eid); if(ch) namesRow.appendChild(ch); });
+        const head = makeNameChip(ev.headliner, 'headliner'); if(head) namesRow.appendChild(head);
+        (ev.guests||[]).forEach(g=>{ const ch = makeNameChip(g, 'guest'); if(ch) namesRow.appendChild(ch); });
         el.appendChild(namesRow);
 
         // Flame badge
-        const fb = document.createElement('div'); fb.className = 'flame-badge'; fb.textContent = `🔥 ${Store.getFlame(eid)}`;
+        const fb = document.createElement('div'); fb.className = 'flame-badge'; fb.innerHTML = `${SVG.flame}<strong class="n">${Store.getFlame(eid)}</strong>`;
         el.appendChild(fb);
 
         // apply current flame state
         if(Store.getFlame(eid)) el.classList.add('event--flamed');
 
         // Double-tap on card => toggle flame
-        makeDoubleTap(el, ()=>{
+        makeDoubleTap(el, (e)=>{
           const on = Store.toggleFlame(eid);
           el.classList.toggle('event--flamed', !!on);
-          fb.textContent = `🔥 ${on}`;
-          // piccola anim
+          fb.querySelector('.n').textContent = on;
           el.style.transform='scale(1.02)'; setTimeout(()=>el.style.transform='', 120);
           renderTotals();
         });
@@ -1211,18 +1158,29 @@
       const t = Store.totals();
       $('#totalRockets').textContent = t.rockets || 0;
       $('#totalFlames').textContent  = t.flames  || 0;
-      $('#totalHearts').textContent  = t.hearts  || 0;
     }
 
-    // Init
-    function initAll(){
+    /* ===== Init ===== */
+    function bindPosterFromEvent(ev){
+      const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
+      posterData.venue    = (ev.venue||'17/19 URBAN BISTROT').toUpperCase();
+      posterData.series   = (ev.title||'').toUpperCase();
+      posterData.date     = formatPosterDate(ev.dateISO);
+      posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
+      posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Riccardo Battaglia')).toUpperCase();
+      posterData.logos    = (ev.sponsors || []).map(s => s.src ? {src:s.src, alt:s.alt||'logo'} : {text:(s.text||'').toUpperCase()});
+      setPosterTexts(posterData);
+      initBouncers(names.slice(0,3)); // razzi solo sul prossimo evento (nomi nel poster)
+    }
+
+    function renderEverything(){
       renderMenu();
       renderEvents();
       bindPosterFromEvent(pickNextEvent());
       $('#eventsMoreBtn').addEventListener('click', ()=>{ eventsExpanded = !eventsExpanded; renderEvents(); });
       renderTotals();
     }
-    initAll();
+    renderEverything();
 
     /* ========== Gallery (con crediti) ========== */
     const galleryData = [
