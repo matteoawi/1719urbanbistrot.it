@@ -29,17 +29,17 @@
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
         --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-        --accent:#ff1f3d; --accent-fg:#000000;
+        --accent#c23331; --accent-fg:#000000;
         --chip:#121212; --chip-fg:#e5e7eb;
       }
     }
     html[data-theme="light"]{
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
-      --accent:#ff1f3d; --accent-fg:#ffffff; --chip:#f4f4f5; --chip-fg:#0b0b0b;
+      --accent:#c23331; --accent-fg:#ffffff; --chip:#f4f4f5; --chip-fg:#0b0b0b;
     }
     html[data-theme="dark"]{
       --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-      --accent:#ff1f3d; --accent-fg:#000000; --chip:#121212; --chip-fg:#e5e7eb;
+      --accent:#c23331; --accent-fg:#000000; --chip:#121212; --chip-fg:#e5e7eb;
     }
 
     *{box-sizing:border-box} html,body{margin:0}
@@ -195,7 +195,7 @@
     .poster-logos span.poster-sponsor{ font-weight:900; letter-spacing:.12em; font-size:.72rem; opacity:.95 }
     .bouncer{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:.16em .44em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;will-change:transform;box-shadow:0 0 0 1px var(--line) inset;background:color-mix(in oklab, var(--bg) 96%, transparent);user-select:none; -webkit-user-select:none; touch-action:manipulation; z-index:2;}
     .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:2px;vertical-align:middle}
-    .bouncer .rc{display:inline-flex; align-items:center; gap:6px; padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent); font-weight:900}
+    .bouncer .rc{display:none !important; align-items:center; gap:6px; padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent); font-weight:900}
     .bouncer .lbl{ transition: color .2s }
     .bouncer.up-lit .lbl{ color: var(--accent); text-shadow: 0 0 10px color-mix(in oklab, var(--accent) 40%, transparent) }
 
@@ -486,6 +486,7 @@
         <p><strong>Indirizzo</strong><br/>Via di Santa Costanza 17/19 — 00198 Roma</p>
         <p><strong>Prenotazioni</strong><br/>
           WhatsApp: <a class="pill" href="https://wa.me/393298252092" target="_blank" rel="noopener">+39 329 825 2092</a><br/>
+          <br/>
           Email: <a class="pill" href="mailto:info@1719bistrot.it">info@1719bistrot.it</a>
         </p>
         <p><strong>Social</strong><br/>
@@ -501,7 +502,7 @@
         </div>
         <div class="map">
           <iframe title="Mappa 17/19 Urban Bistrot" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=41.9226318,12.5118941&z=16&output=embed"></iframe>
+            src="https://www.google.com/maps?q=41.9226317,12.5095981&z=16&output=embed"></iframe>
         </div>
       </div>
     </div>
