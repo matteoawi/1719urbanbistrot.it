@@ -7,22 +7,21 @@
   <meta name="description" content="17/19 Urban Bistrot Roma. DJ set in vinile curated by Riccardo Battaglia. Colazioni, pranzi, cene e cocktail signature." />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
-
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
 
   <style>
     :root{
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
       --accent:#ff1f3d; --accent-fg:#ffffff;
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
-      --radius:16px; --pad:clamp(16px,4vw,32px); --max:1120px;
+      --radius:16px; --pad:clamp(14px,4vw,28px); --max:1120px;
       --header-h:64px;
     }
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
-        --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
+        --bg:#0b0b0b; --fg:#ffffff; --muted:#a1a1aa; --line:#1f1f1f;
         --accent:#ff1f3d; --accent-fg:#000;
         --chip:#121212; --chip-fg:#e5e7eb;
       }
@@ -32,7 +31,7 @@
       --accent:#ff1f3d; --accent-fg:#ffffff; --chip:#f4f4f5; --chip-fg:#0b0b0b;
     }
     html[data-theme="dark"]{
-      --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
+      --bg:#0b0b0b; --fg:#ffffff; --muted:#a1a1aa; --line:#1f1f1f;
       --accent:#ff1f3d; --accent-fg:#000; --chip:#121212; --chip-fg:#e5e7eb;
     }
 
@@ -43,16 +42,15 @@
     section{padding:20px 0}
     .grid{display:grid;gap:16px}
     .grid-2{grid-template-columns:1fr}
-    .grid-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .only-desktop{display:none} .only-mobile{display:flex}
-    @media (min-width:768px){ .grid-2{grid-template-columns:1.2fr .8fr} .only-desktop{display:flex} .only-mobile{display:none} }
+    @media (min-width:768px){ .grid-2{grid-template-columns:1.15fr .85fr} }
 
     /* Header */
-    header{position:fixed;top:0;left:0;right:0;background:transparent;border-bottom:0;z-index:100}
+    header{position:fixed;top:0;left:0;right:0;background:transparent;z-index:100}
     header.header--solid{background:color-mix(in oklab, var(--bg) 85%, transparent);border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
     nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
     .brand img{height:48px;width:auto} @media (min-width:768px){ .brand img{height:56px} }
+
     .nav-desktop{display:none;gap:12px;align-items:center;list-style:none;margin:0;padding:0}
     .nav-desktop a{color:var(--fg);text-decoration:none;font-weight:800;opacity:.9}
     .nav-desktop a:hover{opacity:1}
@@ -61,10 +59,8 @@
     .pill{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.7rem 1.1rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:900;background:var(--chip);color:var(--chip-fg);white-space:nowrap}
     .pill--accent{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
     .pill--ghost{background:transparent}
-    .pill:where(:hover,:focus-visible){transform:translateY(-1px);transition:transform .15s ease}
 
-    .toggle{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--chip-fg);display:grid;place-items:center;cursor:pointer}
-    .menu-toggle{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--chip);display:grid;place-items:center;cursor:pointer}
+    .toggle,.menu-toggle{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--chip-fg);display:grid;place-items:center;cursor:pointer}
     .menu-toggle span,.menu-toggle span::before,.menu-toggle span::after{display:block;width:18px;height:2px;background:var(--fg);content:"";position:relative}
     .menu-toggle span::before{position:absolute;top:-6px} .menu-toggle span::after{position:absolute;top:6px}
 
@@ -82,7 +78,6 @@
 
     /* Hero */
     .hero{padding:72px 0 24px}
-    .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:800;color:var(--muted);background:var(--chip)}
     h1{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
     .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.18rem);margin:8px 0 14px}
 
@@ -95,49 +90,59 @@
     .dot{width:9px;height:9px;border-radius:999px;background:#a1a1aa;border:1px solid #00000020;cursor:pointer;opacity:.85}
     .dot.active{background:#fff;opacity:1}
 
-    /* Cards + menu */
+    /* Cards + panel */
     .card{border:1px solid var(--line);border-radius:16px;padding:16px;background:color-mix(in oklab, var(--bg) 96%, transparent)}
     .block-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .block-title h3{font-family:'Montserrat',system-ui,sans-serif;font-size:1rem;margin:0;letter-spacing:.02em}
     .meta{color:var(--muted);font-size:.95rem}
+
     .time-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
     @media (max-width:420px){ .time-cards{grid-template-columns:1fr;} }
     .time-card{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:color-mix(in oklab, var(--bg) 98%, transparent)}
 
-    details.menu-acc{border:1px solid var(--line);border-radius:16px;background:color-mix(in oklab, var(--bg) 96%, transparent);padding:12px}
-    details.menu-acc + details.menu-acc{margin-top:12px}
-    details.menu-acc[open]{background:color-mix(in oklab, var(--bg) 98%, transparent)}
-    summary.menu-sum{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer}
-    summary.menu-sum::-webkit-details-marker{display:none}
-    .menu-sum h3{margin:8px 0 0;font-family:'Montserrat',system-ui,sans-serif}
-    .menu-sum .chev{margin-left:auto;transition:transform .2s}
-    details[open] .menu-sum .chev{transform:rotate(180deg)}
-    .menu-body{padding:8px 4px 2px}
-    .group-title{margin:8px 0 4px;font-weight:800}
-    .menu-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
-    .menu-item:last-child{border-bottom:0}
+    /* ===== MENU ===== */
+    /* griglia pannelli categoria (due colonne anche su mobile) */
+    .menu-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    /* per schermi piccolissimi forziamo comunque 2 col ma con min */
+    @media (max-width:360px){ .menu-panels{grid-template-columns:1fr 1fr} }
+
+    .menu-panel{border:1px solid var(--line);border-radius:16px;background:color-mix(in oklab, var(--bg) 96%, transparent);padding:12px}
+    .menu-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .menu-head h4{font-family:'Montserrat',system-ui,sans-serif;margin:0;font-size:1.02rem;letter-spacing:.02em}
+
+    /* items in due colonne */
+    .items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;border:1px dashed var(--line);border-radius:12px;padding:10px;background:color-mix(in oklab, var(--bg) 98%, transparent)}
+    .item .name{font-weight:800}
+    .item .desc{font-size:.95rem;color:var(--muted);margin-top:2px}
+    .item .right{display:flex;align-items:center;gap:6px}
     .price{color:var(--accent);font-weight:900}
+    .photo-btn{display:inline-grid;place-items:center;width:34px;height:34px;border:1px solid var(--line);border-radius:10px;background:var(--chip);cursor:pointer}
+    .photo-btn svg{width:18px;height:18px}
+    .photo-btn[hidden]{display:none}
 
-    /* Gallery griglia interna alle colazioni */
-    .mini-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0 4px}
-    @media (min-width:700px){ .mini-photos{grid-template-columns:repeat(4,1fr)} }
-    .mini-photos img{border-radius:12px;border:1px solid var(--line);aspect-ratio:4/5;object-fit:cover}
+    /* Modal foto prodotto */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
+    .lightbox.active{display:flex}
+    .lightbox__inner{position:relative;max-width:min(92vw,720px)}
+    .lightbox__img{width:100%;border-radius:14px;border:1px solid #00000040;object-fit:contain;max-height:82vh;background:#000}
+    .lightbox__close{position:absolute;top:-12px;right:-12px;width:44px;height:44px;border-radius:999px;border:0;background:#fff;color:#000;font-weight:900;font-size:20px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.4)}
 
-    /* Map + gallery macro */
+    /* Gallery macro */
     .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     @media (min-width:768px){ .gallery{grid-template-columns:repeat(4,1fr)} }
     .gallery a{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--chip)}
+
     .map{border:1px solid var(--line);border-radius:16px;overflow:hidden}
     .map iframe{width:100%;height:320px;border:0;display:block}
     @media (min-width:768px){ .map iframe{height:360px} }
 
     footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);text-align:center}
 
-    /* Mobile: CTA menù larga */
-    .cta-menu-mobile{flex:1}
-    .cta-menu-mobile .pill{width:100%}
-    /* Sticky translucido */
-    const headerBorder=0;
+    /* Mobile header row */
+    .only-mobile{display:flex;gap:8px;align-items:center;width:100%}
+    @media (min-width:768px){ .only-mobile{display:none} }
+    .cta-menu-mobile{flex:1}.cta-menu-mobile .pill{width:100%}
   </style>
 </head>
 <body>
@@ -146,7 +151,6 @@
     <div class="container">
       <nav aria-label="principale">
         <a class="brand" href="#">
-          <!-- usa i tuoi SVG se preferisci -->
           <img src="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logooo.svg?v=1755102480" alt="17/19 Urban Bistrot" />
         </a>
 
@@ -157,17 +161,15 @@
           <li><a href="#events">Eventi</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contatti</a></li>
-          <!-- nuovo bottone rosso → ancoraggio menù -->
+          <!-- bottone ROSSO ancorato al menù -->
           <li><a class="pill pill--accent" href="#menu">Menù</a></li>
-          <!-- prenota lasciato come bottone “ghost” -->
-          <li><a class="pill pill--ghost" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
-          <!-- Interazioni RIMOSSO come richiesto -->
+          <li><a class="pill pill--ghost" href="https://wa.me/393298252092?text=Ciao%2017%2F19%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
           <li><button id="themeToggle" class="toggle" aria-label="Tema"></button></li>
           <li><button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button></li>
         </ul>
 
-        <!-- Mobile: bottone ROSSO largo + toggle + hamburger -->
-        <div class="only-mobile" style="gap:8px;align-items:center;width:100%">
+        <!-- Mobile -->
+        <div class="only-mobile">
           <div class="cta-menu-mobile"><a class="pill pill--accent" href="#menu">Menù</a></div>
           <button id="themeToggleM" class="toggle" aria-label="Tema"></button>
           <button class="menu-toggle" id="menuToggle" aria-label="Apri/chiudi menu"><span></span></button>
@@ -176,7 +178,7 @@
     </div>
   </header>
 
-  <!-- Fullscreen Site Menu -->
+  <!-- Fullscreen Menu -->
   <div class="sheet" id="siteMenu" role="dialog" aria-hidden="true" aria-modal="true" aria-label="menu sito">
     <div class="sheet__panel">
       <button class="sheet__close" id="sheetClose" type="button" aria-label="Chiudi menu">×</button>
@@ -197,19 +199,13 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container grid grid-2">
-      <!-- sinistra: CAROSELLO -->
-      <div class="reveal">
+      <div>
         <div class="hero-media" id="heroCarousel" aria-label="carosello hero">
           <div class="dots" id="heroDots"></div>
         </div>
-        <span class="tag" style="margin-top:12px">
-          Roma • Via di Santa Costanza 17/19
-        </span>
       </div>
-
-      <!-- destra: orari + about -->
-      <div class="hero-right">
-        <aside class="card reveal" aria-label="Orari e Servizio">
+      <div>
+        <aside class="card" aria-label="Orari e Servizio">
           <div class="block-title"><h3>Orari & Apertura</h3><span class="meta">Servizio</span></div>
           <div class="time-cards">
             <div class="time-card"><strong>Colazioni</strong><strong>09:30–12:00</strong></div>
@@ -219,187 +215,286 @@
           </div>
         </aside>
 
-        <div id="about" class="card reveal">
+        <div id="about" class="card">
           <div class="block-title"><h3>Urban Bistrot</h3></div>
-          <p style="margin:0">17/19 è un bar con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Musica elettronica dal vivo, rigorosamente <strong>vinile</strong> — line-up curata da <strong>Riccardo Battaglia</strong>. Spazio polifunzionale aperto a podcast, riunioni e progetti per la community.</p>
+          <p style="margin:0">17/19 è un bar con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Musica elettronica dal vivo, <strong>vinile</strong> — line-up curata da <strong>Riccardo Battaglia</strong>. Spazio polifunzionale aperto a podcast, riunioni e progetti per la community.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Live Shots -->
-  <section id="live">
-    <div class="container">
-      <div class="block-title" style="margin-bottom:14px"><h3>Live Shots</h3></div>
-      <div class="hero-media" id="liveCarousel" aria-label="carosello">
-        <div class="dots" id="liveDots"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Menu -->
+  <!-- MENU -->
   <section id="menu">
     <div class="container">
       <div class="block-title" style="margin-bottom:6px"><h3>Il nostro menù</h3></div>
 
-      <!-- COLAZIONI -->
-      <details class="menu-acc" open>
-        <summary class="menu-sum">
-          <span class="badge" aria-hidden="true">Novità</span>
-          <h3 style="margin-left:4px">Colazioni (fino alle 11:30)</h3>
-          <span class="chev">▾</span>
-        </summary>
-        <div class="menu-body">
-          <!-- mini-gallery: SOSTITUISCI i src con i tuoi file -->
-          <div class="mini-photos">
-            <!-- TIP: carica questi 4 file nel tuo hosting (es. /img/colazioni/...) -->
-            <img src="assets/colazioni-1.jpg" alt="Colazioni special - 1">
-            <img src="assets/colazioni-2.jpg" alt="Colazioni special - 2">
-            <img src="assets/colazioni-3.jpg" alt="Bakery">
-            <img src="assets/colazioni-4.jpg" alt="Caffetteria">
-          </div>
+      <!-- Pannelli categoria in due colonne -->
+      <div class="menu-panels">
 
-          <div class="group-title">Colazioni Special</div>
-          <div class="menu-item">
-            <div><strong>Colazione all’Italiana</strong><br>
-              Tris di miele italiano selezionato e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè
+        <!-- COLAZIONI SPECIAL -->
+        <div class="menu-panel" id="colazioni">
+          <div class="menu-head"><h4>Colazioni Special (fino alle 11:30)</h4></div>
+          <div class="items">
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">Colazione all’Italiana</div>
+                <div class="desc">Tris di miele italiano e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè</div>
+              </div>
+              <div class="right">
+                <span class="price">10,00</span>
+                <!-- niente foto → niente pulsante -->
+              </div>
             </div>
-            <div class="price">10,00</div>
-          </div>
-          <div class="menu-item">
-            <div><strong>French Breakfast</strong><br>
-              Tè o infuso d’erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture
-            </div>
-            <div class="price">7,00</div>
-          </div>
-          <div class="menu-item">
-            <div><strong>Danish Breakfast</strong><br>
-              Spremuta; toast o pancake con sciroppo d’acero; caffè
-            </div>
-            <div class="price">7,00</div>
-          </div>
-          <div class="menu-item">
-            <div><strong>American Breakfast Salata</strong><br>
-              Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano
-            </div>
-            <div class="price">12,00</div>
-          </div>
-          <div class="menu-item">
-            <div><strong>American Breakfast Dolce</strong><br>
-              Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano
-            </div>
-            <div class="price">10,00</div>
-          </div>
-          <div class="menu-item">
-            <div><strong>American Breakfast Piccante</strong><br>
-              Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano
-            </div>
-            <div class="price">12,00</div>
-          </div>
 
-          <div class="group-title">Bakery</div>
-          <div class="menu-item"><div>Pancake con sciroppo d’acero o d’agave</div><div class="price">4,50</div></div>
-          <div class="menu-item"><div>Pancake con crema, cioccolato o crema di pistacchio e panna</div><div class="price">5,00</div></div>
-          <div class="menu-item"><div>Pancake con confettura/marmellata e frutta fresca</div><div class="price">5,00</div></div>
-          <div class="menu-item"><div>Pasticceria da tè</div><div class="price">5,00</div></div>
-          <div class="menu-item"><div>Crostata di marmellata (al pz.)</div><div class="price">3,50</div></div>
-          <div class="menu-item"><div>Croissant mignon semplice o farcito</div><div class="price">1,50</div></div>
-          <div class="menu-item"><div>Mini muffin classico o farcito</div><div class="price">1,50</div></div>
-          <div class="menu-item"><div>Mini bombetta o mini ciambellina</div><div class="price">1,50</div></div>
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">French Breakfast</div>
+                <div class="desc">Tè o infuso d’erbe; pan piastrato o brioche con burro; selezione di marmellate/composte</div>
+              </div>
+              <div class="right"><span class="price">7,00</span></div>
+            </div>
 
-          <div class="group-title">Cioccolata Calda <span class="meta">(La Classica Oro, Caramello salato, Gianduia, Rose & Lamponi, Arancia & Cannella, Fondente o Bianca al Pistacchio, Menta)</span></div>
-          <div class="menu-item"><div>Qualsiasi gusto</div><div class="price">4,50</div></div>
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">Danish Breakfast</div>
+                <div class="desc">Spremuta; toast o pancake con sciroppo d’acero; caffè</div>
+              </div>
+              <div class="right"><span class="price">7,00</span></div>
+            </div>
 
-          <div class="group-title">Caffetteria</div>
-          <div class="menu-item"><div>Espresso</div><div class="price">1,50</div></div>
-          <div class="menu-item"><div>Espresso decaffeinato</div><div class="price">2,00</div></div>
-          <div class="menu-item"><div>Espresso americano</div><div class="price">2,50</div></div>
-          <div class="menu-item"><div>Latte macchiato</div><div class="price">2,50</div></div>
-          <div class="menu-item"><div>Caffè latte</div><div class="price">3,00</div></div>
-          <div class="menu-item"><div>Caffè o Cappuccino “Special”</div><div class="price">4,00</div></div>
-          <div class="menu-item"><div>Cappuccino</div><div class="price">2,00</div></div>
-          <div class="menu-item"><div>Cappuccino vegetale di soya</div><div class="price">3,00</div></div>
-          <div class="menu-item"><div>Cappuccino senza lattosio</div><div class="price">3,00</div></div>
-          <div class="menu-item"><div>Orzo <span class="meta">tazza / grande</span></div><div class="price">2,00 / 2,50</div></div>
-          <div class="menu-item"><div>Ginseng <span class="meta">tazza / grande</span></div><div class="price">2,00 / 2,50</div></div>
-          <div class="menu-item"><div>Spremuta di agrumi</div><div class="price">4,00</div></div>
-          <div class="menu-item"><div>Centrifugato</div><div class="price">5,00</div></div>
-          <div class="menu-item"><div>Macedonia o tagliata di frutta fresca</div><div class="price">6,00</div></div>
-          <div class="menu-item"><div>Granita</div><div class="price">6,00</div></div>
-          <div class="menu-item"><div>Milkshake</div><div class="price">4,00</div></div>
-          <div class="menu-item"><div>Tè, Rooibos o infuso d’erbe</div><div class="price">4,00</div></div>
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">American Breakfast Salata</div>
+                <div class="desc">Bacon e uova strapazzate; pan piastrato, burro e confetture; caffè americano</div>
+              </div>
+              <div class="right"><span class="price">12,00</span></div>
+            </div>
+
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">American Breakfast Dolce</div>
+                <div class="desc">Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano</div>
+              </div>
+              <div class="right"><span class="price">10,00</span></div>
+            </div>
+
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">American Breakfast Piccante</div>
+                <div class="desc">Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano</div>
+              </div>
+              <div class="right"><span class="price">12,00</span></div>
+            </div>
+          </div>
         </div>
-      </details>
 
-      <!-- PRANZO -->
-      <details class="menu-acc">
-        <summary class="menu-sum">
-          <h3>Pranzo</h3>
-          <span class="chev">▾</span>
-        </summary>
-        <div class="menu-body">
-          <p class="meta"><em>In allestimento.</em></p>
-          <!-- ESEMPI (rimuovi i commenti quando pronti)
-          <div class="menu-item"><div>Toast gourmet con salmone affumicato, avocado e lime</div><div class="price">9,00</div></div>
-          <div class="menu-item"><div>Insalata di stagione con feta, olive e vinaigrette al miele</div><div class="price">8,50</div></div>
-          -->
+        <!-- BAKERY -->
+        <div class="menu-panel" id="bakery">
+          <div class="menu-head"><h4>Bakery</h4></div>
+          <div class="items">
+            <div class="item" data-photo="">
+              <div><div class="name">Pancake sciroppo d’acero o d’agave</div></div>
+              <div class="right"><span class="price">4,50</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Pancake con crema/cioccolato o pistacchio e panna</div></div>
+              <div class="right"><span class="price">5,00</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Pancake con confettura e frutta fresca</div></div>
+              <div class="right"><span class="price">5,00</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Pasticceria da tè</div></div>
+              <div class="right"><span class="price">5,00</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Crostata di marmellata (al pz.)</div></div>
+              <div class="right"><span class="price">3,50</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Croissant mignon semplice o farcito</div></div>
+              <div class="right"><span class="price">1,50</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Mini muffin classico o farcito</div></div>
+              <div class="right"><span class="price">1,50</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Mini bombetta o mini ciambellina</div></div>
+              <div class="right"><span class="price">1,50</span></div>
+            </div>
+          </div>
         </div>
-      </details>
 
-      <!-- CENA -->
-      <details class="menu-acc">
-        <summary class="menu-sum">
-          <h3>Cena</h3>
-          <span class="chev">▾</span>
-        </summary>
-        <div class="menu-body">
-          <p class="meta"><em>In allestimento.</em></p>
-          <!-- ESEMPI (rimuovi i commenti quando pronti)
-          <div class="menu-item"><div>Pasta fresca cacio e pepe</div><div class="price">12,00</div></div>
-          <div class="menu-item"><div>Polpette di manzo con salsa al pepe e contorno di patate</div><div class="price">14,00</div></div>
-          -->
+        <!-- CIOCCOLATA CALDA -->
+        <div class="menu-panel" id="cioccolata">
+          <div class="menu-head"><h4>Cioccolata Calda</h4></div>
+          <div class="items">
+            <div class="item" data-photo="">
+              <div>
+                <div class="name">La Classica Oro / Caramello salato / Gianduia / Rose & Lamponi / Arancia & Cannella / Fondente o Bianca al Pistacchio / Menta</div>
+              </div>
+              <div class="right"><span class="price">4,50</span></div>
+            </div>
+          </div>
         </div>
-      </details>
 
-      <!-- DRINKS -->
-      <details class="menu-acc">
-        <summary class="menu-sum">
-          <h3>Drinks & Cocktail</h3>
-          <span class="chev">▾</span>
-        </summary>
-        <div class="menu-body">
-          <p class="meta"><em>In allestimento.</em></p>
-          <!-- ESEMPI (rimuovi i commenti quando pronti)
-          <div class="menu-item"><div>Signature “17/19” — gin, lime, bitter, miele</div><div class="price">10,00</div></div>
-          <div class="menu-item"><div>Negroni Sbagliato</div><div class="price">8,00</div></div>
-          -->
+        <!-- CAFFETTERIA -->
+        <div class="menu-panel" id="caffetteria">
+          <div class="menu-head"><h4>Caffetteria</h4></div>
+          <div class="items">
+            <div class="item" data-photo=""><div><div class="name">Espresso</div></div><div class="right"><span class="price">1,50</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Espresso decaffeinato</div></div><div class="right"><span class="price">2,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Espresso americano</div></div><div class="right"><span class="price">2,50</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Latte macchiato</div></div><div class="right"><span class="price">2,50</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Caffè latte</div></div><div class="right"><span class="price">3,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Caffè o Cappuccino “Special”</div></div><div class="right"><span class="price">4,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Cappuccino</div></div><div class="right"><span class="price">2,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Cappuccino vegetale di soya</div></div><div class="right"><span class="price">3,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Cappuccino senza lattosio</div></div><div class="right"><span class="price">3,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Orzo (tazza / grande)</div></div><div class="right"><span class="price">2,00 / 2,50</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Ginseng (tazza / grande)</div></div><div class="right"><span class="price">2,00 / 2,50</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Spremuta di agrumi</div></div><div class="right"><span class="price">4,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Centrifugato</div></div><div class="right"><span class="price">5,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Macedonia o tagliata di frutta fresca</div></div><div class="right"><span class="price">6,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Granita</div></div><div class="right"><span class="price">6,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Milkshake</div></div><div class="right"><span class="price">4,00</span></div></div>
+            <div class="item" data-photo=""><div><div class="name">Tè, Rooibos o infuso d’erbe</div></div><div class="right"><span class="price">4,00</span></div></div>
+          </div>
         </div>
-      </details>
+
+        <!-- PRANZO -->
+        <div class="menu-panel" id="pranzo">
+          <div class="menu-head"><h4>Pranzo</h4><span class="meta">In allestimento</span></div>
+          <div class="items">
+            <!-- ESEMPI (sblocca rimuovendo i commenti)
+            <div class="item" data-photo="https://images.unsplash.com/photo-1550547660-d9450f859349">
+              <div><div class="name">Toast gourmet salmone, avocado e lime</div><div class="desc">Pane multicereali, crema di avocado, cetriolo</div></div>
+              <div class="right"><span class="price">9,00</span></div>
+            </div>
+            <div class="item" data-photo="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe">
+              <div><div class="name">Insalata di stagione</div><div class="desc">Feta, olive, pomodorini, vinaigrette al miele</div></div>
+              <div class="right"><span class="price">8,50</span></div>
+            </div>
+            -->
+          </div>
+        </div>
+
+        <!-- CENA -->
+        <div class="menu-panel" id="cena">
+          <div class="menu-head"><h4>Cena</h4><span class="meta">In allestimento</span></div>
+          <div class="items">
+            <!-- ESEMPI
+            <div class="item" data-photo="https://images.unsplash.com/photo-1526312426976-593c9cae0c8b">
+              <div><div class="name">Cacio e pepe</div><div class="desc">Pasta fresca, pecorino romano DOP</div></div>
+              <div class="right"><span class="price">12,00</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Polpette al pepe</div><div class="desc">Contorno patate al forno</div></div>
+              <div class="right"><span class="price">14,00</span></div>
+            </div>
+            -->
+          </div>
+        </div>
+
+        <!-- DRINKS -->
+        <div class="menu-panel" id="drinks">
+          <div class="menu-head"><h4>Drinks & Cocktail</h4><span class="meta">In allestimento</span></div>
+          <div class="items">
+            <!-- ESEMPI
+            <div class="item" data-photo="">
+              <div><div class="name">Signature “17/19”</div><div class="desc">Gin, lime, bitter, miele</div></div>
+              <div class="right"><span class="price">10,00</span></div>
+            </div>
+            <div class="item" data-photo="">
+              <div><div class="name">Negroni Sbagliato</div></div>
+              <div class="right"><span class="price">8,00</span></div>
+            </div>
+            -->
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
   <!-- MUSICA -->
   <section id="music">
     <div class="container">
-      <div class="card reveal">
-        <div class="block-title"><h3>Resident</h3></div>
-        <p>Riccardo Battaglia</p>
+      <div class="card">
+        <div class="block-title"><h3>Musica & Vinyl Only</h3></div>
+        <p style="margin:0">Line-up curata da <strong>Riccardo Battaglia</strong>. Techno • Electro • House — vinile, mixer analogici, ascolto di qualità.</p>
       </div>
     </div>
   </section>
 
-  <!-- Eventi (placeholder semplice) -->
+  <!-- EVENTI (ripristinati: info + modalità) -->
   <section id="events">
     <div class="container">
-      <div class="block-title" style="margin-bottom:6px"><h3>Prossimi Eventi</h3><span class="meta">stay tuned</span></div>
-      <div class="card"><p style="margin:0">Calendario in uscita. Segui Instagram per gli aggiornamenti.</p></div>
+      <div class="block-title" style="margin-bottom:6px"><h3>Eventi & Collaborazioni</h3></div>
+      <div class="grid" style="grid-template-columns:1fr; gap:16px">
+        <div class="card">
+          <h4 style="margin:0 0 6px;font-family:Montserrat">Cosa ospitiamo</h4>
+          <ul style="margin:6px 0 0 18px">
+            <li>DJ set in vinile (techno/electro/house)</li>
+            <li>Live acustici a volume controllato</li>
+            <li>Talk, podcast, presentazioni</li>
+            <li>Mostre, listening session, release party</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin:0 0 6px;font-family:Montserrat">Dotazione tecnica</h4>
+          <ul style="margin:6px 0 0 18px">
+            <li>2 giradischi + mixer analogico</li>
+            <li>Impianto PA interno con limitatore</li>
+            <li>Mic dinamico + stand</li>
+            <li>Console e area dedicata DJ</li>
+          </ul>
+          <p class="meta" style="margin:8px 0 0">Setup avanzati su richiesta. Rispettiamo il vicinato: livelli sonori controllati.</p>
+        </div>
+        <div class="card">
+          <h4 style="margin:0 0 6px;font-family:Montserrat">Come proporre un evento</h4>
+          <ol style="margin:6px 0 0 18px">
+            <li>Invia <strong>press kit</strong> (bio breve + link) e <strong>proposta</strong> con data preferita.</li>
+            <li>Indica <strong>tecnica</strong> e necessità (rider, orari, fee).</li>
+            <li>Conferma grafica/social: forniamo template per promo.</li>
+          </ol>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+            <a class="pill pill--accent" href="https://wa.me/393298252092?text=Proposta%20evento%20al%2017%2F19%3A%20titolo%2Fdata%2Frider" target="_blank" rel="noopener">Invia proposta su WhatsApp</a>
+            <a class="pill" href="mailto:info@1719bistrot.it?subject=Proposta%20evento%2017%2F19&body=Titolo%0ADate%0ARider%0ALink%20musica" target="_blank" rel="noopener">Oppure via Email</a>
+          </div>
+        </div>
+        <div class="card">
+          <h4 style="margin:0 0 6px;font-family:Montserrat">Policy organizzative</h4>
+          <ul style="margin:6px 0 0 18px">
+            <li>Selezione a cura della direzione artistica.</li>
+            <li>Promozione congiunta su social e canali locali.</li>
+            <li>Orari: feriali fino alle 00:30, weekend fino alle 02:00.</li>
+            <li>Possibile contributo spese/fee da concordare.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram sync -->
+  <section id="instagram">
+    <div class="container">
+      <div class="block-title" style="margin-bottom:6px">
+        <h3>Instagram</h3><span class="meta">@1719_urbanbistrot</span>
+      </div>
+      <div id="igGrid" class="gallery"></div>
+      <p id="igFallback" class="meta" style="text-align:center;margin-top:8px;display:none">
+        Segui <a href="https://instagram.com/1719_urbanbistrot" target="_blank" rel="noopener">@1719_urbanbistrot</a>
+      </p>
     </div>
   </section>
 
   <!-- Gallery -->
   <section id="gallery">
     <div class="container">
-      <div class="grid gallery">
+      <div class="gallery">
         <a href="#"><img alt="Shot 1" src="https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg"></a>
         <a href="#"><img alt="Shot 2" src="https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg"></a>
         <a href="#"><img alt="Shot 3" src="https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg"></a>
@@ -409,10 +504,10 @@
     </div>
   </section>
 
-  <!-- Contact + Map -->
+  <!-- Contatti -->
   <section id="contact">
     <div class="container grid grid-2">
-      <div class="card reveal">
+      <div class="card">
         <div class="block-title"><h3>Contatti</h3></div>
         <p><strong>Indirizzo</strong><br/>Via di Santa Costanza 17/19 — 00198 Roma</p>
         <p><strong>Prenotazioni</strong><br/>
@@ -420,12 +515,12 @@
           Email: <a class="pill" href="mailto:info@1719bistrot.it">info@1719bistrot.it</a>
         </p>
         <p><strong>Social</strong><br/>
-          <a class="pill" href="https://instagram.com/1719_cocktailbar" target="_blank" rel="noopener">Instagram</a>
+          <a class="pill" href="https://instagram.com/1719_urbanbistrot" target="_blank" rel="noopener">Instagram</a>
           <a class="pill" href="https://www.facebook.com/p/1719-Cocktail-Bar-Bistrot-100077668764198/" target="_blank" rel="noopener">Facebook</a>
         </p>
       </div>
 
-      <div class="card reveal">
+      <div class="card">
         <div class="block-title">
           <h3>Dove siamo</h3>
           <a class="pill pill--accent" href="https://maps.app.goo.gl/DH48FCh9wvF6mF8p6" target="_blank" rel="noopener">Google Maps</a>
@@ -442,6 +537,14 @@
     <div class="container"><p>&copy; 2025 17/19 Urban Bistrot Roma</p></div>
   </footer>
 
+  <!-- Lightbox foto prodotto -->
+  <div class="lightbox" id="photoModal" aria-hidden="true" role="dialog" aria-label="Foto prodotto">
+    <div class="lightbox__inner">
+      <button class="lightbox__close" id="photoClose" aria-label="Chiudi">×</button>
+      <img id="photoImg" class="lightbox__img" alt="Foto prodotto">
+    </div>
+  </div>
+
   <script>
     /* Header translucido */
     const header = document.querySelector('header');
@@ -454,23 +557,22 @@
     const panel = siteMenu.querySelector('.sheet__panel');
     const inner = siteMenu.querySelector('.sheet__inner');
     const toggleBtns = [document.getElementById('menuToggle'), document.getElementById('menuToggleD')].filter(Boolean);
-    const openMenu = ()=>{ siteMenu.classList.add('active'); siteMenu.setAttribute('aria-hidden','false'); document.body.classList.add('menu-open'); };
-    const closeMenu = ()=>{ siteMenu.classList.remove('active'); siteMenu.setAttribute('aria-hidden','true'); document.body.classList.remove('menu-open'); };
+    const openMenu = ()=>{ siteMenu.classList.add('active'); siteMenu.setAttribute('aria-hidden','false'); };
+    const closeMenu = ()=>{ siteMenu.classList.remove('active'); siteMenu.setAttribute('aria-hidden','true'); };
     toggleBtns.forEach(btn=> btn.addEventListener('click', ()=> siteMenu.classList.contains('active') ? closeMenu() : openMenu()));
     sheetClose.addEventListener('click', (e)=>{ e.stopPropagation(); closeMenu(); });
     panel.addEventListener('click', (e)=>{ if(!inner.contains(e.target)) closeMenu(); });
     inner.addEventListener('click', (e)=> e.stopPropagation());
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-    siteMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
 
     /* Theme button */
     const THEME_KEY = 'theme-1719';
     const root = document.documentElement;
     function applyTheme(mode){ root.setAttribute('data-theme', mode); localStorage.setItem(THEME_KEY, mode); paintThemeIcon(mode); }
     function paintThemeIcon(mode){
-      const svgAuto = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor" opacity=".9"/><text x="12" y="22" text-anchor="middle" font-size="7" font-family="monospace" fill="currentColor" opacity=".9">AUTO</text></svg>`;
-      const svgSun  = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
-      const svgMoon = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+      const svgAuto = `<svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5" fill="currentColor" opacity=".9"/><text x="12" y="22" text-anchor="middle" font-size="7" font-family="monospace" fill="currentColor" opacity=".9">AUTO</text></svg>`;
+      const svgSun  = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
+      const svgMoon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
       const icon = mode==='auto' ? svgAuto : mode==='light' ? svgSun : svgMoon;
       document.querySelectorAll('#themeToggle,#themeToggleM').forEach(btn=>btn.innerHTML = icon);
     }
@@ -479,25 +581,14 @@
     document.getElementById('themeToggleM')?.addEventListener('click', cycleTheme);
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
-    /* === Carosello HERO ===
-       Aggiorna qui le immagini del poster: basta cambiare gli URL sotto. */
+    /* === Carosello HERO === (sostituisci qui le immagini del poster) */
     const heroImages = [
-      // Sostituisci con i tuoi file (es. /img/hero-1.jpg, /img/hero-2.jpg, ...)
       "https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg",
       "https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg",
       "https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg"
     ];
     makeCarousel('heroCarousel','heroDots', heroImages, 5000);
 
-    /* Live shots (puoi riusare lo stesso array o cambiarlo) */
-    const liveImages = [
-      "https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg",
-      "https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg",
-      "https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg"
-    ];
-    makeCarousel('liveCarousel','liveDots', liveImages, 5000);
-
-    /* Mini builder carosello */
     function makeCarousel(boxId,dotsId,images,interval=5000){
       const box  = document.getElementById(boxId);
       const dots = document.getElementById(dotsId);
@@ -514,7 +605,66 @@
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, interval);
     }
 
-    /* Link esterni → nuova scheda */
+    /* ===== Pulsante fotocamera & modale =====
+       Aggiungi l'URL della foto nel data-attribute:
+       <div class="item" data-photo="https://.../pancake.jpg"> ... </div>
+       Se data-photo è vuoto → niente pulsante. */
+    const camSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3l2-3h8l2 3h3a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+    document.querySelectorAll('.item').forEach(it=>{
+      const url = it.getAttribute('data-photo')?.trim();
+      if(url){
+        const right = it.querySelector('.right');
+        const btn = document.createElement('button');
+        btn.className='photo-btn';
+        btn.innerHTML = camSvg;
+        btn.type='button';
+        btn.setAttribute('aria-label','Vedi foto');
+        btn.addEventListener('click', ()=> openPhoto(url));
+        right?.appendChild(btn);
+      }
+    });
+
+    const modal = document.getElementById('photoModal');
+    const photo = document.getElementById('photoImg');
+    const closeBtn = document.getElementById('photoClose');
+    const openPhoto = (src)=>{ photo.src = src; modal.classList.add('active'); modal.setAttribute('aria-hidden','false'); };
+    const closePhoto = ()=>{ modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); photo.removeAttribute('src'); };
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closePhoto(); });
+    closeBtn.addEventListener('click', closePhoto);
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePhoto(); });
+
+    /* ===== Instagram Sync =====
+       Inserisci il tuo token Basic Display API qui sotto (a lunga durata).
+       Guida rapida: https://developers.facebook.com/docs/instagram-basic-display-api
+       Dopo averlo inserito, verranno caricati gli ultimi post. */
+    const IG_TOKEN = ""; // ← PASTA QUI IL TOKEN se disponibile
+    const IG_COUNT = 8;
+    const igGrid = document.getElementById('igGrid');
+    const igFallback = document.getElementById('igFallback');
+
+    async function loadIG(){
+      if(!IG_TOKEN || IG_TOKEN.length < 20){ igFallback.style.display='block'; return; }
+      try{
+        const url = `https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,caption&access_token=${IG_TOKEN}&limit=${IG_COUNT}`;
+        const r = await fetch(url); if(!r.ok) throw new Error('IG error');
+        const {data=[]} = await r.json();
+        if(!data.length){ igFallback.style.display='block'; return; }
+        data.forEach(p=>{
+          const a = document.createElement('a');
+          a.href = p.permalink; a.target="_blank"; a.rel="noopener";
+          const img = new Image();
+          img.src = p.media_type==='VIDEO' ? (p.thumbnail_url || p.media_url) : p.media_url;
+          img.alt = (p.caption || 'Instagram').slice(0,120);
+          a.appendChild(img);
+          igGrid.appendChild(a);
+        });
+      }catch(e){
+        igFallback.style.display='block';
+      }
+    }
+    loadIG();
+
+    /* Link esterni → nuova scheda (safety) */
     (function(){
       document.querySelectorAll('a[href^="http"]').forEach(a=>{
         try{ const u=new URL(a.getAttribute('href'), location.href); if(u.origin!==location.origin){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); } }catch{}
