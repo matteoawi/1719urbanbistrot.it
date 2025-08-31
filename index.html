@@ -7,11 +7,6 @@
   <meta name="description" content="17/19 Urban Bistrot Roma. DJ set in vinile curated by Riccardo Battaglia. Colazioni, pranzi, cene e cocktail signature." />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
-  <!-- favicon di fallback -->
-  <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0b'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Montserrat,Arial' font-size='28' fill='%23fff'%3E17%2F19%3C/text%3E%3C/svg%3E" />
-  <!-- favicon dal logo -->
-  <link rel="icon" type="image/svg+xml" href="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logobianco.svg?v=1755104086">
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -19,7 +14,6 @@
 
   <style>
     :root{
-      --menu-blur: 18px; --menu-dim: 0.68;
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
       --accent:#ff1f3d; --accent-fg:#ffffff;
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
@@ -29,17 +23,17 @@
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
         --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-        --accent#c23331; --accent-fg:#000000;
+        --accent:#ff1f3d; --accent-fg:#000;
         --chip:#121212; --chip-fg:#e5e7eb;
       }
     }
     html[data-theme="light"]{
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
-      --accent:#c23331; --accent-fg:#ffffff; --chip:#f4f4f5; --chip-fg:#0b0b0b;
+      --accent:#ff1f3d; --accent-fg:#ffffff; --chip:#f4f4f5; --chip-fg:#0b0b0b;
     }
     html[data-theme="dark"]{
       --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-      --accent:#c23331; --accent-fg:#000000; --chip:#121212; --chip-fg:#e5e7eb;
+      --accent:#ff1f3d; --accent-fg:#000; --chip:#121212; --chip-fg:#e5e7eb;
     }
 
     *{box-sizing:border-box} html,body{margin:0}
@@ -50,8 +44,8 @@
     .grid{display:grid;gap:16px}
     .grid-2{grid-template-columns:1fr}
     .grid-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .only-desktop{display:none} .only-mobile{display:inline-flex}
-    @media (min-width:768px){ .grid-2{grid-template-columns:1.2fr .8fr} .only-desktop{display:inline-flex} .only-mobile{display:none} }
+    .only-desktop{display:none} .only-mobile{display:flex}
+    @media (min-width:768px){ .grid-2{grid-template-columns:1.2fr .8fr} .only-desktop{display:flex} .only-mobile{display:none} }
 
     /* Header */
     header{position:fixed;top:0;left:0;right:0;background:transparent;border-bottom:0;z-index:100}
@@ -59,20 +53,17 @@
     nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
     .brand img{height:48px;width:auto} @media (min-width:768px){ .brand img{height:56px} }
-    .logo-dark{display:none}.logo-light{display:inline}
-    html[data-theme="dark"] .logo-light{display:none} html[data-theme="dark"] .logo-dark{display:inline}
-    html[data-theme="light"] .logo-light{display:inline} html[data-theme="light"] .logo-dark{display:none}
-    @media (prefers-color-scheme: dark){ html[data-theme="auto"] .logo-light{display:none} html[data-theme="auto"] .logo-dark{display:inline} }
-    @media (prefers-color-scheme: light){ html[data-theme="auto"] .logo-light{display:inline} html[data-theme="auto"] .logo-dark{display:none} }
     .nav-desktop{display:none;gap:12px;align-items:center;list-style:none;margin:0;padding:0}
-    .nav-desktop a{color:var(--fg);text-decoration:none;font-weight:700;opacity:.86}
+    .nav-desktop a{color:var(--fg);text-decoration:none;font-weight:800;opacity:.9}
     .nav-desktop a:hover{opacity:1}
     @media (min-width:768px){ .nav-desktop{display:flex} }
-    .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:800;background:var(--chip);color:var(--chip-fg)}
+
+    .pill{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.7rem 1.1rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:900;background:var(--chip);color:var(--chip-fg);white-space:nowrap}
     .pill--accent{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
-    .pill--ghost{background:transparent} .pill--disabled{opacity:.55;pointer-events:none}
+    .pill--ghost{background:transparent}
     .pill:where(:hover,:focus-visible){transform:translateY(-1px);transition:transform .15s ease}
-    .toggle{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--chip-fg);display:grid;place-items:center;cursor:pointer}
+
+    .toggle{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--chip);color:var(--chip-fg);display:grid;place-items:center;cursor:pointer}
     .menu-toggle{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--chip);display:grid;place-items:center;cursor:pointer}
     .menu-toggle span,.menu-toggle span::before,.menu-toggle span::after{display:block;width:18px;height:2px;background:var(--fg);content:"";position:relative}
     .menu-toggle span::before{position:absolute;top:-6px} .menu-toggle span::after{position:absolute;top:6px}
@@ -81,48 +72,38 @@
     .sheet{position:fixed; inset:0; background:rgba(0,0,0,.68); opacity:0; pointer-events:none; z-index:999; transition:opacity .25s ease; backdrop-filter: blur(18px) saturate(120%); color:#fff;}
     .sheet.active{opacity:1; pointer-events:auto}
     .sheet__panel{position:absolute; inset:0; display:grid; grid-template-rows:auto 1fr; align-items:start}
-    .sheet__close{position:absolute; top:14px; right:14px; width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.10); color:#fff; font-size:24px; font-weight:900; display:grid; place-items:center; cursor:pointer; z-index:1000; touch-action:manipulation;}
+    .sheet__close{position:absolute; top:14px; right:14px; width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.10); color:#fff; font-size:24px; font-weight:900; display:grid; place-items:center; cursor:pointer; z-index:1000;}
     .sheet__inner{display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99); overflow:auto}
     .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
     .sheet__list a{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:#fff;font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em}
     .sheet__list a:hover{ background:rgba(255,255,255,.08) }
     .sheet__cta{display:inline-flex;margin-top:18px}
     .sheet.active .sheet__inner{opacity:1; transform:none; transition: opacity .25s ease .06s, transform .25s ease .06s}
-    .sheet.active .sheet__list a{ animation: menuStagger .28s ease both }
-    .sheet.active .sheet__list li:nth-child(1) a{animation-delay:.05s} .sheet.active .sheet__list li:nth-child(2) a{animation-delay:.09s}
-    .sheet.active .sheet__list li:nth-child(3) a{animation-delay:.13s} .sheet.active .sheet__list li:nth-child(4) a{animation-delay:.17s}
-    .sheet.active .sheet__list li:nth-child(5) a{animation-delay:.21s} .sheet.active .sheet__list li:nth-child(6) a{animation-delay:.25s}
-    @keyframes menuStagger{from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)}}
-    body.menu-open{overflow:hidden} body.menu-open > :not(.sheet){filter: blur(10px) saturate(1.06); transition: filter .25s ease; transform: translateZ(0)}
 
     /* Hero */
     .hero{padding:72px 0 24px}
     .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:800;color:var(--muted);background:var(--chip)}
     h1{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
     .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.18rem);margin:8px 0 14px}
+
+    /* Carosello */
     .hero-media{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--chip);margin-top:14px}
     @media (min-width:768px){ .hero-media{aspect-ratio:16/9;margin-top:18px} }
     .slide{position:absolute;inset:0;opacity:0;transition:opacity .35s}
     .slide.active{opacity:1}
     .dots{position:absolute;left:0;right:0;bottom:8px;display:flex;gap:6px;justify-content:center}
-    .dot{width:8px;height:8px;border-radius:999px;background:#a1a1aa;border:1px solid #00000020;cursor:pointer;opacity:.85}
+    .dot{width:9px;height:9px;border-radius:999px;background:#a1a1aa;border:1px solid #00000020;cursor:pointer;opacity:.85}
     .dot.active{background:#fff;opacity:1}
 
-    /* Cards */
+    /* Cards + menu */
     .card{border:1px solid var(--line);border-radius:16px;padding:16px;background:color-mix(in oklab, var(--bg) 96%, transparent)}
     .block-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .block-title h3{font-family:'Montserrat',system-ui,sans-serif;font-size:1rem;margin:0;letter-spacing:.02em}
     .meta{color:var(--muted);font-size:.95rem}
-    .hero-right{display:grid;gap:12px}
-
-    /* Mini time cards */
     .time-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
+    @media (max-width:420px){ .time-cards{grid-template-columns:1fr;} }
     .time-card{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:color-mix(in oklab, var(--bg) 98%, transparent)}
-    .time-card .l{display:flex;align-items:center;gap:8px}
-    .time-card .i{display:grid;place-items:center;width:28px;height:28px;border-radius:10px;background:var(--chip);border:1px solid var(--line)}
 
-    /* Menu accordion */
-    .badge{display:inline-block;background:var(--accent);color:var(--accent-fg);padding:6px 10px;border-radius:999px;font-size:.75rem;font-weight:900}
     details.menu-acc{border:1px solid var(--line);border-radius:16px;background:color-mix(in oklab, var(--bg) 96%, transparent);padding:12px}
     details.menu-acc + details.menu-acc{margin-top:12px}
     details.menu-acc[open]{background:color-mix(in oklab, var(--bg) 98%, transparent)}
@@ -135,139 +116,28 @@
     .group-title{margin:8px 0 4px;font-weight:800}
     .menu-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
     .menu-item:last-child{border-bottom:0}
-    .price{color:var(--accent);font-weight:800}
+    .price{color:var(--accent);font-weight:900}
 
-    /* Events */
-    .event{position:relative;display:grid;gap:10px;align-items:start;border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab, var(--bg) 96%, transparent);transition:box-shadow .2s, transform .2s, border-color .2s; touch-action:manipulation; user-select:none; -webkit-user-select:none}
-    .event__title{font-weight:900}
-    .event__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .event__date{min-width:66px;text-align:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--chip)}
-    .event__dow{font-weight:900} .event__day{font-size:1.4rem;font-weight:900;line-height:1}
-    .event__info{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.95rem}
-    .event__names{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; user-select:none; -webkit-user-select:none}
-    .event__sponsors{display:none; gap:8px; flex-wrap:wrap; margin-top:6px; user-select:none; -webkit-user-select:none}
-    .event--show-sponsors .event__sponsors{display:flex}
-    .events-more{display:flex;justify-content:center;margin-top:10px}
-    .event__actions{display:flex; gap:8px; flex-wrap:wrap}
+    /* Gallery griglia interna alle colazioni */
+    .mini-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0 4px}
+    @media (min-width:700px){ .mini-photos{grid-template-columns:repeat(4,1fr)} }
+    .mini-photos img{border-radius:12px;border:1px solid var(--line);aspect-ratio:4/5;object-fit:cover}
 
-    .event--voted{
-      border-color: color-mix(in oklab, var(--accent) 65%, transparent);
-      box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent) inset, 0 6px 18px rgba(255,31,61,.22);
-      animation: upPulse 1.2s ease-in-out infinite alternate;
-    }
-    @keyframes upPulse{
-      from{ box-shadow: 0 0 0 1px rgba(255,31,61,.26) inset, 0 4px 14px rgba(255,31,61,.18) }
-      to  { box-shadow: 0 0 0 1px rgba(255,31,61,.36) inset, 0 8px 22px rgba(255,31,61,.24) }
-    }
-          /* Micro-animazione quando si fa upvote su una card */
-      @keyframes cardPopShake{
-        0%   { transform: scale(1) translateX(0) rotate(0); }
-        12%  { transform: scale(1.03) translateX(-1.5px) rotate(-0.3deg); }
-        24%  { transform: scale(1.03) translateX(1.5px)  rotate(0.3deg); }
-        36%  { transform: scale(1.02) translateX(-1px)   rotate(-0.2deg); }
-        48%  { transform: scale(1.02) translateX(1px)    rotate(0.2deg); }
-        60%  { transform: scale(1.01) translateX(0.5px)  rotate(0); }
-        100% { transform: scale(1) translateX(0) rotate(0); }
-      }
-      .event{ will-change: transform; }
-      .event--burst{ animation: cardPopShake .6s cubic-bezier(.2,.8,.2,1); }
-
-    .vote-badge{position:absolute; top:8px; right:8px; font-weight:900; background:color-mix(in oklab, var(--bg) 92%, transparent); border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:.9rem; display:inline-flex; align-items:center; gap:6px}
-    .icon{width:16px; height:16px; display:inline-block; vertical-align:middle}
-    .share-pop{ position:absolute; z-index:50; background:color-mix(in oklab, var(--bg) 96%, transparent); border:1px solid var(--line); border-radius:10px; padding:8px; display:none; gap:6px; }
-    .share-pop button, .share-pop a{ border:1px solid var(--line); background:var(--chip); color:var(--chip-fg); border-radius:8px; padding:6px 8px; text-decoration:none; font-weight:800; font-size:.9rem; }
-
-    /* Name chips */
-    .name-chip{display:inline-flex; align-items:center; gap:6px; padding:.18rem .46rem; border:1px dashed var(--line); border-radius:12px; font-weight:800; letter-spacing:.04em; background:color-mix(in oklab, var(--bg) 98%, transparent); user-select:none; -webkit-user-select:none; touch-action:manipulation}
-
-    /* Poster + Bouncers */
-    .poster-frame{position:relative;border:1px solid var(--line);border-radius:20px;background:var(--bg);overflow:hidden}
-    .poster-inner{position:relative;padding:clamp(18px,4vw,28px)}
-    .poster-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px; user-select:none; -webkit-user-select:none}
-    .poster-head .venue{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1rem)}
-    .poster-head .series{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:clamp(2rem,6.5vw,3.1rem);line-height:1.05}
-    .poster-head .date{font-weight:900;letter-spacing:.10em;text-transform:uppercase;font-size:clamp(.95rem,3.5vw,1.2rem)}
-    .poster-head .tagline{margin-top:4px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;color:var(--fg);font-size:clamp(.82rem,2.2vw,.96rem)}
-    .poster-head .curated{color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(.78rem,2vw,.9rem)}
-    .poster-canvas{position:relative;margin-top:clamp(16px,3.2vw,26px);height:clamp(320px,56vw,480px);background:color-mix(in oklab, var(--chip) 94%, transparent);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-    .poster-canvas canvas.trail{ position:absolute; inset:0; pointer-events:none; z-index:1 }
-    .poster-logos{position:relative; padding:10px 10px 0; border-top:0; display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; row-gap:6px; user-select:none; -webkit-user-select:none}
-    .poster-logos span.poster-sponsor{ font-weight:900; letter-spacing:.12em; font-size:.72rem; opacity:.95 }
-    .bouncer{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:.16em .44em;border-radius:6px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;will-change:transform;box-shadow:0 0 0 1px var(--line) inset;background:color-mix(in oklab, var(--bg) 96%, transparent);user-select:none; -webkit-user-select:none; touch-action:manipulation; z-index:2;}
-    .bouncer .dot{display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--fg);margin-right:2px;vertical-align:middle}
-    .bouncer .rc{display:none !important; align-items:center; gap:6px; padding:.1rem .4rem; border-radius:999px; border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent); font-weight:900}
-    .bouncer .lbl{ transition: color .2s }
-    .bouncer.up-lit .lbl{ color: var(--accent); text-shadow: 0 0 10px color-mix(in oklab, var(--accent) 40%, transparent) }
-
-    /* Gallery */
+    /* Map + gallery macro */
     .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     @media (min-width:768px){ .gallery{grid-template-columns:repeat(4,1fr)} }
     .gallery a{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--chip)}
-    .credit{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.55);color:#fff;padding:4px 6px;border-radius:8px;font-size:.75rem}
-
-    /* Map */
     .map{border:1px solid var(--line);border-radius:16px;overflow:hidden}
     .map iframe{width:100%;height:320px;border:0;display:block}
     @media (min-width:768px){ .map iframe{height:360px} }
 
-    /* Footer + FAB */
     footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);text-align:center}
-    .fab{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:999px;background:var(--accent);display:grid;place-items:center;box-shadow:0 10px 22px rgba(0,0,0,.15);text-decoration:none;z-index:80}
-    .fab svg{width:26px;height:26px}
-    .fab path{fill:var(--accent-fg)}
 
-    /* Reveal */
-    .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease, transform .5s ease}
-    .reveal.active{opacity:1;transform:translateY(0)}
-
-    /* Mobile overflow */
-    html,body{max-width:100%; overflow-x:hidden;}
-    .tag{ max-width:100%; white-space:normal; flex-wrap:wrap; overflow-wrap:anywhere; }
-    .poster-logos{flex-wrap:wrap; row-gap:6px;}
-    @media (max-width:420px){ .time-cards{grid-template-columns:1fr;} }
-
-    /* Community counters */
-    #community{ padding-top:8px }
-    .counters{ display:grid; grid-template-columns:1fr; gap:12px }
-    @media (min-width:768px){ .counters{ grid-template-columns:1fr 1fr } }
-    .counter-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; font-weight:900 }
-    .counter-row .big{ font-size:1.4rem; display:flex; align-items:center; gap:8px }
-
-    /* Toast: ridisegnata come card persistente */
-    .toast{
-      position:fixed;
-      left:50%;
-      top:calc(var(--header-h) + 12px);
-      transform:translateX(-50%) translateY(-8px);
-      width:min(var(--max), calc(100% - 24px));
-      background:color-mix(in oklab, var(--bg) 96%, transparent);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:12px 14px;
-      box-shadow:0 12px 28px rgba(0,0,0,.18);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:400;
-      z-index:1100;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .18s ease, transform .18s ease;
-      flex-direction: column;
-    }
-    .toast.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0) }
-    .toast .meta{ opacity:.95 }
-    .toast .x{
-      margin-left:auto;
-      border:1px solid var(--line);
-      background:var(--chip);
-      color:var(--chip-fg);
-      padding:6px 10px;
-      border-radius:10px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .toast .k{ font-weight:900; opacity:.95; }
+    /* Mobile: CTA menù larga */
+    .cta-menu-mobile{flex:1}
+    .cta-menu-mobile .pill{width:100%}
+    /* Sticky translucido */
+    const headerBorder=0;
   </style>
 </head>
 <body>
@@ -276,8 +146,8 @@
     <div class="container">
       <nav aria-label="principale">
         <a class="brand" href="#">
-          <img class="logo-light" src="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logooo.svg?v=1755102480" alt="17/19 Urban Bistrot - Logo"/>
-          <img class="logo-dark"  src="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logobianco.svg?v=1755104086" alt="17/19 Urban Bistrot - Logo (dark)"/>
+          <!-- usa i tuoi SVG se preferisci -->
+          <img src="https://cdn.shopify.com/s/files/1/0887/8332/3459/files/1719logooo.svg?v=1755102480" alt="17/19 Urban Bistrot" />
         </a>
 
         <ul class="nav-desktop">
@@ -287,15 +157,19 @@
           <li><a href="#events">Eventi</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contatti</a></li>
-          <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
-          <li><button id="tipsBtn" class="toggle" aria-label="Interazioni" title="Interazioni"></button></li>
-          <li><button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button></li>
+          <!-- nuovo bottone rosso → ancoraggio menù -->
+          <li><a class="pill pill--accent" href="#menu">Menù</a></li>
+          <!-- prenota lasciato come bottone “ghost” -->
+          <li><a class="pill pill--ghost" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
+          <!-- Interazioni RIMOSSO come richiesto -->
+          <li><button id="themeToggle" class="toggle" aria-label="Tema"></button></li>
           <li><button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button></li>
         </ul>
 
-        <div class="only-mobile" style="gap:8px;align-items:center">
-          <button id="tipsBtnM" class="toggle" aria-label="Interazioni"></button>
-          <button id="themeToggleM" class="toggle" aria-label="Tema: automatico"></button>
+        <!-- Mobile: bottone ROSSO largo + toggle + hamburger -->
+        <div class="only-mobile" style="gap:8px;align-items:center;width:100%">
+          <div class="cta-menu-mobile"><a class="pill pill--accent" href="#menu">Menù</a></div>
+          <button id="themeToggleM" class="toggle" aria-label="Tema"></button>
           <button class="menu-toggle" id="menuToggle" aria-label="Apri/chiudi menu"><span></span></button>
         </div>
       </nav>
@@ -315,107 +189,39 @@
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contatti</a></li>
         </ul>
-        <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
+        <a class="pill pill--accent sheet__cta" href="#menu">Vai al Menù</a>
       </div>
     </div>
   </div>
 
-  <div id="tipsToast" class="toast" role="region" aria-live="polite" aria-label="Interazioni">
-  <div style="display:flex;align-items:center;gap:8px">
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-    <strong>Interazioni</strong>
-  </div>
-  <div class="meta">
-    Fai <strong>doppio tap</strong> per interagire con il nome dell'artista o sulla data dell'evento🔝<br/>
-    Tante interazioni = tanto supporto!
-  </div>
-  <button class="x" aria-label="Chiudi">Chiudi</button>
-</div>
-
-
-  <!-- Hero: Poster + Orari + About card -->
+  <!-- Hero -->
   <section class="hero">
     <div class="container grid grid-2">
-      <!-- Colonna sinistra: poster -->
+      <!-- sinistra: CAROSELLO -->
       <div class="reveal">
-        <div class="poster-frame">
-          <div class="poster-inner">
-            <div class="poster-head">
-              <div class="venue" id="posterVenue"></div>
-              <div class="series" id="posterSeries"></div>
-              <div class="date" id="posterDate"></div>
-              <div class="tagline" id="posterTagline"></div>
-              <div class="curated" id="posterCurated"></div>
-            </div>
-            <div class="poster-canvas" id="posterCanvas" aria-label="bouncer nomi"></div>
-            <!-- sponsor/adjective poster (testo semplice) -->
-            <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
-          </div>
+        <div class="hero-media" id="heroCarousel" aria-label="carosello hero">
+          <div class="dots" id="heroDots"></div>
         </div>
         <span class="tag" style="margin-top:12px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px">
-            <path d="M12 22s7-5.33 7-12a7 7 0 1 0-14 0c0 6.67 7 12 7 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
-          </svg>
           Roma • Via di Santa Costanza 17/19
         </span>
       </div>
 
-      <!-- Colonna destra: orari + about -->
+      <!-- destra: orari + about -->
       <div class="hero-right">
         <aside class="card reveal" aria-label="Orari e Servizio">
           <div class="block-title"><h3>Orari & Apertura</h3><span class="meta">Servizio</span></div>
           <div class="time-cards">
-            <div class="time-card">
-              <div class="l">
-                <span class="i" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v4M10 2v4M14 2v4"/>
-                  </svg>
-                </span>
-                <strong>Colazioni</strong>
-              </div>
-              <strong>09:30–12:00</strong>
-            </div>
-            <div class="time-card">
-              <div class="l">
-                <span class="i" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 3v7a2 2 0 0 0 2 2v9"/><path d="M8 3v7a2 2 0 0 1-2 2"/><path d="M12 3v18"/><path d="M15.5 3.5c2 2 2 6.5 0 8.5L12 12"/>
-                  </svg>
-                </span>
-                <strong>Pranzo</strong>
-              </div>
-              <strong>12:00–15:00</strong>
-            </div>
-            <div class="time-card">
-              <div class="l">
-                <span class="i" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 7a6 6 0 0 0-6 6h12a6 6 0 0 0-6-6Z"/><path d="M12 5v2"/><path d="M4 19h16"/>
-                  </svg>
-                </span>
-                <strong>Cena</strong>
-              </div>
-              <strong>19:00–23:00</strong>
-            </div>
-            <div class="time-card">
-              <div class="l">
-                <span class="i" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M14 10h.01"/><path d="M10 14h.01"/>
-                  </svg>
-                </span>
-                <strong>DJ Set</strong>
-              </div>
-              <strong>19:00–02:00</strong>
-            </div>
+            <div class="time-card"><strong>Colazioni</strong><strong>09:30–12:00</strong></div>
+            <div class="time-card"><strong>Pranzo</strong><strong>12:00–15:00</strong></div>
+            <div class="time-card"><strong>Cena</strong><strong>19:00–23:00</strong></div>
+            <div class="time-card"><strong>DJ Set</strong><strong>19:00–02:00</strong></div>
           </div>
         </aside>
 
         <div id="about" class="card reveal">
           <div class="block-title"><h3>Urban Bistrot</h3></div>
-          <p style="margin:0">17/19 è un bar con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Musica elettronica dal vivo, rigorosamente <strong>vinile</strong> — line-up curata da <strong>Riccardo Battaglia</strong>. Spazio polifunzionale aperto a podcast live, riunioni e progetti che fanno bene alla community</p>
+          <p style="margin:0">17/19 è un bar con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Musica elettronica dal vivo, rigorosamente <strong>vinile</strong> — line-up curata da <strong>Riccardo Battaglia</strong>. Spazio polifunzionale aperto a podcast, riunioni e progetti per la community.</p>
         </div>
       </div>
     </div>
@@ -435,48 +241,171 @@
   <section id="menu">
     <div class="container">
       <div class="block-title" style="margin-bottom:6px"><h3>Il nostro menù</h3></div>
-      <div id="menuAccordions" class="grid" style="gap:12px"></div>
+
+      <!-- COLAZIONI -->
+      <details class="menu-acc" open>
+        <summary class="menu-sum">
+          <span class="badge" aria-hidden="true">Novità</span>
+          <h3 style="margin-left:4px">Colazioni (fino alle 11:30)</h3>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="menu-body">
+          <!-- mini-gallery: SOSTITUISCI i src con i tuoi file -->
+          <div class="mini-photos">
+            <!-- TIP: carica questi 4 file nel tuo hosting (es. /img/colazioni/...) -->
+            <img src="assets/colazioni-1.jpg" alt="Colazioni special - 1">
+            <img src="assets/colazioni-2.jpg" alt="Colazioni special - 2">
+            <img src="assets/colazioni-3.jpg" alt="Bakery">
+            <img src="assets/colazioni-4.jpg" alt="Caffetteria">
+          </div>
+
+          <div class="group-title">Colazioni Special</div>
+          <div class="menu-item">
+            <div><strong>Colazione all’Italiana</strong><br>
+              Tris di miele italiano selezionato e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè
+            </div>
+            <div class="price">10,00</div>
+          </div>
+          <div class="menu-item">
+            <div><strong>French Breakfast</strong><br>
+              Tè o infuso d’erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture
+            </div>
+            <div class="price">7,00</div>
+          </div>
+          <div class="menu-item">
+            <div><strong>Danish Breakfast</strong><br>
+              Spremuta; toast o pancake con sciroppo d’acero; caffè
+            </div>
+            <div class="price">7,00</div>
+          </div>
+          <div class="menu-item">
+            <div><strong>American Breakfast Salata</strong><br>
+              Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano
+            </div>
+            <div class="price">12,00</div>
+          </div>
+          <div class="menu-item">
+            <div><strong>American Breakfast Dolce</strong><br>
+              Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano
+            </div>
+            <div class="price">10,00</div>
+          </div>
+          <div class="menu-item">
+            <div><strong>American Breakfast Piccante</strong><br>
+              Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano
+            </div>
+            <div class="price">12,00</div>
+          </div>
+
+          <div class="group-title">Bakery</div>
+          <div class="menu-item"><div>Pancake con sciroppo d’acero o d’agave</div><div class="price">4,50</div></div>
+          <div class="menu-item"><div>Pancake con crema, cioccolato o crema di pistacchio e panna</div><div class="price">5,00</div></div>
+          <div class="menu-item"><div>Pancake con confettura/marmellata e frutta fresca</div><div class="price">5,00</div></div>
+          <div class="menu-item"><div>Pasticceria da tè</div><div class="price">5,00</div></div>
+          <div class="menu-item"><div>Crostata di marmellata (al pz.)</div><div class="price">3,50</div></div>
+          <div class="menu-item"><div>Croissant mignon semplice o farcito</div><div class="price">1,50</div></div>
+          <div class="menu-item"><div>Mini muffin classico o farcito</div><div class="price">1,50</div></div>
+          <div class="menu-item"><div>Mini bombetta o mini ciambellina</div><div class="price">1,50</div></div>
+
+          <div class="group-title">Cioccolata Calda <span class="meta">(La Classica Oro, Caramello salato, Gianduia, Rose & Lamponi, Arancia & Cannella, Fondente o Bianca al Pistacchio, Menta)</span></div>
+          <div class="menu-item"><div>Qualsiasi gusto</div><div class="price">4,50</div></div>
+
+          <div class="group-title">Caffetteria</div>
+          <div class="menu-item"><div>Espresso</div><div class="price">1,50</div></div>
+          <div class="menu-item"><div>Espresso decaffeinato</div><div class="price">2,00</div></div>
+          <div class="menu-item"><div>Espresso americano</div><div class="price">2,50</div></div>
+          <div class="menu-item"><div>Latte macchiato</div><div class="price">2,50</div></div>
+          <div class="menu-item"><div>Caffè latte</div><div class="price">3,00</div></div>
+          <div class="menu-item"><div>Caffè o Cappuccino “Special”</div><div class="price">4,00</div></div>
+          <div class="menu-item"><div>Cappuccino</div><div class="price">2,00</div></div>
+          <div class="menu-item"><div>Cappuccino vegetale di soya</div><div class="price">3,00</div></div>
+          <div class="menu-item"><div>Cappuccino senza lattosio</div><div class="price">3,00</div></div>
+          <div class="menu-item"><div>Orzo <span class="meta">tazza / grande</span></div><div class="price">2,00 / 2,50</div></div>
+          <div class="menu-item"><div>Ginseng <span class="meta">tazza / grande</span></div><div class="price">2,00 / 2,50</div></div>
+          <div class="menu-item"><div>Spremuta di agrumi</div><div class="price">4,00</div></div>
+          <div class="menu-item"><div>Centrifugato</div><div class="price">5,00</div></div>
+          <div class="menu-item"><div>Macedonia o tagliata di frutta fresca</div><div class="price">6,00</div></div>
+          <div class="menu-item"><div>Granita</div><div class="price">6,00</div></div>
+          <div class="menu-item"><div>Milkshake</div><div class="price">4,00</div></div>
+          <div class="menu-item"><div>Tè, Rooibos o infuso d’erbe</div><div class="price">4,00</div></div>
+        </div>
+      </details>
+
+      <!-- PRANZO -->
+      <details class="menu-acc">
+        <summary class="menu-sum">
+          <h3>Pranzo</h3>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="menu-body">
+          <p class="meta"><em>In allestimento.</em></p>
+          <!-- ESEMPI (rimuovi i commenti quando pronti)
+          <div class="menu-item"><div>Toast gourmet con salmone affumicato, avocado e lime</div><div class="price">9,00</div></div>
+          <div class="menu-item"><div>Insalata di stagione con feta, olive e vinaigrette al miele</div><div class="price">8,50</div></div>
+          -->
+        </div>
+      </details>
+
+      <!-- CENA -->
+      <details class="menu-acc">
+        <summary class="menu-sum">
+          <h3>Cena</h3>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="menu-body">
+          <p class="meta"><em>In allestimento.</em></p>
+          <!-- ESEMPI (rimuovi i commenti quando pronti)
+          <div class="menu-item"><div>Pasta fresca cacio e pepe</div><div class="price">12,00</div></div>
+          <div class="menu-item"><div>Polpette di manzo con salsa al pepe e contorno di patate</div><div class="price">14,00</div></div>
+          -->
+        </div>
+      </details>
+
+      <!-- DRINKS -->
+      <details class="menu-acc">
+        <summary class="menu-sum">
+          <h3>Drinks & Cocktail</h3>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="menu-body">
+          <p class="meta"><em>In allestimento.</em></p>
+          <!-- ESEMPI (rimuovi i commenti quando pronti)
+          <div class="menu-item"><div>Signature “17/19” — gin, lime, bitter, miele</div><div class="price">10,00</div></div>
+          <div class="menu-item"><div>Negroni Sbagliato</div><div class="price">8,00</div></div>
+          -->
+        </div>
+      </details>
     </div>
   </section>
 
   <!-- MUSICA -->
-<section id="music">
-  <div class="container">
-    <div class="card reveal">
-      <div class="block-title"><h3>Resident</h3></div>
-      <p>Riccardo Battaglia</p>
-      <div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px">
-        <div class="block-title" style="margin:0"><h3>Impianto</h3><span class="meta">setup</span></div>
-        <ul style="margin:8px 0 0 18px;line-height:1.7">
-          <li>Giradischi e mixer pro</li>
-          <li>Sound system ottimizzato</li>
-          <li>Headroom controllata</li>
-        </ul>
+  <section id="music">
+    <div class="container">
+      <div class="card reveal">
+        <div class="block-title"><h3>Resident</h3></div>
+        <p>Riccardo Battaglia</p>
       </div>
-      <p style="margin-top:12px">
-        <a class="pill pill--ghost" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20proporre%20una%20collaborazione" target="_blank" rel="noopener">Booking / Proposte</a>
-      </p>
     </div>
-  </div>
-</section>
+  </section>
 
-
-  <!-- Events -->
+  <!-- Eventi (placeholder semplice) -->
   <section id="events">
     <div class="container">
-      <div class="block-title" style="margin-bottom:6px"><h3>Prossimi Eventi</h3></div>
-      <div class="grid" id="eventsList" style="gap:12px"></div>
-      <div class="events-more">
-        <button id="eventsMoreBtn" class="pill pill--ghost" type="button">Mostra altri</button>
-      </div>
+      <div class="block-title" style="margin-bottom:6px"><h3>Prossimi Eventi</h3><span class="meta">stay tuned</span></div>
+      <div class="card"><p style="margin:0">Calendario in uscita. Segui Instagram per gli aggiornamenti.</p></div>
     </div>
   </section>
 
   <!-- Gallery -->
   <section id="gallery">
     <div class="container">
-      <div class="grid gallery" id="galleryGrid"></div>
-      <p class="meta" style="margin-top:8px;text-align:center">Immagini da fonti pubbliche, citate con link all’originale.</p>
+      <div class="grid gallery">
+        <a href="#"><img alt="Shot 1" src="https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg"></a>
+        <a href="#"><img alt="Shot 2" src="https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg"></a>
+        <a href="#"><img alt="Shot 3" src="https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg"></a>
+        <a href="#"><img alt="Shot 4" src="https://i.imgur.com/4QvW2cH.jpeg"></a>
+      </div>
+      <p class="meta" style="margin-top:8px;text-align:center">Immagini illustrative.</p>
     </div>
   </section>
 
@@ -488,7 +417,6 @@
         <p><strong>Indirizzo</strong><br/>Via di Santa Costanza 17/19 — 00198 Roma</p>
         <p><strong>Prenotazioni</strong><br/>
           WhatsApp: <a class="pill" href="https://wa.me/393298252092" target="_blank" rel="noopener">+39 329 825 2092</a><br/>
-          <br/>
           Email: <a class="pill" href="mailto:info@1719bistrot.it">info@1719bistrot.it</a>
         </p>
         <p><strong>Social</strong><br/>
@@ -500,7 +428,7 @@
       <div class="card reveal">
         <div class="block-title">
           <h3>Dove siamo</h3>
-          <a class="pill pill--accent" href="https://maps.app.goo.gl/DH48FCh9wvF6mF8p6" target="_blank" rel="noopener">Apri su Google Maps</a>
+          <a class="pill pill--accent" href="https://maps.app.goo.gl/DH48FCh9wvF6mF8p6" target="_blank" rel="noopener">Google Maps</a>
         </div>
         <div class="map">
           <iframe title="Mappa 17/19 Urban Bistrot" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
@@ -510,98 +438,17 @@
     </div>
   </section>
 
-  <!-- Community Counters -->
-  <section id="community">
-    <div class="container">
-      <div class="block-title" style="margin-bottom:8px"><h3>Community Counters</h3><span class="meta">reazioni live</span></div>
-      <div class="counters">
-        <div class="card">
-          <div class="counter-row">
-            <span style="display:inline-flex;align-items:center;gap:8px">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-              Upvotes (nomi)
-            </span>
-            <span class="big" id="totalRockets">0</span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="counter-row">
-            <span style="display:inline-flex;align-items:center;gap:8px">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-              Upvotes (eventi)
-            </span>
-            <span class="big" id="totalFlames">0</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer>
     <div class="container"><p>&copy; 2025 17/19 Urban Bistrot Roma</p></div>
   </footer>
 
-  <!-- WhatsApp FAB -->
-  <a class="fab" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 1.5c5.8 0 10.5 4.7 10.5 10.5S17.8 22.5 12 22.5A10.5 10.5 0 0 1 6.99 21.23L3 21l.82-3.89A10.45 10.45 0 0 1 1.5 12C1.5 6.2 6.2 1.5 12 1.5Z" fill="currentColor" opacity=".96"/>
-      <path d="M16.63 14.62c-.19-.1-1.13-.6-1.3-.66-.17-.06-.29-.1-.42.1s-.49.66-.6.8c-.11.13-.22.15-.41.06-.19-.1-.81-.3-1.55-.98-.57-.51-.95-1.13-1.06-1.31-.11-.19-.01-.29.09-.39.09-.09.2-.24.29-.36.1-.12.13-.2.19-.33.06-.13.03-.25-.02-.35-.05-.1-.44-1.05-.6-1.45-.16-.39-.33-.33-.45-.34h-.38c-.13 0-.33.05-.5.24-.17.19-.66.65-.66 1.59 0 .94.68 1.85.78 2 .1.13 1.31 2.07 3.2 2.91.45.2.8.32 1.04.41.44.15.85.13 1.17.08.36-.05 1.1-.45 1.25-.89.15-.44.15-.82.11-.91-.05-.08-.16-.13-.41-.25Z" fill="#fff"/>
-    </svg>
-  </a>
-
   <script>
-    /* ================= CONFIG ================= */
-    const SHOW_SPONSORS_IN_CARD = false; // true per mostrare testo sponsor nelle card evento
-    const KEY = 'eventreactions1719';    // chiave condivisa col backend
-    const PERSIST_REMOTE = {
-      enabled: true,
-      endpoint: 'https://script.google.com/macros/s/AKfycbyukoQfi8AKrj0dtGGU4gRCCjWMA8Aik1E1s1ssTmWazIEGk0yJjdavqsWd4LE0_Z4/exec?key=eventreactions1719'
-    };
-
-    /* ================= TUNABLES (fisica) ================= */
-    const PHYS = {
-      base: 42, rand: 18,
-      damping: 0.996,
-      restitution: 0.92,
-      wallRestitution: 0.90,
-      min: 18, max: 160,
-      measureEvery: 12,
-      pad: -6,        // maggiore sovrapposizione visiva
-      sepBias: 1.2,   // non più usato nella nuova risoluzione, lasciato per compatibilità
-      nudge: 8,
-      boostMax: 4.5,
-      burstMs: 900,
-      randomResolveMod: 4
-    };
-
-    /* ================= Utils & SVGs ================= */
-    const $ = (s, r=document)=>r.querySelector(s);
-    const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
-    const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
-    const slug = s=>String(s||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-    const UUID = ()=>crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)+'-'+Date.now();
-    const deviceId = (()=>{ const k='1719-device'; let d=localStorage.getItem(k); if(!d){ d=UUID(); localStorage.setItem(k,d); } return d; })();
-
-    const SVG = {
-      up: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>`,
-      help: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"/><path d="M12 17h.01"/></svg>`,
-      share: `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a3 3 0 1 0-2.83-4h0A3 3 0 0 0 18 8ZM6 14a3 3 0 1 0-2.83 4h0A3 3 0 0 0 6 14ZM18 16a3 3 0 1 0 2.83 4h0A3 3 0 0 0 18 16Z" fill="currentColor"/><path d="M8.59 13.51l6.82-3.02M8.59 16.49l6.82 3.02" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`
-    };
-
-    /* ================= Scroll reveal ================= */
-    const reveals = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); io.unobserve(e.target);} });
-    },{ threshold:.14 });
-    reveals.forEach(el=>io.observe(el));
-
-    /* ================= Header translucido ================= */
+    /* Header translucido */
     const header = document.querySelector('header');
-    const onS = () => { header.classList.toggle('header--solid', window.scrollY > 8); };
+    const onS = () => header.classList.toggle('header--solid', window.scrollY > 8);
     window.addEventListener('scroll', onS, {passive:true}); onS();
 
-    /* ================= Fullscreen menu ================= */
+    /* Fullscreen menu */
     const siteMenu = document.getElementById('siteMenu');
     const sheetClose = document.getElementById('sheetClose');
     const panel = siteMenu.querySelector('.sheet__panel');
@@ -616,25 +463,10 @@
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
     siteMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setTimeout(closeMenu,80)));
 
-    /* ================= Link esterni fix ================= */
-    (function(){
-      document.querySelectorAll('a[href^="http"]').forEach(a=>{
-        try{ const u=new URL(a.getAttribute('href'), location.href); if(u.origin!==location.origin){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); } }catch{}
-      });
-      document.addEventListener('click', function(e){
-        const a = e.target.closest('a[href]'); if(!a) return;
-        const href = a.getAttribute('href'); if(!href) return;
-        if(href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
-        let isExternal=false; try{ isExternal = (new URL(href, location.href).origin !== location.origin); }catch{}
-        const openNewTab = isExternal || a.getAttribute('target')==='_blank';
-        if(openNewTab){ e.preventDefault(); e.stopImmediatePropagation(); const win = window.open(href, '_blank'); if(!win){ location.href = href; } }
-      }, true);
-    })();
-
-    /* ================= Theme + Tips buttons ================= */
+    /* Theme button */
     const THEME_KEY = 'theme-1719';
     const root = document.documentElement;
-    function applyTheme(mode){ root.setAttribute('data-theme', mode); localStorage.setItem(THEME_KEY, mode); paintThemeIcon(mode); paintTipsIcon(); }
+    function applyTheme(mode){ root.setAttribute('data-theme', mode); localStorage.setItem(THEME_KEY, mode); paintThemeIcon(mode); }
     function paintThemeIcon(mode){
       const svgAuto = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor" opacity=".9"/><text x="12" y="22" text-anchor="middle" font-size="7" font-family="monospace" fill="currentColor" opacity=".9">AUTO</text></svg>`;
       const svgSun  = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
@@ -642,777 +474,52 @@
       const icon = mode==='auto' ? svgAuto : mode==='light' ? svgSun : svgMoon;
       document.querySelectorAll('#themeToggle,#themeToggleM').forEach(btn=>btn.innerHTML = icon);
     }
-    function paintTipsIcon(){ const icon = `<div style="display:grid;place-items:center">${SVG.up}</div>`; document.querySelectorAll('#tipsBtn,#tipsBtnM').forEach(btn=>btn.innerHTML = icon); }
     function cycleTheme(){ const cur = root.getAttribute('data-theme') || 'auto'; const next = cur==='auto' ? 'light' : cur==='light' ? 'dark' : 'auto'; applyTheme(next); }
     document.getElementById('themeToggle')?.addEventListener('click', cycleTheme);
     document.getElementById('themeToggleM')?.addEventListener('click', cycleTheme);
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
-  // Toast: stile card, con auto-hide a 10s (riarmato a ogni apertura)
-      const toast = document.getElementById('tipsToast');
-      let toastTimer = null;
-      function openToast(){
-        toast.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(()=> toast.classList.remove('show'), 10000);
-      }
-      function closeToast(){
-        toast.classList.remove('show');
-        clearTimeout(toastTimer);
-      }
-      function toggleToast(){
-        if(toast.classList.contains('show')) closeToast();
-        else openToast();
-      }
-      document.getElementById('tipsBtn')?.addEventListener('click', toggleToast);
-      document.getElementById('tipsBtnM')?.addEventListener('click', toggleToast);
-      toast.querySelector('.x').addEventListener('click', closeToast);
-
-
-    /* ================= Live Shots ================= */
-    const liveImages = [
-      'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
-      'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
-      'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg'
+    /* === Carosello HERO ===
+       Aggiorna qui le immagini del poster: basta cambiare gli URL sotto. */
+    const heroImages = [
+      // Sostituisci con i tuoi file (es. /img/hero-1.jpg, /img/hero-2.jpg, ...)
+      "https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg",
+      "https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg",
+      "https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg"
     ];
-    (function(){
-      const box  = document.getElementById('liveCarousel');
-      const dots = document.getElementById('liveDots');
+    makeCarousel('heroCarousel','heroDots', heroImages, 5000);
+
+    /* Live shots (puoi riusare lo stesso array o cambiarlo) */
+    const liveImages = [
+      "https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg",
+      "https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg",
+      "https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg"
+    ];
+    makeCarousel('liveCarousel','liveDots', liveImages, 5000);
+
+    /* Mini builder carosello */
+    function makeCarousel(boxId,dotsId,images,interval=5000){
+      const box  = document.getElementById(boxId);
+      const dots = document.getElementById(dotsId);
       if(!box) return;
       let i = 0; const slides=[], bullets=[];
-      liveImages.forEach((src,idx)=>{
+      images.forEach((src,idx)=>{
         const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
-        const im=new Image(); im.src=src; im.alt='Live '+(idx+1);
+        const im=new Image(); im.src=src; im.alt='Slide '+(idx+1);
         Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
         s.appendChild(im); box.appendChild(s); slides.push(s);
         const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
       });
       function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
-      setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
+      setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, interval);
+    }
+
+    /* Link esterni → nuova scheda */
+    (function(){
+      document.querySelectorAll('a[href^="http"]').forEach(a=>{
+        try{ const u=new URL(a.getAttribute('href'), location.href); if(u.origin!==location.origin){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); } }catch{}
+      });
     })();
-
-    /* ================== STORE (local + GAS JSONP/Beacon) ================== */
-    const Store = {
-      key:'1719-reactions-v6',
-      state:{
-        aggRocketsByName:{},   // aggregato server → NOMI
-        myFlamesByEvent:{},    // toggle locale utente → EVENTI (0/1)
-        aggFlamesByEvent:{},   // aggregato server → EVENTI
-        totals:{rockets:0, flames:0, devices:0}
-      },
-      logQueue:[],
-
-      load(){
-        try{ const s=localStorage.getItem(this.key); if(s){ this.state={...this.state, ...JSON.parse(s)} } }catch{}
-      },
-      saveLocal(){
-        try{ localStorage.setItem(this.key, JSON.stringify(this.state)); }catch{}
-      },
-
-      // Getters
-      getRocketsAgg(name){ return this.state.aggRocketsByName[String(name||'').toUpperCase()]||0; },
-      getFlameCount(eid){ return this.state.aggFlamesByEvent[eid]||0; },
-      getMyFlame(eid){ return this.state.myFlamesByEvent[eid]||0; },
-      totals(){ return this.state.totals || {rockets:0, flames:0, devices:0}; },
-
-      // Actions
-      incRocket({name, ctx}){
-        if(!name) return 0;
-        const NAME = String(name).toUpperCase();
-        this.enqueueLog({type:'name_upvote', name:NAME, ctx});
-        // Ottimismo UI
-        this.state.aggRocketsByName[NAME] = (this.state.aggRocketsByName[NAME]||0)+1;
-        this.state.totals.rockets = Object.values(this.state.aggRocketsByName).reduce((a,b)=>a+b,0);
-        this.saveLocal(); this.remotePushDebounced();
-        return this.getRocketsAgg(NAME);
-      },
-
-      toggleFlame({eid, on, ctx}){
-        const cur  = this.getMyFlame(eid);
-        const next = (on!=null) ? (on?1:0) : (cur?0:1);
-        this.state.myFlamesByEvent[eid] = next;
-
-        // Ottimismo UI sul conteggio aggregato
-        const agg = this.getFlameCount(eid);
-        const newAgg = clamp(agg + (next - cur), 0, 1e9);
-        this.state.aggFlamesByEvent[eid] = newAgg;
-        this.state.totals.flames = Object.values(this.state.aggFlamesByEvent).reduce((a,b)=>a+b,0);
-
-        this.enqueueLog({type:'event_vote', eid, on:next, ctx});
-        this.saveLocal(); this.remotePushDebounced();
-        return next;
-      },
-
-      enqueueLog(entry){
-        const when = new Date().toISOString();
-        const ua   = navigator.userAgent||'';
-        const page = location.href;
-        this.logQueue.push({...entry, when, deviceId, ua, page});
-        if(this.logQueue.length>50) this.remotePush();
-      },
-
-      // Pull aggregati (JSONP)
-      remotePull(){
-        if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return Promise.resolve();
-        return new Promise((resolve)=>{
-          const cb = 'CB_'+Math.random().toString(36).slice(2);
-          window[cb] = (B)=>{
-            try{
-              if(B && typeof B==='object'){
-                this.state.aggRocketsByName = B.rocketsByName || {};
-                this.state.aggFlamesByEvent = B.flamesByEvent || {};
-                this.state.totals = B.totals || this.state.totals;
-                this.saveLocal();
-                if(typeof renderTotals==='function') renderTotals();
-                if(typeof updateEventCountsFromStore==='function') updateEventCountsFromStore();
-                if(typeof updatePosterChipCounts==='function') updatePosterChipCounts();
-              }
-            } finally {
-              delete window[cb]; s.remove(); resolve();
-            }
-          };
-          const s = document.createElement('script');
-          s.src = PERSIST_REMOTE.endpoint + '&callback=' + cb;
-          s.onerror = ()=>{ delete window[cb]; s.remove(); resolve(); };
-          document.head.appendChild(s);
-        });
-      },
-
-      // Push solo LOGS (con key nel body)
-      async remotePush(){
-        if(!PERSIST_REMOTE.enabled || !PERSIST_REMOTE.endpoint) return;
-        try{
-          const logs = this.logQueue.splice(0);
-          if(!logs.length) return;
-          const body = JSON.stringify({ key:KEY, logs });
-          const blob = new Blob([body], {type:'text/plain;charset=utf-8'});
-          if (navigator.sendBeacon) navigator.sendBeacon(PERSIST_REMOTE.endpoint, blob);
-          else await fetch(PERSIST_REMOTE.endpoint, { method:'POST', mode:'no-cors', body: blob });
-          // Pull di allineamento poco dopo
-          setTimeout(()=>this.remotePull(), 600);
-        }catch(_){}
-      },
-      remotePushDebounced:(()=>{ let t; return function(){ clearTimeout(t); t=setTimeout(()=>this.remotePush(), 400); }; })()
-    };
-
-    Store.load();
-    Store.remotePull();
-    setInterval(()=>Store.remotePull(), 20000); // aggiornamento “live-ish”
-
-    /* ================= Double-tap handler ================= */
-    function makeDoubleTap(el, handler, threshold=300, moveTol=18){
-      let lastTime=0, lastX=0, lastY=0;
-      el.addEventListener('pointerdown', (e)=>{
-        if(e.pointerType!=='mouse') e.preventDefault();
-        e.stopPropagation();
-        const now = performance.now(); const x=e.clientX, y=e.clientY;
-        const dt = now - lastTime; const dist = Math.hypot(x-lastX, y-lastY);
-        if(dt < threshold && dist < moveTol){ lastTime=0; handler(e); } else { lastTime=now; lastX=x; lastY=y; }
-      }, {passive:false});
-      el.addEventListener('dblclick', (e)=>{ e.preventDefault(); e.stopPropagation(); }, {passive:false});
-    }
-
-    /* ================= Poster / Bouncers ================= */
-    const posterData = {
-      venue: '17/19 URBAN BISTROT',
-      series: 'ELECTRO TECHNO NIGHT',
-      date:   'WEDNESDAY 03/09',
-      tagline:'TECHNO • ELECTRO • VINYL',
-      curatedBy:'CURATED BY RICCARDO BATTAGLIA',
-      logos:[ { text:'CASAMIGOS' }, { text:'ORGANICS' }, { text:'UPVOTES' } ]
-    };
-    let currentPosterEventCtx = null; // {eid, title, dateISO}
-
-    const posterCanvas = document.getElementById('posterCanvas');
-    let bounceRAF = null, bouncers = [];
-    let trailCanvas=null, trailCtx=null, trailRO=null;
-
-    // collision burst / random throttling (manteniamo variabili per compatibilità)
-    let collisionBurstUntil = 0;
-    let frameCounter = 0;
-
-    function setPosterTexts(p){
-      const set = (id,txt)=>{ const el=document.getElementById(id); if(el) el.textContent=(txt||'').toUpperCase(); };
-      set('posterVenue', p.venue); set('posterSeries',p.series); set('posterDate', p.date); set('posterTagline', p.tagline); set('posterCurated', p.curatedBy);
-      const logosWrap = document.getElementById('posterLogos'); logosWrap.innerHTML='';
-      (p.logos||[]).forEach(L=>{ const span=document.createElement('span'); span.className='poster-sponsor'; span.textContent=(L.text||'').toUpperCase(); logosWrap.appendChild(span); });
-    }
-    function setupTrailCanvas(){
-      if(trailCanvas) return;
-      trailCanvas = document.createElement('canvas');
-      trailCanvas.className = 'trail';
-      posterCanvas.appendChild(trailCanvas);
-      trailCtx = trailCanvas.getContext('2d');
-      const resize = ()=> { const w = posterCanvas.clientWidth|0, h = posterCanvas.clientHeight|0; trailCanvas.width = w; trailCanvas.height = h; trailCtx.clearRect(0,0,w,h); };
-      resize();
-      if('ResizeObserver' in window){ trailRO = new ResizeObserver(resize); trailRO.observe(posterCanvas); }
-      else window.addEventListener('resize', resize);
-    }
-    function easeInOutCubic(t){ return t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
-
-    function sparkle(x,y){
-      if(!trailCtx) return;
-      const parts = 10;
-      for(let i=0;i<parts;i++){
-        (function(i){
-          const a = Math.random()*Math.PI*2, v= 40+Math.random()*80, life=250+Math.random()*350;
-          const start = performance.now();
-          function tick(now){
-            const t = Math.min(1,(now-start)/life);
-            const px = x + Math.cos(a)*v*t, py = y + Math.sin(a)*v*t;
-            trailCtx.save(); trailCtx.globalCompositeOperation='lighter'; trailCtx.fillStyle=`rgba(255,31,61,${1-t})`;
-            trailCtx.beginPath(); trailCtx.arc(px,py,2*(1-t),0,Math.PI*2); trailCtx.fill(); trailCtx.restore();
-            if(t<1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        })(i);
-      }
-    }
-
-    function clearBouncers(){
-      cancelAnimationFrame(bounceRAF);
-      bouncers.forEach(b=> b.el.remove());
-      bouncers = [];
-      if(trailCtx){ trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height); }
-    }
-
-    function triggerUpvote(targetEl){
-      const b = bouncers.find(x=>x.el===targetEl); if(!b) return;
-      const name = targetEl.dataset.name || '';
-      const now = performance.now();
-      const DUR = 1100, BOOST = PHYS.boostMax;
-      b.boost = {start:now, end:now+DUR, max:BOOST};
-      targetEl.classList.add('up-lit');
-
-      // counter + log (ottimismo UI)
-      const n = Store.incRocket({name, ctx: currentPosterEventCtx});
-      const cnt = targetEl.querySelector('.rc .n'); if(cnt) cnt.textContent = n;
-
-      // leggero scale
-      targetEl.style.transform += ' scale(1.06)'; setTimeout(()=> targetEl.style.transform = targetEl.style.transform.replace(' scale(1.06)',''), 140);
-
-      // scintille
-      const cx = b.x + b.w/2, cy = b.y + b.h/2;
-      sparkle(cx, cy);
-      b.trailPulseUntil = now + DUR;
-
-      // “burst” collisioni (manteniamo per spinta generale)
-      collisionBurstUntil = performance.now() + PHYS.burstMs;
-
-      renderTotals();
-
-      // ricalcola dimensioni in caso di numero che cresce
-      const r = targetEl.getBoundingClientRect(); b.w = r.width; b.h = r.height; b.r = Math.max(14, 0.25*(b.w+b.h));
-    }
-
-    function limitVel(b){
-      const s = Math.hypot(b.vx, b.vy) || 0.0001;
-      if (s < PHYS.min){ const f = PHYS.min / s; b.vx *= f; b.vy *= f; }
-      if (s > PHYS.max){ const f = PHYS.max / s; b.vx *= f; b.vy *= f; }
-    }
-
-    function initBouncers(names){
-      clearBouncers(); setupTrailCanvas();
-      const rect = posterCanvas.getBoundingClientRect();
-      names.forEach((name, idx)=>{
-        const el = document.createElement('div');
-        el.className = 'bouncer';
-        el.dataset.name = name.toUpperCase();
-        el.innerHTML = `<span class="dot"></span><span class="lbl">${name}</span><span class="rc">${SVG.up}<span class="n">${Store.getRocketsAgg(name)}</span></span>`;
-        posterCanvas.appendChild(el);
-
-        const w = el.offsetWidth || 80, h = el.offsetHeight || 28;
-        const r = Math.max(14, 0.25*(w+h)); // raggio per collisioni “circolari”
-
-        // spawn non sovrapposto (max 20 tentativi)
-        let x = 0, y = 0;
-        for (let tries=0; tries<20; tries++){
-          x = Math.random() * Math.max(1, rect.width  - w);
-          y = Math.random() * Math.max(1, rect.height - h);
-          const overlap = bouncers.some(o => {
-            const ax=x+w/2, ay=y+h/2, bx=o.x+o.w/2, by=o.y+o.h/2;
-            const d = Math.hypot(bx-ax, by-ay);
-            return d < (r + o.r + 2);
-          });
-          if (!overlap) break;
-        }
-
-        const speed = PHYS.base + Math.random()*PHYS.rand;
-        const angle = Math.random() * Math.PI * 2;
-        const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed;
-
-        bouncers.push({ el, x, y, w, h, r, vx, vy, boost:null, trailPulseUntil:0 });
-        makeDoubleTap(el, ()=>triggerUpvote(el));
-      });
-
-      let last = performance.now();
-      frameCounter = 0;
-
-      const tick = (now)=>{
-        const dt = (now - last) / 1000; last = now;
-        const W = posterCanvas.clientWidth, H = posterCanvas.clientHeight;
-
-        // fade-out trail
-        if(trailCtx && (trailCanvas.width!==W || trailCanvas.height!==H)){ trailCanvas.width=W; trailCanvas.height=H; }
-        if(trailCtx){
-          trailCtx.save(); trailCtx.globalCompositeOperation = 'destination-out';
-          trailCtx.fillStyle = 'rgba(0,0,0,0.08)'; trailCtx.fillRect(0,0,W,H); trailCtx.restore();
-        }
-
-        // update
-        bouncers.forEach(b=>{
-          // damping
-          b.vx *= PHYS.damping; b.vy *= PHYS.damping;
-
-          // boost
-          if(b.boost && now < b.boost.end){
-            const t = (now - b.boost.start) / (b.boost.end - b.boost.start);
-            const e = easeInOutCubic(clamp(t,0,1));
-            const factor = 1 + e*(b.boost.max - 1);
-            b.vx *= factor; b.vy *= factor;
-
-            // trail pulse
-            if(trailCtx){
-              const cx = b.x + b.w/2, cy = b.y + b.h/2;
-              const len = 10 + 30*e;
-              const norm = Math.hypot(b.vx,b.vy) || 1;
-              const bx = cx - (b.vx/norm) * len;
-              const by = cy - (b.vy/norm) * len;
-              trailCtx.save();
-              trailCtx.globalCompositeOperation='lighter';
-              trailCtx.lineWidth = 1 + 2*e;
-              trailCtx.strokeStyle = `rgba(255,31,61,${0.45+0.25*e})`;
-              trailCtx.beginPath(); trailCtx.moveTo(bx,by); trailCtx.lineTo(cx,cy); trailCtx.stroke();
-              trailCtx.restore();
-            }
-          } else if (b.boost && now >= b.boost.end){
-            b.boost = null;
-            b.el.classList.remove('up-lit');
-          }
-
-          // integrazione
-          let nx = b.x + b.vx * dt;
-          let ny = b.y + b.vy * dt;
-
-          // pareti
-          if (nx <= 0){ nx = 0; b.vx = Math.abs(b.vx) * PHYS.wallRestitution; }
-          if (ny <= 0){ ny = 0; b.vy = Math.abs(b.vy) * PHYS.wallRestitution; }
-          if (nx + b.w >= W){ nx = W - b.w; b.vx = -Math.abs(b.vx) * PHYS.wallRestitution; }
-          if (ny + b.h >= H){ ny = H - b.h; b.vy = -Math.abs(b.vy) * PHYS.wallRestitution; }
-
-          limitVel(b);
-
-          // applica
-          b.x = nx; b.y = ny;
-          b.el.style.transform = `translate(${nx}px, ${ny}px)`;
-        });
-
-        // ricalcolo dimensioni periodico
-        if ((frameCounter % PHYS.measureEvery) === 0){
-          bouncers.forEach(b=>{
-            const br = b.el.getBoundingClientRect();
-            b.w = br.width; b.h = br.height;
-            b.r = Math.max(14, 0.25*(b.w+b.h));
-          });
-        }
-
-        // Collisioni: sempre (pochi elementi → fluido e naturale)
-        resolveCollisions();
-
-        frameCounter++;
-        bounceRAF = requestAnimationFrame(tick);
-      };
-      bounceRAF = requestAnimationFrame(tick);
-    }
-
-    // Collisioni “morbide” come cerchi
-    function resolveCollisions(){
-      const e = PHYS.restitution;
-      for(let i=0;i<bouncers.length;i++){
-        for(let j=i+1;j<bouncers.length;j++){
-          const a=bouncers[i], b=bouncers[j];
-
-          // Centri
-          const ax=a.x + a.w/2, ay=a.y + a.h/2;
-          const bx=b.x + b.w/2, by=b.y + b.h/2;
-
-          const dx=bx-ax, dy=by-ay;
-          const dist2 = dx*dx + dy*dy;
-          const minD = (a.r + b.r) + PHYS.pad; // pad < 0 = più sovrapposizione visiva
-          if(dist2 < minD*minD){
-            const dist = Math.max(Math.sqrt(dist2), 1e-6);
-            let nx = dx/dist, ny = dy/dist;      // normale
-
-            // Correzione posizionale parziale (morbida)
-            const penetration = minD - dist;
-            const percent = 0.20; // più basso = più smooth
-            const corr = Math.max(penetration, 0) * percent;
-            a.x -= nx * corr; a.y -= ny * corr;
-            b.x += nx * corr; b.y += ny * corr;
-
-            // Impulso elastico solo se si avvicinano
-            const rvx = b.vx - a.vx;
-            const rvy = b.vy - a.vy;
-            const velAlongNormal = rvx*nx + rvy*ny;
-
-            if(velAlongNormal < 0){
-              const jimp = -(1+e)*velAlongNormal / 2; // masse=1
-              // Kick tangenziale leggero anti-sticking
-              const tx = -ny, ty = nx;
-              const kick = (Math.random()-0.5)*PHYS.nudge*0.5;
-
-              a.vx -= jimp*nx - tx*kick; a.vy -= jimp*ny - ty*kick;
-              b.vx += jimp*nx + tx*kick; b.vy += jimp*ny + ty*kick;
-
-              limitVel(a); limitVel(b);
-            }
-          }
-        }
-      }
-    }
-
-    function formatPosterDate(iso){
-      const d = new Date(iso + 'T12:00:00Z');
-      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
-      const dd = String(d.getUTCDate()).padStart(2,'0'); const mm = String(d.getUTCMonth()+1).padStart(2,'0');
-      return `${days[d.getUTCDay()]} ${dd}/${mm}`;
-    }
-    function toItDowShort(d){ return d.toLocaleString('it-IT',{weekday:'short'}).toUpperCase(); }
-    function toMonShort(d){ return d.toLocaleString('it-IT',{month:'short'}).toUpperCase(); }
-    function formatLongIt(iso){
-      const d = new Date(iso + 'T12:00:00');
-      return d.toLocaleDateString('it-IT', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
-    }
-
-    function buildShareText(ev){
-      const when = formatLongIt(ev.dateISO);
-      const start = ev.start ? ` (start ${ev.start})` : '';
-      const artists = [ev.headliner, ...(ev.guests||[])].filter(Boolean).join(', ');
-      let lines = [];
-      lines.push(`🎶 ${ev.title}`);
-      if(artists) lines.push(`👤 ${artists}`);
-      if(ev.genres?.length) lines.push(`🎧 ${ev.genres.join(' • ')}`);
-      lines.push(`📍 17/19 Urban Bistrot • Roma`);
-      lines.push(`🗓️ ${when}${start}`);
-      lines.push('');
-      lines.push(`Ti va?`);
-      return lines.join('\n');
-    }
-    function waUrlFromEvent(ev){ return `https://wa.me/?text=${encodeURIComponent(buildShareText(ev))}`; }
-    function tgUrlFromEvent(ev){ return `https://t.me/share/url?text=${encodeURIComponent(buildShareText(ev))}`; }
-    function xUrlFromEvent(ev){ return `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(ev))}`; }
-
-    /* ===== MENU DATA ===== */
-    const menuData = [
-      { badge:'BREAKFAST', title:'Colazioni', items:[
-        { name:'Cornetto Artigianale', desc:"crema / marmellata / vuoto", price:'€2' },
-        { name:'Avocado Toast', desc:"uovo poché, lime", price:'€9' },
-        { name:'Pancake Stack', desc:"acero, frutti rossi", price:'€8' },
-        { name:'Yogurt Bowl', desc:"granola, miele, frutta", price:'€6' },
-      ]},
-      { badge:'LUNCH', title:'Pranzo', items:[
-        { name:'Caesar Salad', desc:"pollo, crostini", price:'€12' },
-        { name:'Club Sandwich', desc:"tacchino, bacon", price:'€13' },
-        { name:'Pasta del Giorno', desc:"chiedi allo staff", price:'€14' },
-        { name:'Tataki di Tonno', desc:"sesamo, agrumi", price:'€16' },
-      ]},
-      { badge:'DINNER', title:'Cena', items:[
-        { name:'Polpo Grigliato', desc:"patate, olive", price:'€18' },
-        { name:'Black Burger', desc:"cheddar, bacon", price:'€16' },
-        { name:'Risotto Techno', desc:"nero di seppia", price:'€17' },
-        { name:'Tagliata di Manzo', desc:"rucola, scaglie", price:'€20' },
-      ]},
-      { badge:'DRINKS', title:'Drinks', groups:[
-        { title:'Cocktail Signature', items:[
-          { name:'Neon Spritz', desc:"bitter, agrumi, metodo classico", price:'€10' },
-          { name:'Vinyl Sour', desc:"whisky, albume, limone", price:'€11' },
-          { name:'Acid Groove', desc:"gin, lime, basilico", price:'€10' },
-          { name:'Electro Mule', desc:"vodka, ginger beer, lime", price:'€9' },
-        ]},
-        { title:'Vini al Calice', items:[
-          { name:'Frascati Superiore DOC', desc:"bianco", price:'€6' },
-          { name:'Cesanese del Piglio DOCG', desc:"rosso", price:'€7' },
-          { name:'Rosé Lazio', desc:"rosato", price:'€6' },
-        ]},
-        { title:'Birre', items:[
-          { name:'Lager alla Spina', desc:"0.4L", price:'€6' },
-          { name:'IPA Artigianale', desc:"bottiglia", price:'€7' },
-        ]},
-        { title:'Analcolici', items:[
-          { name:'Virgin Mojito', desc:"lime, menta, soda", price:'€7' },
-          { name:'Club Mate', desc:"bottiglia", price:'€4' },
-        ]}
-      ]}
-    ];
-
-    function renderMenu(){
-      const wrap = document.getElementById('menuAccordions');
-      wrap.innerHTML = '';
-      menuData.forEach(cat=>{
-        const details = document.createElement('details');
-        details.className = 'menu-acc reveal';
-        const sum = document.createElement('summary');
-        sum.className = 'menu-sum';
-        sum.innerHTML = `<span class="badge">${cat.badge}</span><h3>${cat.title}</h3><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
-        details.appendChild(sum);
-
-        const body = document.createElement('div');
-        body.className = 'menu-body';
-
-        if(cat.items){
-          cat.items.forEach(it=>{
-            const row = document.createElement('div');
-            row.className = 'menu-item';
-            row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||''}</span></div><div class="price">${it.price||''}</div>`;
-            body.appendChild(row);
-          });
-        }
-        if(cat.groups){
-          cat.groups.forEach(gr=>{
-            const gt = document.createElement('div');
-            gt.className = 'group-title';
-            gt.textContent = gr.title;
-            body.appendChild(gt);
-            gr.items.forEach(it=>{
-              const row = document.createElement('div');
-              row.className = 'menu-item';
-              row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||''}</span></div><div class="price">${it.price||''}</div>`;
-              body.appendChild(row);
-            });
-          });
-        }
-        details.appendChild(body);
-        wrap.appendChild(details);
-      });
-      document.querySelectorAll('.reveal:not(.active)').forEach(el=>io.observe(el));
-    }
-
-    /* ========== EVENTI ========== */
-    // booking per evento: 'open' | 'closed' | 'soon'
-const events = [
-  { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season',       genres: ['TECHNO','ELECTRO','VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [],           sponsors: [{text:''}] },
-
-  { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-
-  { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-
-  { dateISO: '2025-09-06', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-
-  { dateISO: '2025-09-07', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',    genres: ['HOUSE','MINIMAL'],          start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA',                 guests: [],         sponsors: [] },
-];
-
-
-    function pickNextEvent(){
-      const today = new Date(); today.setHours(0,0,0,0);
-      const up = events.filter(e=>!isNaN(new Date(e.dateISO)) && new Date(e.dateISO) >= today)
-                       .sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO));
-      return up[0] || events.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))[0];
-    }
-    function eventId(ev){ return ev.dateISO + '::' + slug(ev.title); }
-    function makeNameChip(name, role){
-      if(!name) return null;
-      const chip = document.createElement('span');
-      chip.className = 'name-chip';
-      chip.innerHTML = `${role==='headliner' ? '<span class="dot" style="width:8px;height:8px;border-radius:3px;background:var(--fg)"></span>' : ''}${name}`;
-      return chip;
-    }
-    function makeSChip(txt){ const s=document.createElement('span'); s.className='s-chip'; s.textContent=txt; return s; }
-
-    function renderEvents(){
-      const list = document.getElementById('eventsList'); if(!list) return;
-      list.innerHTML='';
-      const sorted = [...events].sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO)).slice(0,7);
-      const toShow = eventsExpanded ? sorted : sorted.slice(0,3);
-      toShow.forEach(ev=>{
-        const d = new Date(ev.dateISO + 'T12:00:00');
-        const day = String(d.getUTCDate()).padStart(2,'0');
-        const mon = toMonShort(d);
-        const dow = toItDowShort(d).slice(0,3).toUpperCase();
-        const eid = eventId(ev);
-
-        const el = document.createElement('div'); el.className='event'; el.dataset.eid = eid;
-
-        // Title
-        const title = document.createElement('div');
-        title.className = 'event__title';
-        title.innerHTML = `<strong>${ev.title}</strong>`;
-        el.appendChild(title);
-
-        // Top bar
-        const top = document.createElement('div'); top.className = 'event__top';
-
-        const dateBox = document.createElement('div');
-        dateBox.className = 'event__date';
-        dateBox.innerHTML = `<div class="event__dow">${dow}</div><div class="event__day">${day} ${mon}</div>`;
-        top.appendChild(dateBox);
-
-        // CTA prenota (per-evento)
-        let cta;
-        if(ev.booking==='open'){
-          cta = document.createElement('a');
-          cta.className = 'pill pill--ghost event__cta';
-          cta.href = `https://wa.me/393298252092?text=${encodeURIComponent('Ciao 17/19 Urban Bistrot, vorrei prenotare per: '+ev.title+' • '+formatLongIt(ev.dateISO))}`;
-          cta.target = '_blank'; cta.rel = 'noopener'; cta.textContent = 'Prenota';
-        }else{
-          cta = document.createElement('span');
-          cta.className = 'pill pill--ghost pill--disabled event__cta';
-          cta.textContent = ev.booking==='soon' ? 'Coming Soon' : 'Prenotazioni chiuse';
-        }
-        top.appendChild(cta);
-        el.appendChild(top);
-
-        // Info row
-        const info = document.createElement('div');
-        info.className = 'event__info';
-        const parts = [ ev.start ? `Start ${ev.start}` : null, ...(ev.genres||[]) ].filter(Boolean);
-        info.innerHTML = parts.map(t=>`<span>${t}</span>`).join('');
-        el.appendChild(info);
-
-        // Names
-        const namesRow = document.createElement('div');
-        namesRow.className = 'event__names';
-        const head = makeNameChip(ev.headliner, 'headliner'); if(head) namesRow.appendChild(head);
-        (ev.guests||[]).forEach(g=>{ const ch = makeNameChip(g, 'guest'); if(ch) namesRow.appendChild(ch); });
-        el.appendChild(namesRow);
-
-        // (opz.) Sponsor in card
-        if (SHOW_SPONSORS_IN_CARD && ev.sponsors?.length){
-          const srow = document.createElement('div'); srow.className = 'event__sponsors';
-          ev.sponsors.forEach(s=> s.text && srow.appendChild(makeSChip(s.text)));
-          el.appendChild(srow); el.classList.add('event--show-sponsors');
-        }
-
-        // Upvote badge (aggregato)
-        const vb = document.createElement('div'); vb.className = 'vote-badge'; vb.innerHTML = `${SVG.up}<strong class="n">${Store.getFlameCount(eid)}</strong>`;
-        el.appendChild(vb);
-        if(Store.getMyFlame(eid)) el.classList.add('event--voted');
-
-        // Actions row (Condividi)
-        const actions = document.createElement('div'); actions.className='event__actions';
-        const shareBtn = document.createElement('button');
-        shareBtn.className='pill pill--ghost';
-        shareBtn.innerHTML = `${SVG.share}<span>Condividi</span>`;
-        shareBtn.addEventListener('click', (e)=> openShare(el, ev, e.currentTarget));
-        actions.appendChild(shareBtn);
-        el.appendChild(actions);
-
-
-        // Double-tap sulla card (toggle flame) + animazione satisfying
-        makeDoubleTap(el, ()=>{
-          const my = Store.toggleFlame({eid, ctx:{eid, title:ev.title, dateISO:ev.dateISO}});
-          el.classList.toggle('event--voted', !!my);
-          vb.querySelector('.n').textContent = Store.getFlameCount(eid); // numero aggregato
-          if(my){                    // anima solo quando il voto è attivato
-            el.classList.remove('event--burst');
-            void el.offsetWidth;     // reflow per riarmare l’animazione
-            el.classList.add('event--burst');
-          }
-          renderTotals();
-        });
-
-
-        list.appendChild(el);
-      });
-
-      const btn = document.getElementById('eventsMoreBtn');
-      if(sorted.length <= 3){ btn.style.display = 'none'; }
-      else { btn.style.display = 'inline-flex'; btn.textContent = eventsExpanded ? 'Mostra meno' : 'Mostra altri'; }
-    }
-
-    // Share: Web Share API + fallback popover
-    function openShare(cardEl, ev, anchor){
-      const text = buildShareText(ev);
-      const url = location.href.split('#')[0] + '#events';
-      if(navigator.share){
-        navigator.share({ title:`17/19 • ${ev.title}`, text, url }).catch(()=>{});
-        return;
-      }
-      let pop = cardEl.querySelector('.share-pop');
-      if(!pop){
-        pop = document.createElement('div'); pop.className='share-pop';
-        pop.innerHTML = `
-          <a href="${waUrlFromEvent(ev)}" target="_blank" rel="noopener">WhatsApp</a>
-          <a href="${tgUrlFromEvent(ev)}" target="_blank" rel="noopener">Telegram</a>
-          <a href="${xUrlFromEvent(ev)}"  target="_blank" rel="noopener">X</a>
-          <button type="button" data-cpy>Copia</button>
-        `;
-        cardEl.appendChild(pop);
-        pop.querySelector('[data-cpy]').addEventListener('click', async ()=>{
-          try{ await navigator.clipboard.writeText(text+'\n'+url); }catch{}
-          pop.style.display='none';
-        });
-      }
-      const r = anchor.getBoundingClientRect(); const pr = cardEl.getBoundingClientRect();
-      pop.style.left = (r.left - pr.left) + 'px';
-      pop.style.top = (r.bottom - pr.top + 6) + 'px';
-      pop.style.display = 'grid';
-      document.addEventListener('click', function close(e){
-        if(!pop.contains(e.target) && e.target!==anchor){ pop.style.display='none'; document.removeEventListener('click', close, true); }
-      }, true);
-    }
-
-    /* ===== REACTIONS TOTALS RENDER ===== */
-    function renderTotals(){
-      const t = Store.totals();
-      $('#totalRockets').textContent = t.rockets || 0;
-      $('#totalFlames').textContent  = t.flames  || 0;
-    }
-
-    function updateEventCountsFromStore(){
-      $$('#eventsList .event').forEach(el=>{
-        const eid = el.dataset.eid;
-        el.querySelector('.vote-badge .n').textContent = Store.getFlameCount(eid);
-        el.classList.toggle('event--voted', !!Store.getMyFlame(eid));
-      });
-    }
-    function updatePosterChipCounts(){
-      if(!posterCanvas) return;
-      bouncers.forEach(b=>{
-        const name = b.el.dataset.name;
-        const cnt = b.el.querySelector('.rc .n');
-        if(cnt) cnt.textContent = Store.getRocketsAgg(name);
-      });
-    }
-
-    /* ===== Init ===== */
-    let eventsExpanded = false;
-    function bindPosterFromEvent(ev){
-      const names = [ev.headliner].concat(ev.guests||[]).filter(Boolean).map(s=>s.toUpperCase());
-      posterData.venue    = (ev.venue||'17/19 URBAN BISTROT').toUpperCase();
-      posterData.series   = (ev.title||'').toUpperCase();
-      posterData.date     = formatPosterDate(ev.dateISO);
-      posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
-      posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Riccardo Battaglia')).toUpperCase();
-      posterData.logos    = (ev.sponsors || []).map(s => ({text:(s.text||'').toUpperCase()}));
-      currentPosterEventCtx = {eid: eventId(ev), title: ev.title, dateISO: ev.dateISO};
-      setPosterTexts(posterData);
-      initBouncers(names.slice(0,3)); // fino a 3 nomi nel poster
-      updatePosterChipCounts();
-    }
-
-    function renderEverything(){
-      renderMenu();
-      renderEvents();
-      bindPosterFromEvent(pickNextEvent());
-      $('#eventsMoreBtn').addEventListener('click', ()=>{ eventsExpanded = !eventsExpanded; renderEvents(); updateEventCountsFromStore(); });
-      renderTotals();
-    }
-    renderEverything();
-
-    /* ========== Gallery (con crediti) ========== */
-    const galleryData = [
-      { src:'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg', alt:'Interni 17/19', credit:'Restaurant Guru', href:'https://restaurantguru.it/1719-LIve-Eat-Drink-Love-Rome' },
-      { src:'https://img.restaurantguru.com/ccd7-17-19-Stenfields-and-c-Rome-dishes.jpg', alt:'Piatti 17/19', credit:'Restaurant Guru', href:'https://restaurantguru.it/1719-LIve-Eat-Drink-Love-Rome' },
-      { src:'https://img3.restaurantguru.com/c467-Pub-and-bar-17-19-Stenfields-and-c-exterior.jpg', alt:'Esterni 17/19', credit:'Restaurant Guru', href:'https://restaurantguru.it/1719-LIve-Eat-Drink-Love-Rome' },
-      { src:'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg', alt:'Bar 17/19', credit:'IoRampo', href:'https://iorampo.com' }
-    ];
-    const galleryGrid = document.getElementById('galleryGrid');
-    galleryData.forEach(g=>{
-      const a=document.createElement('a'); a.href=g.href; a.target='_blank'; a.rel='noopener';
-      a.innerHTML = `<img loading="lazy" decoding="async" src="${g.src}" alt="${g.alt}"><span class="credit">© ${g.credit}</span>`;
-      galleryGrid.appendChild(a);
-    });
   </script>
 </body>
 </html>
