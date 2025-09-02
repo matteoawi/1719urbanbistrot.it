@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>17/19 Urban Bistrot • Techno • Electro • House</title>
-  <meta name="description" content="17/19 Urban Bistrot Roma. DJ set in vinile curated by Riccardo Battaglia. Colazioni, pranzi, cene e cocktail signature." />
+  <meta name="description" content="17/19 Urban Bistrot Roma. DJ set in vinile curated by resident DJs. Colazioni, pranzi, cene e cocktail signature. Location per eventi privati." />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
   <!-- favicon di fallback -->
@@ -199,12 +199,6 @@
     .bouncer .lbl{ transition: color .2s }
     .bouncer.up-lit .lbl{ color: var(--accent); text-shadow: 0 0 10px color-mix(in oklab, var(--accent) 40%, transparent) }
 
-    /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    @media (min-width:768px){ .gallery{grid-template-columns:repeat(4,1fr)} }
-    .gallery a{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--chip)}
-    .credit{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.55);color:#fff;padding:4px 6px;border-radius:8px;font-size:.75rem}
-
     /* Map */
     .map{border:1px solid var(--line);border-radius:16px;overflow:hidden}
     .map iframe{width:100%;height:320px;border:0;display:block}
@@ -225,13 +219,6 @@
     .tag{ max-width:100%; white-space:normal; flex-wrap:wrap; overflow-wrap:anywhere; }
     .poster-logos{flex-wrap:wrap; row-gap:6px;}
     @media (max-width:420px){ .time-cards{grid-template-columns:1fr;} }
-
-    /* Community counters */
-    #community{ padding-top:8px }
-    .counters{ display:grid; grid-template-columns:1fr; gap:12px }
-    @media (min-width:768px){ .counters{ grid-template-columns:1fr 1fr } }
-    .counter-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; font-weight:900 }
-    .counter-row .big{ font-size:1.4rem; display:flex; align-items:center; gap:8px }
 
     /* Toast: ridisegnata come card persistente */
     .toast{
@@ -285,9 +272,32 @@
     .modal__close{ position:absolute; right:10px; top:10px; width:40px; height:40px; border-radius:12px;
       border:1px solid var(--line); background:var(--chip); color:var(--chip-fg); font-size:22px; font-weight:900; cursor:pointer; }
     .modal__caption{ margin-top:6px; text-align:center; }
-    /* Hero switch */
-    .hero-switch{ position:absolute; right:10px; top:10px; z-index:5; }
-    #heroCarousel{ display:none; }
+
+    /* Private Events Section */
+    .private-events{
+      background:color-mix(in oklab, var(--accent) 5%, transparent);
+      border:1px solid color-mix(in oklab, var(--accent) 20%, transparent);
+      border-radius:16px;
+      padding:20px;
+      margin-top:16px;
+    }
+    .private-events h4{
+      margin:0 0 12px;
+      font-family:'Montserrat',system-ui,sans-serif;
+      font-weight:900;
+      color:var(--accent);
+    }
+    .private-events-grid{
+      display:grid;
+      gap:8px;
+      margin:12px 0;
+    }
+    .private-events-grid span{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
+    }
 
   </style>
 </head>
@@ -306,7 +316,7 @@
           <li><a href="#menu">Menu</a></li>
           <li><a href="#music">Musica</a></li>
           <li><a href="#events">Eventi</a></li>
-          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#private">Eventi Privati</a></li>
           <li><a href="#contact">Contatti</a></li>
           <li><a class="pill pill--accent" href="#menu">Menù</a></li>
           <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
@@ -315,7 +325,6 @@
         </ul>
 
         <div class="only-mobile" style="gap:8px;align-items:center">
-          <a href="#menu" class="pill pill--accent pill--wide" aria-label="Vai al menù">Menù</a>
           <a href="#menu" class="pill pill--accent pill--wide" aria-label="Vai al menù">Menù</a>
           <button id="themeToggleM" class="toggle" aria-label="Tema: automatico"></button>
           <button class="menu-toggle" id="menuToggle" aria-label="Apri/chiudi menu"><span></span></button>
@@ -334,7 +343,7 @@
           <li><a href="#menu">Menu</a></li>
           <li><a href="#music">Musica</a></li>
           <li><a href="#events">Eventi</a></li>
-          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#private">Eventi Privati</a></li>
           <li><a href="#contact">Contatti</a></li>
         </ul>
         <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
@@ -343,26 +352,24 @@
   </div>
 
   <div id="tipsToast" class="toast" role="region" aria-live="polite" aria-label="Interazioni">
-  <div style="display:flex;align-items:center;gap:8px">
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-    <strong>Interazioni</strong>
+    <div style="display:flex;align-items:center;gap:8px">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
+      <strong>Interazioni</strong>
+    </div>
+    <div class="meta">
+      Fai <strong>doppio tap</strong> per interagire con il nome dell'artista o sulla data dell'evento🔥<br/>
+      Tante interazioni = tanto supporto!
+    </div>
+    <button class="x" aria-label="Chiudi">Chiudi</button>
   </div>
-  <div class="meta">
-    Fai <strong>doppio tap</strong> per interagire con il nome dell'artista o sulla data dell'evento🔝<br/>
-    Tante interazioni = tanto supporto!
-  </div>
-  <button class="x" aria-label="Chiudi">Chiudi</button>
-</div>
 
-
-  <!-- Hero: Poster + Orari + About card -->
+  <!-- Hero: Poster/Live Shots + Orari + About card -->
   <section class="hero">
     <div class="container grid grid-2">
-      <!-- Colonna sinistra: poster -->
+      <!-- Colonna sinistra: poster o live shots -->
       <div class="reveal">
-        <div class="poster-frame">
+        <div class="poster-frame" id="posterFrame">
           <div class="poster-inner">
-            <button id="heroSwitch" class="pill pill--ghost hero-switch" type="button" aria-pressed="false" title="Switch poster/carosello">Carosello: OFF</button>
             <div class="poster-head">
               <div class="venue" id="posterVenue"></div>
               <div class="series" id="posterSeries"></div>
@@ -375,7 +382,7 @@
             <div class="poster-logos" id="posterLogos" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="hero-media" id="heroCarousel" aria-label="carosello hero"><div class="dots" id="heroDots"></div></div>
+        <div class="hero-media" id="liveCarousel" aria-label="live shots"><div class="dots" id="liveDots"></div></div>
         <span class="tag" style="margin-top:12px">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px">
             <path d="M12 22s7-5.33 7-12a7 7 0 1 0-14 0c0 6.67 7 12 7 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -439,18 +446,8 @@
 
         <div id="about" class="card reveal">
           <div class="block-title"><h3>Urban Bistrot</h3></div>
-          <p style="margin:0">17/19 è un bar con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Musica elettronica dal vivo, rigorosamente <strong>vinile</strong> — line-up curata da <strong>Riccardo Battaglia</strong>. Spazio polifunzionale aperto a podcast live, riunioni e progetti che fanno bene alla community</p>
+          <p style="margin:0">17/19 è un bar con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Musica elettronica dal vivo, rigorosamente <strong>vinile</strong> — line-up curata dai nostri <strong>resident DJ</strong>. Spazio polifunzionale aperto a podcast live, riunioni e progetti che fanno bene alla community</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Live Shots -->
-  <section id="live">
-    <div class="container">
-      <div class="block-title" style="margin-bottom:14px"><h3>Live Shots</h3></div>
-      <div class="hero-media" id="liveCarousel" aria-label="carosello">
-        <div class="dots" id="liveDots"></div>
       </div>
     </div>
   </section>
@@ -460,6 +457,37 @@
     <div class="container">
       <div class="block-title" style="margin-bottom:6px"><h3>Il nostro menù</h3></div>
       <div id="menuAccordions" class="grid" style="gap:12px"></div>
+    </div>
+  </section>
+
+  <!-- Eventi Privati -->
+  <section id="private">
+    <div class="container">
+      <div class="card reveal">
+        <div class="block-title">
+          <h3>Eventi Privati</h3>
+          <span class="meta">Location esclusiva</span>
+        </div>
+        <p>17/19 Urban Bistrot è la location perfetta per i tuoi eventi privati. Organizziamo con cura ogni dettaglio per rendere speciale la tua occasione.</p>
+        
+        <div class="private-events">
+          <h4>Che tipo di eventi organizziamo:</h4>
+          <div class="private-events-grid">
+            <span>🎂 Compleanni e feste private</span>
+            <span>🎓 Feste di laurea</span>
+            <span>🍽️ Cene di gruppo e aziendali</span>
+            <span>🎉 Aperitivi e cocktail party</span>
+            <span>🎵 Eventi con DJ set personalizzati</span>
+            <span>📸 Shooting fotografici e video</span>
+          </div>
+          <p style="margin:12px 0 16px;font-size:.95rem;color:var(--muted)">
+            Spazio modulabile, cucina completa, impianto audio professionale e atmosfera unica nel cuore di Roma.
+          </p>
+          <a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20organizzare%20un%20evento%20privato" target="_blank" rel="noopener">
+            Richiedi Preventivo
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -474,20 +502,12 @@
     </div>
   </section>
 
-  <!-- Gallery -->
-  <section id="gallery">
-    <div class="container">
-      <div class="grid gallery" id="galleryGrid"></div>
-      <p class="meta" style="margin-top:8px;text-align:center">Immagini da fonti pubbliche, citate con link all’originale.</p>
-    </div>
-  </section>
-
   <!-- Contact + Map -->
   <section id="contact">
     <div class="container grid grid-2">
       <div class="card reveal">
         <div class="block-title"><h3>Contatti</h3></div>
-        <p><strong>Indirizzo</strong><br/>Via di Santa Costanza 17/19 — 00198 Roma</p>
+        <p><strong>Indirizzo</strong><br/>Via di Santa Costanza 17/19 – 00198 Roma</p>
         <p><strong>Prenotazioni</strong><br/>
           WhatsApp: <a class="pill" href="https://wa.me/393298252092" target="_blank" rel="noopener">+39 329 825 2092</a><br/>
           <br/>
@@ -507,33 +527,6 @@
         <div class="map">
           <iframe title="Mappa 17/19 Urban Bistrot" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
             src="https://www.google.com/maps?q=17%2F19%20Cocktail%20Bar%2C%20Via%20di%20Santa%20Costanza%2017%2F19%2C%20Roma&ll=41.9226278,12.514469&z=17&output=embed"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Community Counters -->
-  <section id="community">
-    <div class="container">
-      <div class="block-title" style="margin-bottom:8px"><h3>Community Counters</h3><span class="meta">reazioni live</span></div>
-      <div class="counters">
-        <div class="card">
-          <div class="counter-row">
-            <span style="display:inline-flex;align-items:center;gap:8px">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-              Upvotes (nomi)
-            </span>
-            <span class="big" id="totalRockets">0</span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="counter-row">
-            <span style="display:inline-flex;align-items:center;gap:8px">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-              Upvotes (eventi)
-            </span>
-            <span class="big" id="totalFlames">0</span>
-          </div>
         </div>
       </div>
     </div>
@@ -560,6 +553,9 @@
       enabled: true,
       endpoint: 'https://script.google.com/macros/s/AKfycbyukoQfi8AKrj0dtGGU4gRCCjWMA8Aik1E1s1ssTmWazIEGk0yJjdavqsWd4LE0_Z4/exec?key=eventreactions1719'
     };
+    
+    // CONFIG: Poster vs Live Shots
+    const SHOW_POSTER = false; // false = mostra live shots, true = mostra poster
 
     /* ================= TUNABLES (fisica) ================= */
     const PHYS = {
@@ -570,7 +566,7 @@
       min: 18, max: 160,
       measureEvery: 12,
       pad: -6,        // maggiore sovrapposizione visiva
-      sepBias: 1.2,   // non più usato nella nuova risoluzione, lasciato per compatibilità
+      sepBias: 1.2,   // non più usato nella nuova risoluzione, lasciato per compatibilità 
       nudge: 8,
       boostMax: 4.5,
       burstMs: 900,
@@ -650,26 +646,25 @@
     document.getElementById('themeToggleM')?.addEventListener('click', cycleTheme);
     applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
 
-  // Toast: stile card, con auto-hide a 10s (riarmato a ogni apertura)
-      const toast = document.getElementById('tipsToast');
-      let toastTimer = null;
-      function openToast(){
-        toast.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(()=> toast.classList.remove('show'), 10000);
-      }
-      function closeToast(){
-        toast.classList.remove('show');
-        clearTimeout(toastTimer);
-      }
-      function toggleToast(){
-        if(toast.classList.contains('show')) closeToast();
-        else openToast();
-      }
-      document.getElementById('tipsBtn')?.addEventListener('click', toggleToast);
-      document.getElementById('tipsBtnM')?.addEventListener('click', toggleToast);
-      toast.querySelector('.x').addEventListener('click', closeToast);
-
+    // Toast: stile card, con auto-hide a 10s (riarmato a ogni apertura)
+    const toast = document.getElementById('tipsToast');
+    let toastTimer = null;
+    function openToast(){
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> toast.classList.remove('show'), 10000);
+    }
+    function closeToast(){
+      toast.classList.remove('show');
+      clearTimeout(toastTimer);
+    }
+    function toggleToast(){
+      if(toast.classList.contains('show')) closeToast();
+      else openToast();
+    }
+    document.getElementById('tipsBtn')?.addEventListener('click', toggleToast);
+    document.getElementById('tipsBtnM')?.addEventListener('click', toggleToast);
+    toast.querySelector('.x').addEventListener('click', closeToast);
 
     /* ================= Live Shots ================= */
     const liveImages = [
@@ -677,10 +672,16 @@
       'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
       'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg'
     ];
-    (function(){
+
+    function setupLiveCarousel(){
       const box  = document.getElementById('liveCarousel');
       const dots = document.getElementById('liveDots');
       if(!box) return;
+      
+      // Clear any existing content
+      box.innerHTML = '';
+      dots.innerHTML = '';
+      
       let i = 0; const slides=[], bullets=[];
       liveImages.forEach((src,idx)=>{
         const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
@@ -689,9 +690,13 @@
         s.appendChild(im); box.appendChild(s); slides.push(s);
         const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
       });
+      
+      // Add dots container to box
+      box.appendChild(dots);
+      
       function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
-    })();
+    }
 
     /* ================== STORE (local + GAS JSONP/Beacon) ================== */
     const Store = {
@@ -765,7 +770,6 @@
                 this.state.aggFlamesByEvent = B.flamesByEvent || {};
                 this.state.totals = B.totals || this.state.totals;
                 this.saveLocal();
-                if(typeof renderTotals==='function') renderTotals();
                 if(typeof updateEventCountsFromStore==='function') updateEventCountsFromStore();
                 if(typeof updatePosterChipCounts==='function') updatePosterChipCounts();
               }
@@ -799,7 +803,7 @@
 
     Store.load();
     Store.remotePull();
-    setInterval(()=>Store.remotePull(), 20000); // aggiornamento “live-ish”
+    setInterval(()=>Store.remotePull(), 20000); // aggiornamento "live-ish"
 
     /* ================= Double-tap handler ================= */
     function makeDoubleTap(el, handler, threshold=300, moveTol=18){
@@ -820,7 +824,7 @@
       series: 'ELECTRO TECHNO NIGHT',
       date:   'WEDNESDAY 03/09',
       tagline:'TECHNO • ELECTRO • VINYL',
-      curatedBy:'CURATED BY RICCARDO BATTAGLIA',
+      curatedBy:'CURATED BY RESIDENT DJS',
       logos:[ { text:'CASAMIGOS' }, { text:'ORGANICS' }, { text:'UPVOTES' } ]
     };
     let currentPosterEventCtx = null; // {eid, title, dateISO}
@@ -836,8 +840,8 @@
     function setPosterTexts(p){
       const set = (id,txt)=>{ const el=document.getElementById(id); if(el) el.textContent=(txt||'').toUpperCase(); };
       set('posterVenue', p.venue); set('posterSeries',p.series); set('posterDate', p.date); set('posterTagline', p.tagline); set('posterCurated', p.curatedBy);
-      const logosWrap = document.getElementById('posterLogos'); logosWrap.innerHTML='';
-      (p.logos||[]).forEach(L=>{ const span=document.createElement('span'); span.className='poster-sponsor'; span.textContent=(L.text||'').toUpperCase(); logosWrap.appendChild(span); });
+      const logosWrap = document.getElementById('posterLogos'); if(logosWrap){ logosWrap.innerHTML='';
+      (p.logos||[]).forEach(L=>{ const span=document.createElement('span'); span.className='poster-sponsor'; span.textContent=(L.text||'').toUpperCase(); logosWrap.appendChild(span); }); }
     }
     function setupTrailCanvas(){
       if(trailCanvas) return;
@@ -898,10 +902,8 @@
       sparkle(cx, cy);
       b.trailPulseUntil = now + DUR;
 
-      // “burst” collisioni (manteniamo per spinta generale)
+      // "burst" collisioni (manteniamo per spinta generale)
       collisionBurstUntil = performance.now() + PHYS.burstMs;
-
-      renderTotals();
 
       // ricalcola dimensioni in caso di numero che cresce
       const r = targetEl.getBoundingClientRect(); b.w = r.width; b.h = r.height; b.r = Math.max(14, 0.25*(b.w+b.h));
@@ -924,7 +926,7 @@
         posterCanvas.appendChild(el);
 
         const w = el.offsetWidth || 80, h = el.offsetHeight || 28;
-        const r = Math.max(14, 0.25*(w+h)); // raggio per collisioni “circolari”
+        const r = Math.max(14, 0.25*(w+h)); // raggio per collisioni "circolari"
 
         // spawn non sovrapposto (max 20 tentativi)
         let x = 0, y = 0;
@@ -1028,7 +1030,7 @@
       bounceRAF = requestAnimationFrame(tick);
     }
 
-    // Collisioni “morbide” come cerchi
+    // Collisioni "morbide" come cerchi
     function resolveCollisions(){
       const e = PHYS.restitution;
       for(let i=0;i<bouncers.length;i++){
@@ -1105,85 +1107,96 @@
     function tgUrlFromEvent(ev){ return `https://t.me/share/url?text=${encodeURIComponent(buildShareText(ev))}`; }
     function xUrlFromEvent(ev){ return `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(ev))}`; }
 
-    
-    
     /* ===== MENU DATA ===== */
-    // Compilato da foto del menu cartaceo (Colazione). Pranzo, Cena e Drinks sono in allestimento.
-    // NB: per aggiungere foto prodotto, aggiungi {photo:'URL'} all'item: comparirà l'icona fotocamera.
+    // Menu con sezioni espandibili
     const menuData = [
-      { badge:'BREAKFAST', title:'Colazione', groups:[
-        { title:'Colazioni Special (fino alle 11:30)', items:[
-          { name:"Colazione all’Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10,00" },
-          { name:"French Breakfast", desc:"Tè o infuso d’erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7,00" },
-          { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d’acero; caffè", price:"€7,00" },
-          { name:"American Breakfast Salata", desc:"Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price:"€12,00" },
-          { name:"American Breakfast Dolce", desc:"Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano", price:"€10,00" },
-          { name:"American Breakfast Piccante", desc:"Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano", price:"€12,00" }
-        ]},
-        { title:'Bakery', items:[
-          { name:"Pancake con sciroppo d’acero o d’agave", price:"€4,00" },
-          { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", price:"€5,00" },
-          { name:"Pancake con confettura o marmellata e frutta fresca", price:"€5,00" },
-          { name:"Pasticceria da tè (al pz.)", price:"€1,50" },
-          { name:"Crostata di marmellata (al pz.)", price:"€3,50" },
-          { name:"Croissant mignon semplice o farcito", price:"€1,50" },
-          { name:"Mini muffin classico o farcito", price:"€1,50" },
-          { name:"Mini bombetta o mini ciambellina", price:"€1,50" }
-        ]},
-        { title:'Cioccolata calda', items:[
-          { name:"Classica oro", price:"€4,50" },
-          { name:"Caramello salato", price:"€4,50" },
-          { name:"Gianduia", price:"€4,50" },
-          { name:"Rose e lamponi", price:"€4,50" },
-          { name:"Arancia e cannella", price:"€4,50" },
-          { name:"Fondente o bianca al pistacchio", price:"€4,50" },
-          { name:"Menta", price:"€4,50" }
-        ]},
-        { title:'Caffetteria', items:[
-          { name:"Espresso", price:"€1,50" },
-          { name:"Espresso decaffeinato", price:"€2,00" },
-          { name:"Espresso americano", price:"€2,50" },
-          { name:"Latte macchiato", price:"€2,50" },
-          { name:"Caffè latte", price:"€3,00" },
-          { name:"Caffè o cappuccino spècial", price:"€4,00" },
-          { name:"Cappuccino", price:"€2,00" },
-          { name:"Cappuccino vegetale di soya", price:"€3,00" },
-          { name:"Cappuccino senza lattosio", price:"€3,00" },
-          { name:"Orzo (piccolo / grande)", price:"€2,00 / €2,50" },
-          { name:"Ginseng (piccolo / grande)", price:"€2,00 / €2,50" },
-          { name:"Tè, rooibos o infuso d’erbe", price:"€4,00" }
-        ]},
-        { title:'Succhi & Frutta', items:[
-          { name:"Spremuta di agrumi", price:"€4,00" },
-          { name:"Centrifugato", price:"€5,00" },
-          { name:"Macedonia o tagliata di frutta fresca", price:"€6,00" },
-          { name:"Granita", price:"€6,00" },
-          { name:"Milkshake", price:"€4,00" }
-        ]}
-      ]},
-      { badge:'LUNCH', title:'Pranzo', items:[
-        { name:'— In allestimento —', desc:'', price:'' },
-        // Esempio:
-        // { name:'Pasta del giorno', desc:'chiedi allo staff', price:'€14' },
-      ]},
-      { badge:'DINNER', title:'Cena', items:[
-        { name:'— In allestimento —', desc:'', price:'' },
-        // Esempio:
-        // { name:'Tagliata di manzo', desc:'rucola e scaglie', price:'€20' },
-      ]},
-      { badge:'DRINKS', title:'Drinks', items:[
-        { name:'— In allestimento —', desc:'', price:'' },
-        // Esempio:
-        // { title:'Cocktail Signature', items:[ { name:'Neon Spritz', price:'€10' } ]},
-      ]}
+      { 
+        badge:'BREAKFAST', 
+        title:'Colazione',
+        isMainCategory: true,
+        groups:[
+          { title:'Colazioni Special (fino alle 11:30)', collapsed: true, items:[
+            { name:"Colazione all'Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10,00" },
+            { name:"French Breakfast", desc:"Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7,00" },
+            { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d'acero; caffè", price:"€7,00" },
+            { name:"American Breakfast Salata", desc:"Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price:"€12,00" },
+            { name:"American Breakfast Dolce", desc:"Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano", price:"€10,00" },
+            { name:"American Breakfast Piccante", desc:"Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano", price:"€12,00" }
+          ]},
+          { title:'Bakery', collapsed: true, items:[
+            { name:"Pancake con sciroppo d'acero o d'agave", price:"€4,00" },
+            { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", price:"€5,00" },
+            { name:"Pancake con confettura o marmellata e frutta fresca", price:"€5,00" },
+            { name:"Pasticceria da tè (al pz.)", price:"€1,50" },
+            { name:"Crostata di marmellata (al pz.)", price:"€3,50" },
+            { name:"Croissant mignon semplice o farcito", price:"€1,50" },
+            { name:"Mini muffin classico o farcito", price:"€1,50" },
+            { name:"Mini bombetta o mini ciambellina", price:"€1,50" }
+          ]},
+          { title:'Cioccolata calda', collapsed: true, items:[
+            { name:"Classica oro", price:"€4,50" },
+            { name:"Caramello salato", price:"€4,50" },
+            { name:"Gianduia", price:"€4,50" },
+            { name:"Rose e lamponi", price:"€4,50" },
+            { name:"Arancia e cannella", price:"€4,50" },
+            { name:"Fondente o bianca al pistacchio", price:"€4,50" },
+            { name:"Menta", price:"€4,50" }
+          ]},
+          { title:'Caffetteria', collapsed: true, items:[
+            { name:"Espresso", price:"€1,50" },
+            { name:"Espresso decaffeinato", price:"€2,00" },
+            { name:"Espresso americano", price:"€2,50" },
+            { name:"Latte macchiato", price:"€2,50" },
+            { name:"Caffè latte", price:"€3,00" },
+            { name:"Caffè o cappuccino spécial", price:"€4,00" },
+            { name:"Cappuccino", price:"€2,00" },
+            { name:"Cappuccino vegetale di soya", price:"€3,00" },
+            { name:"Cappuccino senza lattosio", price:"€3,00" },
+            { name:"Orzo (piccolo / grande)", price:"€2,00 / €2,50" },
+            { name:"Ginseng (piccolo / grande)", price:"€2,00 / €2,50" },
+            { name:"Tè, rooibos o infuso d'erbe", price:"€4,00" }
+          ]},
+          { title:'Succhi & Frutta', collapsed: true, items:[
+            { name:"Spremuta di agrumi", price:"€4,00" },
+            { name:"Centrifugato", price:"€5,00" },
+            { name:"Macedonia o tagliata di frutta fresca", price:"€6,00" },
+            { name:"Granita", price:"€6,00" },
+            { name:"Milkshake", price:"€4,00" }
+          ]}
+        ]
+      },
+      { 
+        badge:'LUNCH', 
+        title:'Pranzo', 
+        isMainCategory: true,
+        items:[
+          { name:'— In allestimento —', desc:'', price:'' }
+        ]
+      },
+      { 
+        badge:'DINNER', 
+        title:'Cena', 
+        isMainCategory: true,
+        items:[
+          { name:'— In allestimento —', desc:'', price:'' }
+        ]
+      },
+      { 
+        badge:'DRINKS', 
+        title:'Drinks', 
+        isMainCategory: true,
+        items:[
+          { name:'— In allestimento —', desc:'', price:'' }
+        ]
+      }
     ];
-
-
 
     function renderMenu(){
       const wrap = document.getElementById('menuAccordions');
       wrap.innerHTML = '';
+      
       menuData.forEach(cat=>{
+        // Main category accordion
         const details = document.createElement('details');
         details.className = 'menu-acc reveal';
         const sum = document.createElement('summary');
@@ -1194,6 +1207,7 @@
         const body = document.createElement('div');
         body.className = 'menu-body';
 
+        // Handle direct items (for categories without groups)
         if(cat.items){
           cat.items.forEach(it=>{
             const row = document.createElement('div');
@@ -1202,20 +1216,50 @@
             body.appendChild(row);
           });
         }
+
+        // Handle groups (for categories with subcategories)
         if(cat.groups){
           cat.groups.forEach(gr=>{
-            const gt = document.createElement('div');
-            gt.className = 'group-title';
-            gt.textContent = gr.title;
-            body.appendChild(gt);
-            gr.items.forEach(it=>{
-              const row = document.createElement('div');
-              row.className = 'menu-item';
-              row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||""}</span>${it.photo?` <button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 012-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}</div><div class="price">${it.price||""}</div>`;
-              body.appendChild(row);
-            });
+            if(gr.collapsed) {
+              // Create sub-accordion for collapsed groups
+              const subDetails = document.createElement('details');
+              subDetails.className = 'menu-acc';
+              subDetails.style.margin = '8px 0';
+              subDetails.style.fontSize = '0.95em';
+              
+              const subSum = document.createElement('summary');
+              subSum.className = 'menu-sum';
+              subSum.innerHTML = `<span class="group-title">${gr.title}</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
+              subDetails.appendChild(subSum);
+              
+              const subBody = document.createElement('div');
+              subBody.className = 'menu-body';
+              
+              gr.items.forEach(it=>{
+                const row = document.createElement('div');
+                row.className = 'menu-item';
+                row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||""}</span>${it.photo?` <button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 012-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}</div><div class="price">${it.price||""}</div>`;
+                subBody.appendChild(row);
+              });
+              
+              subDetails.appendChild(subBody);
+              body.appendChild(subDetails);
+            } else {
+              // Regular group title + items
+              const gt = document.createElement('div');
+              gt.className = 'group-title';
+              gt.textContent = gr.title;
+              body.appendChild(gt);
+              gr.items.forEach(it=>{
+                const row = document.createElement('div');
+                row.className = 'menu-item';
+                row.innerHTML = `<div>${it.name} <span class="meta">${it.desc||""}</span>${it.photo?` <button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 012-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}</div><div class="price">${it.price||""}</div>`;
+                body.appendChild(row);
+              });
+            }
           });
         }
+
         details.appendChild(body);
         wrap.appendChild(details);
       });
@@ -1224,19 +1268,13 @@
     }
 
     /* ========== EVENTI ========== */
-    // booking per evento: 'open' | 'closed' | 'soon'
-const events = [
-  { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season',       genres: ['TECHNO','ELECTRO','VINYL'], start: '22:30', curatedBy: 'Riccardo Battaglia', headliner: 'Riccardo Battaglia', guests: [],           sponsors: [{text:''}] },
-
-  { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-
-  { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-
-  { dateISO: '2025-09-06', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-
-  { dateISO: '2025-09-07', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',    genres: ['HOUSE','MINIMAL'],          start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'TBA',                 guests: [],         sponsors: [] },
-];
-
+    const events = [
+      { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season',       genres: ['TECHNO','ELECTRO','VINYL'], start: '22:30', curatedBy: 'Resident DJs', headliner: 'Resident DJ', guests: [],           sponsors: [{text:''}] },
+      { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-09-06', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-09-07', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',    genres: ['HOUSE','MINIMAL'],          start: '18:00', curatedBy: 'Resident DJs', headliner: 'TBA',                 guests: [],         sponsors: [] },
+    ];
 
     function pickNextEvent(){
       const today = new Date(); today.setHours(0,0,0,0);
@@ -1332,7 +1370,6 @@ const events = [
         actions.appendChild(shareBtn);
         el.appendChild(actions);
 
-
         // Double-tap sulla card (toggle flame) + animazione satisfying
         makeDoubleTap(el, ()=>{
           const my = Store.toggleFlame({eid, ctx:{eid, title:ev.title, dateISO:ev.dateISO}});
@@ -1340,12 +1377,10 @@ const events = [
           vb.querySelector('.n').textContent = Store.getFlameCount(eid); // numero aggregato
           if(my){                    // anima solo quando il voto è attivato
             el.classList.remove('event--burst');
-            void el.offsetWidth;     // reflow per riarmare l’animazione
+            void el.offsetWidth;     // reflow per riarmare l'animazione
             el.classList.add('event--burst');
           }
-          renderTotals();
         });
-
 
         list.appendChild(el);
       });
@@ -1387,15 +1422,8 @@ const events = [
       }, true);
     }
 
-    /* ===== REACTIONS TOTALS RENDER ===== */
-    function renderTotals(){
-      const t = Store.totals();
-      $('#totalRockets').textContent = t.rockets || 0;
-      $('#totalFlames').textContent  = t.flames  || 0;
-    }
-
     function updateEventCountsFromStore(){
-      $$('#eventsList .event').forEach(el=>{
+      $('#eventsList .event').forEach(el=>{
         const eid = el.dataset.eid;
         el.querySelector('.vote-badge .n').textContent = Store.getFlameCount(eid);
         el.classList.toggle('event--voted', !!Store.getMyFlame(eid));
@@ -1418,37 +1446,39 @@ const events = [
       posterData.series   = (ev.title||'').toUpperCase();
       posterData.date     = formatPosterDate(ev.dateISO);
       posterData.tagline  = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
-      posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Riccardo Battaglia')).toUpperCase();
+      posterData.curatedBy= ('Curated by ' + (ev.curatedBy || 'Resident DJs')).toUpperCase();
       posterData.logos    = (ev.sponsors || []).map(s => ({text:(s.text||'').toUpperCase()}));
       currentPosterEventCtx = {eid: eventId(ev), title: ev.title, dateISO: ev.dateISO};
       setPosterTexts(posterData);
-      initBouncers(names.slice(0,3)); // fino a 3 nomi nel poster
-      updatePosterChipCounts();
+      if(SHOW_POSTER) {
+        initBouncers(names.slice(0,3)); // fino a 3 nomi nel poster
+        updatePosterChipCounts();
+      }
+    }
+
+    function setupHeroDisplay(){
+      const posterFrame = document.getElementById('posterFrame');
+      const liveCarousel = document.getElementById('liveCarousel');
+      
+      if(SHOW_POSTER) {
+        posterFrame.style.display = '';
+        liveCarousel.style.display = 'none';
+      } else {
+        posterFrame.style.display = 'none';
+        liveCarousel.style.display = '';
+        setupLiveCarousel();
+      }
     }
 
     function renderEverything(){
       renderMenu();
       renderEvents();
       bindPosterFromEvent(pickNextEvent());
+      setupHeroDisplay();
       $('#eventsMoreBtn').addEventListener('click', ()=>{ eventsExpanded = !eventsExpanded; renderEvents(); updateEventCountsFromStore(); });
-      renderTotals();
     }
     renderEverything();
 
-    /* ========== Gallery (con crediti) ========== */
-    const galleryData = [
-      { src:'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg', alt:'Interni 17/19', credit:'Restaurant Guru', href:'https://restaurantguru.it/1719-LIve-Eat-Drink-Love-Rome' },
-      { src:'https://img.restaurantguru.com/ccd7-17-19-Stenfields-and-c-Rome-dishes.jpg', alt:'Piatti 17/19', credit:'Restaurant Guru', href:'https://restaurantguru.it/1719-LIve-Eat-Drink-Love-Rome' },
-      { src:'https://img3.restaurantguru.com/c467-Pub-and-bar-17-19-Stenfields-and-c-exterior.jpg', alt:'Esterni 17/19', credit:'Restaurant Guru', href:'https://restaurantguru.it/1719-LIve-Eat-Drink-Love-Rome' },
-      { src:'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg', alt:'Bar 17/19', credit:'IoRampo', href:'https://iorampo.com' }
-    ];
-    const galleryGrid = document.getElementById('galleryGrid');
-    galleryData.forEach(g=>{
-      const a=document.createElement('a'); a.href=g.href; a.target='_blank'; a.rel='noopener';
-      a.innerHTML = `<img loading="lazy" decoding="async" src="${g.src}" alt="${g.alt}"><span class="credit">© ${g.credit}</span>`;
-      galleryGrid.appendChild(a);
-    });
-  
     /* ===== Foto prodotto: modal ===== */
     (function(){
       const modal = document.getElementById('photoModal');
@@ -1491,47 +1521,6 @@ const events = [
           }
         });
       });
-    })();
-
-    /* ===== Hero poster ↔ carosello (toggle) ===== */
-    (function(){
-      const btn = document.getElementById('heroSwitch');
-      const poster = document.querySelector('.poster-frame');
-      const carousel = document.getElementById('heroCarousel');
-      const dots = document.getElementById('heroDots');
-      if(!btn || !poster || !carousel) return;
-
-      const HERO_IMAGES = [
-        'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
-        'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
-        'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg'
-      ];
-
-      // build slides once
-      const slides=[]; const bullets=[];
-      HERO_IMAGES.forEach((src,idx)=>{
-        const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
-        const im=new Image(); im.src=src; im.alt='Hero '+(idx+1);
-        Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
-        s.appendChild(im); carousel.appendChild(s); slides.push(s);
-        const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
-      });
-      let i=0;
-      function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
-      setInterval(()=>{ if(slides.length>1 && carousel.style.display!=='none') go((i+1)%slides.length); }, 5000);
-
-      const KEY='hero-mode-1719';
-      function apply(mode){
-        const isCarousel = (mode==='carousel');
-        poster.style.display = isCarousel ? 'none' : '';
-        carousel.style.display = isCarousel ? '' : 'none';
-        btn.textContent = 'Carosello: ' + (isCarousel ? 'ON' : 'OFF');
-        btn.setAttribute('aria-pressed', isCarousel ? 'true':'false');
-        localStorage.setItem(KEY, mode);
-      }
-      let mode = localStorage.getItem(KEY) || 'poster';
-      apply(mode);
-      btn.addEventListener('click', ()=>{ mode = (mode==='poster') ? 'carousel' : 'poster'; apply(mode); });
     })();
 
     /* ===== Animazione fluida apertura/chiusura dei <details> ===== */
@@ -1574,122 +1563,5 @@ const events = [
     </div>
   </div>
 
-
-  <script>
-
-    /* ===== Foto prodotto: modal ===== */
-    (function(){
-      const modal = document.getElementById('photoModal');
-      if(!modal) return;
-      const img = document.getElementById('modalPhoto');
-      const cap = document.getElementById('modalCaption');
-      function open(src, caption){
-        img.src = src; cap.textContent = caption||'';
-        modal.classList.add('show'); modal.setAttribute('aria-hidden','false');
-      }
-      function close(){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); img.src=''; cap.textContent=''; }
-      modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-      modal.querySelector('.modal__close').addEventListener('click', close);
-      document.addEventListener('click', (e)=>{
-        const b = e.target.closest && e.target.closest('.photo-btn'); if(!b) return;
-        const src = b.getAttribute('data-photo'); const caption = b.getAttribute('data-caption');
-        if(src) open(src, caption);
-      });
-      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') modal.classList.contains('show') && modal.click(); });
-    })();
-
-    /* ===== Smooth scroll con offset header ===== */
-    (function(){
-      function scrollWithOffset(targetId){
-        const el = document.querySelector(targetId);
-        if(!el) return;
-        const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
-        const y = el.getBoundingClientRect().top + window.pageYOffset - (headerH + 8);
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-      document.querySelectorAll('a[href^="#"]').forEach(a=>{
-        a.addEventListener('click', function(e){
-          const href = this.getAttribute('href');
-          if(!href || href.length<2) return;
-          const id = href.slice(1);
-          const tgt = document.getElementById(id);
-          if(tgt){
-            e.preventDefault();
-            scrollWithOffset('#'+id);
-          }
-        });
-      });
-    })();
-
-    /* ===== Hero poster ↔ carosello (toggle) ===== */
-    (function(){
-      const btn = document.getElementById('heroSwitch');
-      const poster = document.querySelector('.poster-frame');
-      const carousel = document.getElementById('heroCarousel');
-      const dots = document.getElementById('heroDots');
-      if(!btn || !poster || !carousel) return;
-
-      const HERO_IMAGES = [
-        'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
-        'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
-        'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg'
-      ];
-
-      // build slides once
-      const slides=[]; const bullets=[];
-      HERO_IMAGES.forEach((src,idx)=>{
-        const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
-        const im=new Image(); im.src=src; im.alt='Hero '+(idx+1);
-        Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
-        s.appendChild(im); carousel.appendChild(s); slides.push(s);
-        const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
-      });
-      let i=0;
-      function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
-      setInterval(()=>{ if(slides.length>1 && carousel.style.display!=='none') go((i+1)%slides.length); }, 5000);
-
-      const KEY='hero-mode-1719';
-      function apply(mode){
-        const isCarousel = (mode==='carousel');
-        poster.style.display = isCarousel ? 'none' : '';
-        carousel.style.display = isCarousel ? '' : 'none';
-        btn.textContent = 'Carosello: ' + (isCarousel ? 'ON' : 'OFF');
-        btn.setAttribute('aria-pressed', isCarousel ? 'true':'false');
-        localStorage.setItem(KEY, mode);
-      }
-      let mode = localStorage.getItem(KEY) || 'poster';
-      apply(mode);
-      btn.addEventListener('click', ()=>{ mode = (mode==='poster') ? 'carousel' : 'poster'; apply(mode); });
-    })();
-
-    /* ===== Animazione fluida apertura/chiusura dei <details> ===== */
-    (function(){
-      function animateDetails(el){
-        if(!el) return;
-        el.addEventListener('toggle', ()=>{
-          const body = el.querySelector('.menu-body'); if(!body) return;
-          body.style.overflow='hidden';
-          const start = el.open ? 0 : body.scrollHeight;
-          const end   = el.open ? body.scrollHeight : 0;
-          const dur = 220;
-          const startTime = performance.now();
-          function tick(now){
-            const t = Math.min(1, (now-startTime)/dur);
-            const eased = t<.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOutQuad
-            const h = start + (end-start)*eased;
-            body.style.maxHeight = h+'px';
-            if(t<1) requestAnimationFrame(tick);
-            else if(el.open){ body.style.maxHeight=''; body.style.overflow='visible'; }
-            else { body.style.maxHeight=''; body.style.overflow='hidden'; }
-          }
-          requestAnimationFrame(tick);
-        });
-      }
-      document.querySelectorAll('details.menu-acc').forEach(animateDetails);
-      // also wrap newly rendered after renderMenu()
-      window.afterMenuRender = function(){ document.querySelectorAll('details.menu-acc').forEach(animateDetails); }
-    })();
-
-  </script>
 </body>
 </html>
