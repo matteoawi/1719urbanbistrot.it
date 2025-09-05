@@ -21,7 +21,7 @@
     :root{
       --menu-blur: 18px; --menu-dim: 0.68;
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
-      --accent:#ff1f3d; --accent-fg:#ffffff;
+      --accent:#c23331; --accent-fg:#ffffff;
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
       --radius:16px; --pad:clamp(16px,4vw,32px); --max:1120px;
       --header-h:64px;
@@ -29,17 +29,16 @@
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
         --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-        --accent:c23331; --accent-fg:#000000;
         --chip:#121212; --chip-fg:#e5e7eb;
       }
     }
     html[data-theme="light"]{
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
-      --accent:#c23331; --accent-fg:#ffffff; --chip:#f4f4f5; --chip-fg:#0b0b0b;
+      --chip:#f4f4f5; --chip-fg:#0b0b0b;
     }
     html[data-theme="dark"]{
       --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-      --accent:#c23331; --accent-fg:#000000; --chip:#121212; --chip-fg:#e5e7eb;
+      --chip:#121212; --chip-fg:#e5e7eb;
     }
 
     *{box-sizing:border-box} html,body{margin:0}
@@ -265,8 +264,8 @@
     .photo-btn{ display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--chip); color:var(--chip-fg);
       border-radius:999px; padding:3px 8px; font-weight:800; font-size:.8rem; margin-left:8px; cursor:pointer; }
     .photo-btn svg{ width:14px; height:14px; }
-    .modal{ position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.55); z-index:1200; }
-    .modal.show{ display:grid; }
+    .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.55);z-index:1200;opacity:0;visibility:hidden;transition:opacity .18s ease;will-change:opacity}
+    .modal.show{opacity:1;visibility:visible}
     .modal__body{ position:relative; background:var(--bg); border:1px solid var(--line); border-radius:16px;
       max-width:min(920px, 96vw); max-height:90vh; padding:10px; }
     .modal__body img{ display:block; max-width:100%; max-height:72vh; border-radius:12px; }
@@ -306,8 +305,8 @@
     border:var(--w) solid color-mix(in oklab, var(--accent) 26%, transparent);
     border-top-color:var(--accent); animation:spin .8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loader-overlay{ position: absolute; inset:0; display:grid; place-items:center; pointer-events:none; }
-  .loader-overlay.hidden{ display:none; }
+  .loader-overlay{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; opacity:1; transition:opacity .18s ease }
+  .loader-overlay.hidden{ opacity:0 }
 
   /* === Modal: remove layout toggling to avoid white flash; animate opacity/visibility === */
   .modal{ position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,.55);
@@ -738,8 +737,8 @@ function setupLiveCarousel(){
     const im=new Image();
     im.alt='Live '+(idx+1);
     im.decoding='async';
-    im.loading= idx===0 ? 'eager' : 'lazy';
-    im.fetchPriority = idx===0 ? 'high' : 'low';
+    im.loading = idx < 2 ? 'eager' : 'lazy';
+    im.fetchPriority = idx < 2 ? 'high' : 'low';
     im.style.width='100%'; im.style.height='100%'; im.style.objectFit='cover';
     im.addEventListener('load', ()=>{ if(idx===0){ overlay.classList.add('hidden'); } });
     im.src=src;
