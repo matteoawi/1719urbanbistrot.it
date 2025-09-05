@@ -736,7 +736,7 @@ function setupLiveCarousel(){
 
   // Clear any existing content
   box.innerHTML = '';
-  dots.innerHTML = '';
+  if(dots) dots.innerHTML = '';
 
   // local loader
   const overlay = document.createElement('div');
@@ -758,9 +758,9 @@ function setupLiveCarousel(){
     s.appendChild(im);
     box.appendChild(s); slides.push(s);
 
-    const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
+    const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); if(dots) dots.appendChild(b); bullets.push(b);
   });
-  box.appendChild(dots);
+  if(dots) box.appendChild(dots);
 
   function go(n){
     if(n===i || n<0 || n>=slides.length) return;
@@ -773,8 +773,8 @@ function setupLiveCarousel(){
     requestAnimationFrame(()=>{
       cur.classList.remove('active');
       nxt.classList.add('active');
-      bullets[i]?.classList.remove('active');
-      bullets[n]?.classList.add('active');
+      if(bullets[i]) bullets[i].classList.remove('active');
+      if(bullets[n]) bullets[n].classList.add('active');
       i=n;
     });
   }
@@ -826,9 +826,9 @@ function setupLiveCarousel(){
       box.addEventListener('pointerdown', (e)=>{ if(e.pointerType==='touch') onTouchStart(e); }, {passive:true});
       box.addEventListener('pointermove', (e)=>{ if(e.pointerType==='touch') onTouchMove(e); }, {passive:true});
       box.addEventListener('pointerup',   (e)=>{ if(e.pointerType==='touch') onTouchEnd(e); }, {passive:true});
-function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
+function go(n){ slides[i].classList.remove('active'); if(bullets[i]) bullets[i].classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
-    
+    }
 
     /* ================== STORE (local + GAS JSONP/Beacon) ================== */
     const Store = {
@@ -1751,7 +1751,17 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
       window.afterMenuRender = function(){ document.querySelectorAll('details.menu-acc').forEach(animateDetails); }
     })();
 
-  </script>
+  
+<script>
+  // Global loader helpers (optional use)
+  window.Loader = {
+    el: null,
+    ensure(){ if(!this.el){ this.el = document.getElementById('globalLoader'); } return this.el; },
+    show(){ const el=this.ensure(); if(el){ el.style.display='grid'; } },
+    hide(){ const el=this.ensure(); if(el){ el.style.display='none'; } }
+  };
+</script>
+</script>
   
 
   <!-- Product Photo Modal -->
