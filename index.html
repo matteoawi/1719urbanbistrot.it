@@ -29,7 +29,7 @@
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
         --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-        --accent:#c23331; --accent-fg:#000000;
+        --accent#c23331; --accent-fg:#000000;
         --chip:#121212; --chip-fg:#e5e7eb;
       }
     }
@@ -78,14 +78,14 @@
     .menu-toggle span::before{position:absolute;top:-6px} .menu-toggle span::after{position:absolute;top:6px}
 
     /* Fullscreen sheet */
-    .sheet{position:fixed; inset:0; background:rgba(0,0,0,0.68); opacity:0; pointer-events:none; z-index:999; transition:opacity .25s ease; backdrop-filter: blur(18px) saturate(120%); color:#fff;}
+    .sheet{position:fixed; inset:0; background:rgba(0,0,0,.68); opacity:0; pointer-events:none; z-index:999; transition:opacity .25s ease; backdrop-filter: blur(18px) saturate(120%); color:#fff;}
     .sheet.active{opacity:1; pointer-events:auto}
     .sheet__panel{position:absolute; inset:0; display:grid; grid-template-rows:auto 1fr; align-items:start}
-    .sheet__close{position:absolute; top:14px; right:14px; width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.10); color:#fff; font-size:24px; font-weight:900; display:grid; place-items:center; cursor:pointer; z-index:1000; touch-action:manipulation;}
+    .sheet__close{position:absolute; top:14px; right:14px; width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.10); color:#fff; font-size:24px; font-weight:900; display:grid; place-items:center; cursor:pointer; z-index:1000; touch-action:manipulation;}
     .sheet__inner{display:grid; place-items:center; height:100%; padding:28px; opacity:.0; transform: translateY(6px) scale(.99); overflow:auto}
     .sheet__list{list-style:none;margin:0;padding:0;display:grid;gap:14px;text-align:center}
     .sheet__list a{display:block;padding:10px 14px;border-radius:14px;text-decoration:none;color:#fff;font-weight:900;font-size:clamp(1.4rem,5vw,2.4rem);letter-spacing:.04em}
-    .sheet__list a:hover{ background:rgba(255,255,255,0.08) }
+    .sheet__list a:hover{ background:rgba(255,255,255,.08) }
     .sheet__cta{display:inline-flex;margin-top:18px}
     .sheet.active .sheet__inner{opacity:1; transform:none; transition: opacity .25s ease .06s, transform .25s ease .06s}
     .sheet.active .sheet__list a{ animation: menuStagger .28s ease both }
@@ -134,8 +134,7 @@
     .menu-body{padding:8px 4px 2px}
     .group-title{margin:8px 0 4px;font-weight:800}
     .menu-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
-    .menu-item .l{flex:1}
-    .menu-item .r{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+    .menu-item .mi-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
     .menu-item:last-child{border-bottom:0}
     .price{color:var(--accent);font-weight:800}
 
@@ -154,12 +153,12 @@
 
     .event--voted{
       border-color: color-mix(in oklab, var(--accent) 65%, transparent);
-      box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent) inset, 0 6px 18px rgba(255,31,61,0.22);
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent) inset, 0 6px 18px rgba(255,31,61,.22);
       animation: upPulse 1.2s ease-in-out infinite alternate;
     }
     @keyframes upPulse{
-      from{ box-shadow: 0 0 0 1px rgba(255,31,61,0.26) inset, 0 4px 14px rgba(255,31,61,0.18) }
-      to  { box-shadow: 0 0 0 1px rgba(255,31,61,0.36) inset, 0 8px 22px rgba(255,31,61,0.24) }
+      from{ box-shadow: 0 0 0 1px rgba(255,31,61,.26) inset, 0 4px 14px rgba(255,31,61,.18) }
+      to  { box-shadow: 0 0 0 1px rgba(255,31,61,.36) inset, 0 8px 22px rgba(255,31,61,.24) }
     }
           /* Micro-animazione quando si fa upvote su una card */
       @keyframes cardPopShake{
@@ -208,7 +207,7 @@
 
     /* Footer + FAB */
     footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);text-align:center}
-    .fab{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:999px;background:var(--accent);display:grid;place-items:center;box-shadow:0 10px 22px rgba(0,0,0,0.15);text-decoration:none;z-index:80}
+    .fab{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:999px;background:var(--accent);display:grid;place-items:center;box-shadow:0 10px 22px rgba(0,0,0,.15);text-decoration:none;z-index:80}
     .fab svg{width:26px;height:26px}
     .fab path{fill:var(--accent-fg)}
 
@@ -233,7 +232,7 @@
       border:1px solid var(--line);
       border-radius:16px;
       padding:12px 14px;
-      box-shadow:0 12px 28px rgba(0,0,0,0.18);
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
       display:flex;
       align-items:center;
       gap:10px;
@@ -266,7 +265,7 @@
     .photo-btn{ display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--chip); color:var(--chip-fg);
       border-radius:999px; padding:3px 8px; font-weight:800; font-size:.8rem; margin-left:8px; cursor:pointer; }
     .photo-btn svg{ width:14px; height:14px; }
-    .modal{ position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,0.55); z-index:1200; }
+    .modal{ position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.55); z-index:1200; }
     .modal.show{ display:grid; }
     .modal__body{ position:relative; background:var(--bg); border:1px solid var(--line); border-radius:16px;
       max-width:min(920px, 96vw); max-height:90vh; padding:10px; }
@@ -305,9 +304,9 @@
 
     <style>
       /* photo modal styles */
-      .modal {position: fixed; inset:0; background: rgba(0,0,0,0.60); display:none; align-items:center; justify-content:center; padding: 24px; z-index: 9999;}
+      .modal {position: fixed; inset:0; background: rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; padding: 24px; z-index: 9999;}
       .modal.show {display:flex;}
-      .modal__body {background:#111; border-radius: 16px; padding: 12px; max-width: 92vw; max-height: 92vh; box-shadow: 0 10px 30px rgba(0,0,0,0.40); position: relative;}
+      .modal__body {background:#111; border-radius: 16px; padding: 12px; max-width: 92vw; max-height: 92vh; box-shadow: 0 10px 30px rgba(0,0,0,.4); position: relative;}
       .modal__close {position:absolute; top:8px; right:10px; background:#fff; color:#111; border:none; border-radius:10px; width:32px; height:32px; font-size:20px; cursor:pointer;}
       .modal__body img {display:block; max-width: 88vw; max-height: 75vh; border-radius: 14px; margin: 28px auto 8px;}
       .modal__caption {text-align:center; color:#ddd; margin-bottom:8px;}
@@ -704,7 +703,7 @@
       let i = 0; const slides=[], bullets=[];
       liveImages.forEach((src,idx)=>{
         const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
-        const im=new Image(); im.src=src; im.alt='Live '+(idx+1); im.loading="lazy";
+        const im=new Image(); im.src=src; im.alt='Live '+(idx+1);
         Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
         s.appendChild(im); box.appendChild(s); slides.push(s);
         const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
@@ -1155,97 +1154,60 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
     function xUrlFromEvent(ev){ return `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(ev))}`; }
 
     /* ===== MENU DATA ===== */
-
-    // === Helpers: normalize menu data and prices ===
-    function extractPriceTokens(p) {
-      if (typeof p !== 'string') return p || '';
-      // Try to capture one or two euro price tokens like '€2,50' or '€2,00 / €2,50'
-      const m = p.match(/€\d+(?:,\d{2})?(?:\s*\/\s*€\d+(?:,\d{2})?)?/);
-      if (m) return m[0];
-      // Fallback: fix common corruption '€X, image: null,YY' -> '€X,YY'
-      let s = p.replace(/,\s*image:.*?(,\d{2})/i, '$1');
-      s = s.replace(/,\s*image:.*$/i, '');
-      // If it now looks like '€X' without cents, pad with ',00'
-      if (/^€\d+$/.test(s)) return s + ',00';
-      return s.trim();
-    }
-    function normalizeMenuItem(it){
-      const out = Object.assign({}, it);
-      // move image->photo if needed
-      if (out.photo == null && out.image != null) out.photo = out.image;
-      // sanitize price
-      out.price = extractPriceTokens(out.price);
-      return out;
-    }
-    function normalizeMenuGroup(gr){
-      const out = Object.assign({}, gr);
-      if (Array.isArray(out.items)) out.items = out.items.map(normalizeMenuItem);
-      return out;
-    }
-    function normalizeMenuCategory(cat){
-      const out = Object.assign({}, cat);
-      if (Array.isArray(out.items)) out.items = out.items.map(normalizeMenuItem);
-      if (Array.isArray(out.groups)) out.groups = out.groups.map(normalizeMenuGroup);
-      return out;
-    }
-    function normalizeMenuData(arr){
-      return (arr||[]).map(normalizeMenuCategory);
-    }
-
     // Menu con sezioni espandibili
-    let menuData = [
+    const menuData = [
       { 
         badge:'BREAKFAST', 
         title:'Colazione',
         isMainCategory: true,
         groups:[
           { title:'Colazioni Special (fino alle 11:30)', collapsed: true, items:[
-            { name:"Colazione all'Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10" },
-            { name:"French Breakfast", desc:"Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7" },
-            { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d'acero; caffè", price:"€7" },
-            { name:"American Breakfast Salata", desc:"Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price:"€12" },
-            { name:"American Breakfast Dolce", desc:"Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano", price:"€10" },
-            { name:"American Breakfast Piccante", desc:"Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano", price:"€12" }
+            { name:"Colazione all'Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10,00" },
+            { name:"French Breakfast", desc:"Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7,00" },
+            { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d'acero; caffè", price:"€7,00" },
+            { name:"American Breakfast Salata", desc:"Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price:"€12,00" },
+            { name:"American Breakfast Dolce", desc:"Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano", price:"€10,00" },
+            { name:"American Breakfast Piccante", desc:"Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano", price:"€12,00" }
           ]},
           { title:'Bakery', collapsed: true, items:[
-            { name:"Pancake con sciroppo d'acero o d'agave", price:"€4" },
-            { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", price:"€5" },
-            { name:"Pancake con confettura o marmellata e frutta fresca", price:"€5" },
-            { name:"Pasticceria da tè (al pz.)", price:"€1" },
-            { name:"Crostata di marmellata (al pz.)", price:"€3" },
-            { name:"Croissant mignon semplice o farcito", price:"€1" },
-            { name:"Mini muffin classico o farcito", price:"€1" },
-            { name:"Mini bombetta o mini ciambellina", price:"€1" }
+            { name:"Pancake con sciroppo d'acero o d'agave", price:"€4,00" },
+            { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", price:"€5,00" },
+            { name:"Pancake con confettura o marmellata e frutta fresca", price:"€5,00" },
+            { name:"Pasticceria da tè (al pz.)", price:"€1,50" },
+            { name:"Crostata di marmellata (al pz.)", price:"€3,50" },
+            { name:"Croissant mignon semplice o farcito", price:"€1,50" },
+            { name:"Mini muffin classico o farcito", price:"€1,50" },
+            { name:"Mini bombetta o mini ciambellina", price:"€1,50" }
           ]},
           { title:'Cioccolata calda', collapsed: true, items:[
-            { name:"Classica oro", price:"€4" },
-            { name:"Caramello salato", price:"€4" },
-            { name:"Gianduia", price:"€4" },
-            { name:"Rose e lamponi", price:"€4" },
-            { name:"Arancia e cannella", price:"€4" },
-            { name:"Fondente o bianca al pistacchio", price:"€4" },
-            { name:"Menta", price:"€4" }
+            { name:"Classica oro", price:"€4,50" },
+            { name:"Caramello salato", price:"€4,50" },
+            { name:"Gianduia", price:"€4,50" },
+            { name:"Rose e lamponi", price:"€4,50" },
+            { name:"Arancia e cannella", price:"€4,50" },
+            { name:"Fondente o bianca al pistacchio", price:"€4,50" },
+            { name:"Menta", price:"€4,50" }
           ]},
           { title:'Caffetteria', collapsed: true, items:[
-            { name:"Espresso", price:"€1" },
-            { name:"Espresso decaffeinato", price:"€2" },
-            { name:"Espresso americano", price:"€2" },
-            { name:"Latte macchiato", price:"€2" },
-            { name:"Caffè latte", price:"€3" },
-            { name:"Caffè o cappuccino spécial", price:"€4" },
-            { name:"Cappuccino", price:"€2" },
-            { name:"Cappuccino vegetale di soya", price:"€3" },
-            { name:"Cappuccino senza lattosio", price:"€3" },
-            { name:"Orzo (piccolo / grande)", price:"€2 / €2,50" },
-            { name:"Ginseng (piccolo / grande)", price:"€2 / €2,50" },
-            { name:"Tè, rooibos o infuso d'erbe", price:"€4" }
+            { name:"Espresso", price:"€1,00", photo:"/media/carusel1.jpg" },
+            { name:"Espresso decaffeinato", price:"€2,00" },
+            { name:"Espresso americano", price:"€2,50" },
+            { name:"Latte macchiato", price:"€2,50" },
+            { name:"Caffè latte", price:"€3,00" },
+            { name:"Caffè o cappuccino spécial", price:"€4,00" },
+            { name:"Cappuccino", price:"€2,00" },
+            { name:"Cappuccino vegetale di soya", price:"€3,00" },
+            { name:"Cappuccino senza lattosio", price:"€3,00" },
+            { name:"Orzo (piccolo / grande)", price:"€2,00 / €2,50" },
+            { name:"Ginseng (piccolo / grande)", price:"€2,00 / €2,50" },
+            { name:"Tè, rooibos o infuso d'erbe", price:"€4,00" }
           ]},
           { title:'Succhi & Frutta', collapsed: true, items:[
-            { name:"Spremuta di agrumi", price:"€4" },
-            { name:"Centrifugato", price:"€5" },
-            { name:"Macedonia o tagliata di frutta fresca", price:"€6" },
-            { name:"Granita", price:"€6" },
-            { name:"Milkshake", price:"€4" }
+            { name:"Spremuta di agrumi", price:"€4,00" },
+            { name:"Centrifugato", price:"€5,00" },
+            { name:"Macedonia o tagliata di frutta fresca", price:"€6,00" },
+            { name:"Granita", price:"€6,00" },
+            { name:"Milkshake", price:"€4,00" }
           ]}
         ]
       },
@@ -1254,7 +1216,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
         title:'Pranzo', 
         isMainCategory: true,
         items:[
-           { name:"Club Sandwich", price:"€11,00", photo: "/media/clubsandwich.jpg" },
+           { name:"Club Sandwich", price:"€11,00", photo:"/media/clubsandwich.jpg", photo:"/media/carusel1.jpg" },
         ]
       },
       { 
@@ -1262,7 +1224,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
         title:'Cena', 
         isMainCategory: true,
         items:[
-          { name:'— In allestimento —', desc:'', price:'' , image: null}
+          { name:'— In allestimento —', desc:'', price:'' , photo: null}
         ]
       },
       { 
@@ -1270,14 +1232,10 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
         title:'Drinks', 
         isMainCategory: true,
         items:[
-          { name:'— In allestimento —', desc:'', price:'' , image: null}
+          { name:'— In allestimento —', desc:'', price:'' , photo: null}
         ]
       }
     ];
-
-    // normalize corrupted price/image fields
-    menuData = normalizeMenuData(menuData);
-
 
     function renderMenu(){
       const wrap = document.getElementById('menuAccordions');
@@ -1300,7 +1258,11 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
           cat.items.forEach(it=>{
             const row = document.createElement('div');
             row.className = 'menu-item';
-            const photo = it.photo || it.image || null; const price = extractPriceTokens(it.price); row.innerHTML = `<div class=\"l\">${it.name} <span class=\"meta\">${it.desc||\"\"}</span></div>` +`<div class=\"r\"><div class=\"price\">${price||\"\"}</div>${photo?`<button class=\"photo-btn\" data-photo=\"${photo}\" data-caption=\"${it.name}\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5l2 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l2-2zM12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z\" fill=\"currentColor\"/></svg> Foto</button>`:\"\"}</div>`;
+            row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
+  <div class="mi-right">
+    <div class="price">${it.price||""}</div>
+    ${it.photo?`<button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+  </div>`;
             body.appendChild(row);
           });
         }
@@ -1326,7 +1288,11 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
               gr.items.forEach(it=>{
                 const row = document.createElement('div');
                 row.className = 'menu-item';
-                const photo = it.photo || it.image || null; const price = extractPriceTokens(it.price); row.innerHTML = `<div class=\"l\">${it.name} <span class=\"meta\">${it.desc||\"\"}</span></div>` +`<div class=\"r\"><div class=\"price\">${price||\"\"}</div>${photo?`<button class=\"photo-btn\" data-photo=\"${photo}\" data-caption=\"${it.name}\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5l2 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l2-2zM12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z\" fill=\"currentColor\"/></svg> Foto</button>`:\"\"}</div>`;
+                row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
+  <div class="mi-right">
+    <div class="price">${it.price||""}</div>
+    ${it.photo?`<button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+  </div>`;
                 subBody.appendChild(row);
               });
               
@@ -1341,7 +1307,11 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
               gr.items.forEach(it=>{
                 const row = document.createElement('div');
                 row.className = 'menu-item';
-                const photo = it.photo || it.image || null; const price = extractPriceTokens(it.price); row.innerHTML = `<div class=\"l\">${it.name} <span class=\"meta\">${it.desc||\"\"}</span></div>` +`<div class=\"r\"><div class=\"price\">${price||\"\"}</div>${photo?`<button class=\"photo-btn\" data-photo=\"${photo}\" data-caption=\"${it.name}\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5l2 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l2-2zM12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z\" fill=\"currentColor\"/></svg> Foto</button>`:\"\"}</div>`;
+                row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
+  <div class="mi-right">
+    <div class="price">${it.price||""}</div>
+    ${it.photo?`<button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+  </div>`;
                 body.appendChild(row);
               });
             }
@@ -1572,6 +1542,9 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
       const modal = document.getElementById('photoModal');
       if(!modal) return;
       const img = document.getElementById('modalPhoto');
+      img.setAttribute('loading','lazy');
+      img.setAttribute('decoding','async');
+      img.setAttribute('fetchpriority','low');
       const cap = document.getElementById('modalCaption');
       function open(src, caption){
         img.src = src; cap.textContent = caption||'';
@@ -1646,7 +1619,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
   <div class="modal" id="photoModal" aria-hidden="true">
     <div class="modal__body">
       <button class="modal__close" type="button" aria-label="Chiudi">×</button>
-      <img id="modalPhoto" alt="Foto prodotto" loading="lazy">
+      <img id="modalPhoto" alt="Foto prodotto">
       <div id="modalCaption" class="modal__caption meta"></div>
     </div>
   </div>
