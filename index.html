@@ -828,7 +828,7 @@ function setupLiveCarousel(){
       box.addEventListener('pointerup',   (e)=>{ if(e.pointerType==='touch') onTouchEnd(e); }, {passive:true});
 function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
-    }
+    
 
     /* ================== STORE (local + GAS JSONP/Beacon) ================== */
     const Store = {
