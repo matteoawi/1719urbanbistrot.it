@@ -300,6 +300,19 @@
     }
 
   </style>
+
+    <style>
+      /* photo modal styles */
+      .modal {position: fixed; inset:0; background: rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; padding: 24px; z-index: 9999;}
+      .modal.show {display:flex;}
+      .modal__body {background:#111; border-radius: 16px; padding: 12px; max-width: 92vw; max-height: 92vh; box-shadow: 0 10px 30px rgba(0,0,0,.4); position: relative;}
+      .modal__close {position:absolute; top:8px; right:10px; background:#fff; color:#111; border:none; border-radius:10px; width:32px; height:32px; font-size:20px; cursor:pointer;}
+      .modal__body img {display:block; max-width: 88vw; max-height: 75vh; border-radius: 14px; margin: 28px auto 8px;}
+      .modal__caption {text-align:center; color:#ddd; margin-bottom:8px;}
+      .photo-btn {display:inline-flex; gap:.5rem; align-items:center; padding:.3rem .55rem; border-radius: 999px; border: 1px solid currentColor; background: transparent; cursor: pointer; font-size: .9rem; margin-top: 6px;}
+      .photo-btn svg {width: 18px; height: 18px;}
+    </style>
+    
 </head>
 <body>
   <!-- Header -->
@@ -665,11 +678,17 @@
     toast.querySelector('.x').addEventListener('click', closeToast);
 
     /* ================= Live Shots ================= */
+    
+    
     const liveImages = [
-      'https://media-cdn.tripadvisor.com/media/photo-s/21/e8/71/95/19-il-nostro-stile-accogliente.jpg',
-      'https://img3.restaurantguru.com/c493-Pub-and-bar-17-19-interior.jpg',
-      'https://iorampo.com/wp-content/uploads/2024/12/17-19-800x600.jpg'
+      '/media/carusel1.jpg',
+      '/media/carusel5.jpg',
+      '/media/carusel4.jpg',
+      '/media/carusel2.jpg',
+      '/media/carusel3.jpg'
     ];
+    
+
 
     function setupLiveCarousel(){
       const box  = document.getElementById('liveCarousel');
@@ -692,7 +711,35 @@
       // Add dots container to box
       box.appendChild(dots);
       
-      function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
+      
+      // Touch / swipe handlers
+      let startX=0, startY=0, deltaX=0, deltaY=0, isTouching=false;
+      const THRESH = 40; // px to trigger swipe
+
+      function onTouchStart(e){
+        const t = e.touches ? e.touches[0] : e;
+        startX = t.clientX; startY = t.clientY; deltaX = 0; deltaY = 0; isTouching = true;
+      }
+      function onTouchMove(e){
+        if(!isTouching) return;
+        const t = e.touches ? e.touches[0] : e;
+        deltaX = t.clientX - startX;
+        deltaY = t.clientY - startY;
+      }
+      function onTouchEnd(){
+        if(!isTouching) return;
+        isTouching = false;
+        if(Math.abs(deltaX) > Math.max(THRESH, Math.abs(deltaY))){
+          if(deltaX < 0){ go((i+1)%slides.length); } else { go((i-1+slides.length)%slides.length); }
+        }
+      }
+      box.addEventListener('touchstart', onTouchStart, {passive:true});
+      box.addEventListener('touchmove', onTouchMove, {passive:true});
+      box.addEventListener('touchend', onTouchEnd, {passive:true});
+      box.addEventListener('pointerdown', (e)=>{ if(e.pointerType==='touch') onTouchStart(e); }, {passive:true});
+      box.addEventListener('pointermove', (e)=>{ if(e.pointerType==='touch') onTouchMove(e); }, {passive:true});
+      box.addEventListener('pointerup',   (e)=>{ if(e.pointerType==='touch') onTouchEnd(e); }, {passive:true});
+function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
       setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
     }
 
@@ -1114,52 +1161,52 @@
         isMainCategory: true,
         groups:[
           { title:'Colazioni Special (fino alle 11:30)', collapsed: true, items:[
-            { name:"Colazione all'Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10,00" },
-            { name:"French Breakfast", desc:"Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7,00" },
-            { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d'acero; caffè", price:"€7,00" },
-            { name:"American Breakfast Salata", desc:"Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price:"€12,00" },
-            { name:"American Breakfast Dolce", desc:"Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano", price:"€10,00" },
-            { name:"American Breakfast Piccante", desc:"Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano", price:"€12,00" }
+            { name:"Colazione all'Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10, image: null,00" },
+            { name:"French Breakfast", desc:"Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7, image: null,00" },
+            { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d'acero; caffè", price:"€7, image: null,00" },
+            { name:"American Breakfast Salata", desc:"Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price:"€12, image: null,00" },
+            { name:"American Breakfast Dolce", desc:"Cioccolata calda con panna; mini muffin assortiti o pasticceria da tè; caffè americano", price:"€10, image: null,00" },
+            { name:"American Breakfast Piccante", desc:"Uova strapazzate alla paprika; pan piastrato e salame piccante; caffè americano", price:"€12, image: null,00" }
           ]},
           { title:'Bakery', collapsed: true, items:[
-            { name:"Pancake con sciroppo d'acero o d'agave", price:"€4,00" },
-            { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", price:"€5,00" },
-            { name:"Pancake con confettura o marmellata e frutta fresca", price:"€5,00" },
-            { name:"Pasticceria da tè (al pz.)", price:"€1,50" },
-            { name:"Crostata di marmellata (al pz.)", price:"€3,50" },
-            { name:"Croissant mignon semplice o farcito", price:"€1,50" },
-            { name:"Mini muffin classico o farcito", price:"€1,50" },
-            { name:"Mini bombetta o mini ciambellina", price:"€1,50" }
+            { name:"Pancake con sciroppo d'acero o d'agave", price:"€4, image: null,00" },
+            { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", price:"€5, image: null,00" },
+            { name:"Pancake con confettura o marmellata e frutta fresca", price:"€5, image: null,00" },
+            { name:"Pasticceria da tè (al pz.)", price:"€1, image: null,50" },
+            { name:"Crostata di marmellata (al pz.)", price:"€3, image: null,50" },
+            { name:"Croissant mignon semplice o farcito", price:"€1, image: null,50" },
+            { name:"Mini muffin classico o farcito", price:"€1, image: null,50" },
+            { name:"Mini bombetta o mini ciambellina", price:"€1, image: null,50" }
           ]},
           { title:'Cioccolata calda', collapsed: true, items:[
-            { name:"Classica oro", price:"€4,50" },
-            { name:"Caramello salato", price:"€4,50" },
-            { name:"Gianduia", price:"€4,50" },
-            { name:"Rose e lamponi", price:"€4,50" },
-            { name:"Arancia e cannella", price:"€4,50" },
-            { name:"Fondente o bianca al pistacchio", price:"€4,50" },
-            { name:"Menta", price:"€4,50" }
+            { name:"Classica oro", price:"€4, image: null,50" },
+            { name:"Caramello salato", price:"€4, image: null,50" },
+            { name:"Gianduia", price:"€4, image: null,50" },
+            { name:"Rose e lamponi", price:"€4, image: null,50" },
+            { name:"Arancia e cannella", price:"€4, image: null,50" },
+            { name:"Fondente o bianca al pistacchio", price:"€4, image: null,50" },
+            { name:"Menta", price:"€4, image: null,50" }
           ]},
           { title:'Caffetteria', collapsed: true, items:[
-            { name:"Espresso", price:"€1,50" },
-            { name:"Espresso decaffeinato", price:"€2,00" },
-            { name:"Espresso americano", price:"€2,50" },
-            { name:"Latte macchiato", price:"€2,50" },
-            { name:"Caffè latte", price:"€3,00" },
-            { name:"Caffè o cappuccino spécial", price:"€4,00" },
-            { name:"Cappuccino", price:"€2,00" },
-            { name:"Cappuccino vegetale di soya", price:"€3,00" },
-            { name:"Cappuccino senza lattosio", price:"€3,00" },
-            { name:"Orzo (piccolo / grande)", price:"€2,00 / €2,50" },
-            { name:"Ginseng (piccolo / grande)", price:"€2,00 / €2,50" },
-            { name:"Tè, rooibos o infuso d'erbe", price:"€4,00" }
+            { name:"Espresso", price:"€1, image: null,50" },
+            { name:"Espresso decaffeinato", price:"€2, image: null,00" },
+            { name:"Espresso americano", price:"€2, image: null,50" },
+            { name:"Latte macchiato", price:"€2, image: null,50" },
+            { name:"Caffè latte", price:"€3, image: null,00" },
+            { name:"Caffè o cappuccino spécial", price:"€4, image: null,00" },
+            { name:"Cappuccino", price:"€2, image: null,00" },
+            { name:"Cappuccino vegetale di soya", price:"€3, image: null,00" },
+            { name:"Cappuccino senza lattosio", price:"€3, image: null,00" },
+            { name:"Orzo (piccolo / grande)", price:"€2, image: null,00 / €2,50" },
+            { name:"Ginseng (piccolo / grande)", price:"€2, image: null,00 / €2,50" },
+            { name:"Tè, rooibos o infuso d'erbe", price:"€4, image: null,00" }
           ]},
           { title:'Succhi & Frutta', collapsed: true, items:[
-            { name:"Spremuta di agrumi", price:"€4,00" },
-            { name:"Centrifugato", price:"€5,00" },
-            { name:"Macedonia o tagliata di frutta fresca", price:"€6,00" },
-            { name:"Granita", price:"€6,00" },
-            { name:"Milkshake", price:"€4,00" }
+            { name:"Spremuta di agrumi", price:"€4, image: null,00" },
+            { name:"Centrifugato", price:"€5, image: null,00" },
+            { name:"Macedonia o tagliata di frutta fresca", price:"€6, image: null,00" },
+            { name:"Granita", price:"€6, image: null,00" },
+            { name:"Milkshake", price:"€4, image: null,00" }
           ]}
         ]
       },
@@ -1168,7 +1215,7 @@
         title:'Pranzo', 
         isMainCategory: true,
         items:[
-          { name:'— In allestimento —', desc:'', price:'' }
+          { name:'— In allestimento —', desc:'', price:'' , image: null}
         ]
       },
       { 
@@ -1176,7 +1223,7 @@
         title:'Cena', 
         isMainCategory: true,
         items:[
-          { name:'— In allestimento —', desc:'', price:'' }
+          { name:'— In allestimento —', desc:'', price:'' , image: null}
         ]
       },
       { 
@@ -1184,7 +1231,7 @@
         title:'Drinks', 
         isMainCategory: true,
         items:[
-          { name:'— In allestimento —', desc:'', price:'' }
+          { name:'— In allestimento —', desc:'', price:'' , image: null}
         ]
       }
     ];
