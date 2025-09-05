@@ -21,7 +21,7 @@
     :root{
       --menu-blur: 18px; --menu-dim: 0.68;
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
-      --accent:#c23331; --accent-fg:#ffffff;
+      --accent:#ff4d75; --accent-fg:#ffffff;
       --chip:#f4f4f5; --chip-fg:#0b0b0b;
       --radius:16px; --pad:clamp(16px,4vw,32px); --max:1120px;
       --header-h:64px;
@@ -335,7 +335,31 @@
 
 </style>
 
-    </head>
+    
+<style id="visual-hotfixes-v7e">
+:root{ --accent:#ff4d75; --accent-fg:#ffffff; }
+html{ scrollbar-gutter: stable both-edges; }
+html.modal-open, body.modal-open{ overflow: hidden; }
+.modal{ contain:paint; backface-visibility:hidden; }
+.modal .modal-inner{ transform: translateZ(0); will-change: transform, opacity; }
+.modal img[data-photo]{ display:block; width:100%; height:100%; object-fit:cover; image-rendering:auto; }
+.modal[data-state="loading"] img[data-photo]{ opacity:0; }
+.modal[data-state="loaded"] img[data-photo]{ opacity:1; transition: opacity .2s ease; }
+.modal .spinner{ position:absolute; inset:auto; left:50%; top:50%; transform:translate(-50%,-50%); width:64px; height:64px; opacity:0; transition:opacity .2s ease; }
+.modal[data-state="loading"] .spinner{ opacity:1; }
+.modal .close-btn{ position:absolute; right:10px; top:10px; background:rgba(0,0,0,.5); color:#fff; border:0; border-radius:999px; width:40px; height:40px; display:grid; place-items:center; cursor:pointer; }
+.modal .photo-frame{ max-width:min(92vw,1080px); max-height:min(86vh,1080px); width:clamp(280px,86vw,1080px); aspect-ratio:4/3; border-radius:16px; overflow:hidden; position:relative; background:rgba(0,0,0,.18); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+.hero-carousel, [data-carousel]{ contain:paint; backface-visibility:hidden; }
+.hero-carousel .track, [data-carousel] .track, [data-carousel][data-track]{ will-change: transform; transform: translate3d(var(--x,0),0,0); transition: transform .28s ease; }
+.hero-carousel img, [data-carousel] img{ content-visibility:auto; contain-intrinsic-size:auto 300px; }
+img[loading="lazy"]{ decoding:async; }
+@media (prefers-reduced-motion: reduce){
+  .hero-carousel .track, [data-carousel] .track, [data-carousel][data-track]{ transition:none !important; }
+  .modal *{ transition:none !important; }
+}
+</style>
+
+</head>
 <body>
   <!-- Header -->
   <header>
@@ -440,7 +464,7 @@
                 </span>
                 <strong>Colazioni</strong>
               </div>
-              <strong>09:30–12:00</strong>
+              <strong>08:00–12:00</strong>
             </div>
             <div class="time-card">
               <div class="l">
@@ -471,9 +495,9 @@
                     <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M14 10h.01"/><path d="M10 14h.01"/>
                   </svg>
                 </span>
-                <strong>DJ Set</strong>
+                <strong>DJ Set/Dopocena</strong>
               </div>
-              <strong>19:00–02:00</strong>
+              <strong>21:00-00:00 (fino a 01:00 nel weekend)</strong>
             </div>
           </div>
         </aside>
@@ -703,11 +727,8 @@
     
     
     const liveImages = [
-      '/media/carusel1.jpg',
-      '/media/carusel5.jpg',
-      '/media/carusel4.jpg',
-      '/media/carusel2.jpg',
-      '/media/carusel3.jpg'
+      '/media/carusel2.webp',
+      '/media/carusel3.webp'
     ];
     
 
@@ -1210,7 +1231,7 @@ function setupLiveCarousel(){
         title:'Colazione',
         isMainCategory: true,
         groups:[
-          { title:'Colazioni Special (fino alle 11:30)', collapsed: true, items:[
+          { title:'Colazioni Special', collapsed: true, items:[
             { name:"Colazione all'Italiana", desc:"Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price:"€10,00" },
             { name:"French Breakfast", desc:"Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price:"€7,00" },
             { name:"Danish Breakfast", desc:"Spremuta; toast o pancake con sciroppo d'acero; caffè", price:"€7,00" },
@@ -1265,7 +1286,7 @@ function setupLiveCarousel(){
         title:'Pranzo', 
         isMainCategory: true,
         items:[
-           { name:"Club Sandwich", price:"€11,00", photo:"/media/clubsandwich.jpg", photo:"/media/carusel1.jpg" },
+           { name:"Club Sandwich", price:"€11,00", photo:"/media/clubsandwich.webp" },
         ]
       },
       { 
@@ -1382,11 +1403,10 @@ function setupLiveCarousel(){
 
     /* ========== EVENTI ========== */
     const events = [
-      { dateISO: '2025-09-03', booking:'open',  venue: '17/19 URBAN BISTROT', title: 'New Season',       genres: ['TECHNO','ELECTRO','VINYL'], start: '22:30', curatedBy: 'Resident DJs', headliner: 'Resident DJ', guests: [],           sponsors: [{text:''}] },
-      { dateISO: '2025-09-04', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-      { dateISO: '2025-09-05', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-      { dateISO: '2025-09-06', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-      { dateISO: '2025-09-07', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'Sunday Grooves',    genres: ['HOUSE','MINIMAL'],          start: '18:00', curatedBy: 'Resident DJs', headliner: 'TBA',                 guests: [],         sponsors: [] },
+     
+      { dateISO: '2025-09-10', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-09-11', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-09-12', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
     ];
 
     function pickNextEvent(){
@@ -1747,6 +1767,145 @@ function setupLiveCarousel(){
   <div id="globalLoader" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.35);z-index:1300">
     <span class="loader--ring" aria-label="Caricamento"></span>
   </div>
+
+
+<script id="visual-hotfixes-v7e-js">
+(function(){
+  // --- Build a resilient photo modal if the page doesn't include one ---
+  var existing = document.getElementById("photoModal");
+  if(!existing){
+    var m = document.createElement("div");
+    m.className = "modal";
+    m.id = "photoModal";
+    m.setAttribute("role","dialog");
+    m.setAttribute("aria-modal","true");
+    m.innerHTML = '<div class="modal-inner" style="display:grid;place-items:center;width:100%;height:100%;">\
+      <div class="photo-frame">\
+        <button class="close-btn" data-close aria-label="Chiudi">\
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">\
+            <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" />\
+          </svg>\
+        </button>\
+        <img data-photo alt="" />\
+        <svg class="spinner" viewBox="0 0 24 24" aria-hidden="true">\
+          <path fill="currentColor" d="M9 3h6l1.4 2H21a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2.6L15 21H9l-3.4-2H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2.6L9 3zm3 4a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM5.4 7L4 8.1V16h2.6L9 18h6l2.4-2H20V8.1L18.6 7H5.4zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>\
+        </svg>\
+      </div>\
+    </div>';
+    Object.assign(m.style, {position:"fixed", inset:"0", display:"grid", placeItems:"center", background:"rgba(0,0,0,.55)", zIndex:1200, opacity:"0", visibility:"hidden", transition:"opacity .18s ease"});
+    document.body.appendChild(m);
+  }
+  var modal = document.getElementById("photoModal");
+  var imgEl = modal.querySelector('img[data-photo]');
+
+  function openModal(src, alt){
+    document.documentElement.classList.add("modal-open");
+    document.body.classList.add("modal-open");
+    modal.dataset.state = "loading";
+    modal.style.visibility = "visible";
+    requestAnimationFrame(function(){ modal.style.opacity = "1"; });
+
+    imgEl.style.opacity = "0";
+    imgEl.removeAttribute("src"); // reset to avoid showing previous frame
+    if(src){
+      try{
+        imgEl.fetchPriority = "high";
+      }catch(e){}
+      imgEl.decoding = "async";
+      imgEl.alt = alt || "";
+      // Load and fade-in when ready
+      var done = function(){ modal.dataset.state = "loaded"; imgEl.style.opacity = "1"; };
+      imgEl.onload = done;
+      imgEl.onerror = done;
+      imgEl.src = src;
+      if(imgEl.decode) { imgEl.decode().then(done).catch(done); }
+    } else {
+      modal.dataset.state = "loaded";
+    }
+  }
+
+  function closeModal(){
+    document.documentElement.classList.remove("modal-open");
+    document.body.classList.remove("modal-open");
+    modal.style.opacity = "0";
+    modal.addEventListener("transitionend", function onEnd(){
+      modal.removeEventListener("transitionend", onEnd);
+      modal.style.visibility = "hidden";
+      modal.dataset.state = "";
+      imgEl.removeAttribute("src");
+    }, {once:true});
+  }
+
+  modal.addEventListener("click", function(ev){
+    if(ev.target === modal || ev.target.closest("[data-close]")) closeModal();
+  });
+  window.addEventListener("keydown", function(ev){ if(ev.key === "Escape" && modal.style.visibility === "visible") closeModal(); });
+
+  // Delegate clicks from buttons/links that carry a data-photo-src (or href to image)
+  document.addEventListener("click", function(ev){
+    var btn = ev.target.closest("[data-photo-src], .photo-btn, [data-open-photo]");
+    if(!btn) return;
+    var src = btn.getAttribute("data-photo-src") || btn.getAttribute("data-open-photo") || btn.getAttribute("href");
+    if(src && /\.(png|jpe?g|webp|avif|gif|svg)(\?.*)?$/i.test(src)){
+      ev.preventDefault();
+      var alt = btn.getAttribute("data-alt") || btn.getAttribute("aria-label") || "Anteprima";
+      openModal(src, alt);
+    }
+  }, {passive:false});
+
+  // --- Carousel micro-stutter guard: eager-load neighbors & force GPU during gestures ---
+  function setupCarousel(root){
+    var track = root.querySelector(".track") || root.querySelector("[data-track]") || root;
+    // Hardware accel during drag
+    var onDown = function(){ track && (track.style.willChange = "transform"); };
+    var onUp = function(){ requestAnimationFrame(function(){ if(track) track.style.willChange = "auto"; }); };
+    root.addEventListener("pointerdown", onDown);
+    root.addEventListener("pointerup", onUp);
+    root.addEventListener("pointercancel", onUp);
+    // Preload neighbors when a slide becomes visible
+    var imgs = root.querySelectorAll("img");
+    imgs.forEach(function(im, idx){
+      try{ if(idx < 2){ im.loading = "eager"; im.fetchPriority = "high"; } else { im.loading = "lazy"; im.fetchPriority = "low"; } }catch(e){}
+      im.decoding = "async";
+      if(!im.getAttribute("width") || !im.getAttribute("height")){
+        // Avoid layout jump by giving an aspect-ratio if none available
+        if(!im.style.aspectRatio) im.style.aspectRatio = "16 / 9";
+      }
+    });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(ent){
+        if(ent.isIntersecting){
+          var el = ent.target;
+          // preload neighbors
+          var next = el.nextElementSibling;
+          var prev = el.previousElementSibling;
+          [next, prev].forEach(function(n){
+            if(!n) return;
+            var ii = n.tagName === "IMG" ? n : n.querySelector("img");
+            if(ii && ii.loading === "lazy"){
+              try{ ii.loading = "eager"; ii.fetchPriority = "low"; }catch(e){}
+            }
+          });
+        }
+      });
+    }, {root: root, threshold: 0.6});
+    imgs.forEach(function(im){ io.observe(im); });
+  }
+
+  document.querySelectorAll("[data-carousel], .hero-carousel").forEach(setupCarousel);
+
+  // Also apply to any dynamically added carousels
+  var mo = new MutationObserver(function(muts){
+    muts.forEach(function(m){
+      m.addedNodes && m.addedNodes.forEach(function(node){
+        if(!(node instanceof Element)) return;
+        if(node.matches && (node.matches("[data-carousel]") || node.matches(".hero-carousel"))) setupCarousel(node);
+      });
+    });
+  });
+  mo.observe(document.documentElement, {childList:true, subtree:true});
+})();
+</script>
 
 </body>
 </html>
