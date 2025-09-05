@@ -1261,7 +1261,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
             row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
   </div>`;
             body.appendChild(row);
           });
@@ -1291,7 +1291,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
   </div>`;
                 subBody.appendChild(row);
               });
@@ -1310,7 +1310,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
   </div>`;
                 body.appendChild(row);
               });
@@ -1539,27 +1539,68 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
 
     /* ===== Foto prodotto: modal ===== */
     (function(){
-      const modal = document.getElementById('photoModal');
-      if(!modal) return;
-      const img = document.getElementById('modalPhoto');
-      img.setAttribute('loading','lazy');
-      img.setAttribute('decoding','async');
-      img.setAttribute('fetchpriority','low');
-      const cap = document.getElementById('modalCaption');
-      function open(src, caption){
-        img.src = src; cap.textContent = caption||'';
-        modal.classList.add('show'); modal.setAttribute('aria-hidden','false');
+      // Lazy query helpers so this works even if modal is defined after the script.
+      function els(){
+        return {
+          modal: document.getElementById('photoModal'),
+          img: document.getElementById('modalPhoto'),
+          cap: document.getElementById('modalCaption')
+        };
       }
-      function close(){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); img.src=''; cap.textContent=''; }
-      modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-      modal.querySelector('.modal__close').addEventListener('click', close);
-      document.addEventListener('click', (e)=>{
-        const b = e.target.closest && e.target.closest('.photo-btn'); if(!b) return;
-        const src = b.getAttribute('data-photo'); const caption = b.getAttribute('data-caption');
-        if(src) open(src, caption);
+      function ensureImgAttrs(img){
+        if(!img) return;
+        img.setAttribute('loading','lazy');
+        img.setAttribute('decoding','async');
+        img.setAttribute('fetchpriority','low');
+      }
+      function openModal(src, caption){
+        const {modal, img, cap} = els();
+        if(!modal || !img || !cap) return;
+        ensureImgAttrs(img);
+        img.src = src;
+        cap.textContent = caption || '';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden','false');
+      }
+      function closeModal(){
+        const {modal, img, cap} = els();
+        if(!modal) return;
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+        if(img) img.src = '';
+        if(cap) cap.textContent = '';
+      }
+
+      // Single delegated click handler
+      document.addEventListener('click', function(e){
+        // Open from photo button (or its children)
+        var btn = e.target && e.target.closest ? e.target.closest('.photo-btn') : null;
+        if(btn){
+          e.preventDefault();
+          var src = btn.getAttribute('data-photo');
+          var caption = btn.getAttribute('data-caption');
+          if(src) openModal(src, caption);
+          return;
+        }
+        // Close if clicking the X
+        if(e.target && e.target.closest && e.target.closest('.modal__close')){
+          e.preventDefault();
+          closeModal();
+          return;
+        }
+        // Close if clicking on overlay
+        if(e.target && e.target.id === 'photoModal'){
+          closeModal();
+          return;
+        }
       });
-      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') modal.classList.contains('show') && modal.click(); });
+
+      // ESC closes
+      window.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){ closeModal(); }
+      });
     })();
+;
 
     /* ===== Smooth scroll con offset header ===== */
     (function(){
