@@ -29,7 +29,7 @@
     @media (prefers-color-scheme: dark){
       html[data-theme="auto"]{
         --bg:#0b0b0b; --fg:#ffffff; --muted:#9ca3af; --line:#1f1f1f;
-        --accent#c23331; --accent-fg:#000000;
+        --accent:c23331; --accent-fg:#000000;
         --chip:#121212; --chip-fg:#e5e7eb;
       }
     }
@@ -806,31 +806,7 @@ function setupLiveCarousel(){
 
   // Expose programmatic controls if needed
   box.dataset.carouselReady = "1";
-}
-      function onTouchMove(e){
-        if(!isTouching) return;
-        const t = e.touches ? e.touches[0] : e;
-        deltaX = t.clientX - startX;
-        deltaY = t.clientY - startY;
-      }
-      function onTouchEnd(){
-        if(!isTouching) return;
-        isTouching = false;
-        if(Math.abs(deltaX) > Math.max(THRESH, Math.abs(deltaY))){
-          if(deltaX < 0){ go((i+1)%slides.length); } else { go((i-1+slides.length)%slides.length); }
-        }
-      }
-      box.addEventListener('touchstart', onTouchStart, {passive:true});
-      box.addEventListener('touchmove', onTouchMove, {passive:true});
-      box.addEventListener('touchend', onTouchEnd, {passive:true});
-      box.addEventListener('pointerdown', (e)=>{ if(e.pointerType==='touch') onTouchStart(e); }, {passive:true});
-      box.addEventListener('pointermove', (e)=>{ if(e.pointerType==='touch') onTouchMove(e); }, {passive:true});
-      box.addEventListener('pointerup',   (e)=>{ if(e.pointerType==='touch') onTouchEnd(e); }, {passive:true});
-function go(n){ slides[i].classList.remove('active'); if(bullets[i]) bullets[i].classList.remove('active'); i=n; slides[i].classList.add('active'); bullets[i]?.classList.add('active'); }
-      setInterval(()=>{ if(slides.length>1) go((i+1)%slides.length); }, 5000);
-    }
-
-    /* ================== STORE (local + GAS JSONP/Beacon) ================== */
+}/* ================== STORE (local + GAS JSONP/Beacon) ================== */
     const Store = {
       key:'1719-reactions-v6',
       state:{
@@ -1347,8 +1323,10 @@ function go(n){ slides[i].classList.remove('active'); if(bullets[i]) bullets[i].
             row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
-  </div>`;
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}"
+      data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
+  </div>
+`;
             body.appendChild(row);
           });
         }
@@ -1377,8 +1355,10 @@ function go(n){ slides[i].classList.remove('active'); if(bullets[i]) bullets[i].
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
-  </div>`;
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}"
+      data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
+  </div>
+`;
                 subBody.appendChild(row);
               });
               
@@ -1396,8 +1376,10 @@ function go(n){ slides[i].classList.remove('active'); if(bullets[i]) bullets[i].
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
-  </div>`;
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}"
+      data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
+  </div>
+`;
                 body.appendChild(row);
               });
             }
