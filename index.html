@@ -21,8 +21,8 @@
     :root{
       --menu-blur: 18px; --menu-dim: 0.68;
       --bg:#ffffff; --fg:#0b0b0b; --muted:#6b7280; --line:#e5e7eb;
-      --accent:#ff4d75; --accent-fg:#ffffff;
-      --chip:#f4f4f5; --chip-fg:#0b0b0b;
+      --accent:#c23331; --accent-fg:#ffffff;
+      --chip:#c23331; --chip-fg:#0b0b0b;
       --radius:16px; --pad:clamp(16px,4vw,32px); --max:1120px;
       --header-h:64px;
     }
@@ -337,7 +337,7 @@
 
     
 <style id="visual-hotfixes-v7e">
-:root{ --accent:#ff4d75; --accent-fg:#ffffff; }
+:root{ --accent:#c23331; --accent-fg:#ffffff; }
 html{ scrollbar-gutter: stable both-edges; }
 html.modal-open, body.modal-open{ overflow: hidden; }
 .modal{ contain:paint; backface-visibility:hidden; }
@@ -1282,19 +1282,51 @@ function setupLiveCarousel(){
         ]
       },
       { 
-        badge:'LUNCH', 
-        title:'Pranzo', 
+        badge:'GASTRONOMY', 
+        title:'Gastronomia', 
         isMainCategory: true,
         items:[
-           { name:"Club Sandwich", price:"€11,00", photo:"/media/clubsandwich.webp" },
-        ]
-      },
-      { 
-        badge:'DINNER', 
-        title:'Cena', 
-        isMainCategory: true,
-        items:[
-          { name:'— In allestimento —', desc:'', price:'' , photo: null}
+           { 
+    "name": "Classic Club", 
+    "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", 
+    "price": "€8,00"
+  },
+  { 
+    "name": "Classic Club + Patate", 
+    "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", 
+    "price": "€12,00" ,
+    photo:"/media/clubsandwich.webp"
+  },
+  { 
+    "name": "Classic Club", 
+    "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", 
+    "price": "€8,00" 
+  },
+  { 
+    "name": "Classic Club + Patate", 
+    "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", 
+    "price": "€12,00" 
+  },
+  { 
+    "name": "Special Club", 
+    "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", 
+    "price": "€9,00" 
+  },
+  { 
+    "name": "Special Club + Patate", 
+    "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", 
+    "price": "€12,00" 
+  },
+  { 
+    "name": "Special Club", 
+    "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", 
+    "price": "€9,00" 
+  },
+  { 
+    "name": "Special Club + Patate", 
+    "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", 
+    "price": "€12,00" 
+  }
         ]
       },
       { 
