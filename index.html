@@ -300,7 +300,41 @@
       font-weight:600;
     }
 
-  </style>
+  
+  /* === Global red loader (ring) === */
+  .loader--ring{ --s:22px; --w:3px; width:var(--s); height:var(--s); border-radius:50%; display:inline-block;
+    border:var(--w) solid color-mix(in oklab, var(--accent) 26%, transparent);
+    border-top-color:var(--accent); animation:spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-overlay{ position: absolute; inset:0; display:grid; place-items:center; pointer-events:none; }
+  .loader-overlay.hidden{ display:none; }
+
+  /* === Modal: remove layout toggling to avoid white flash; animate opacity/visibility === */
+  .modal{ position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,.55);
+    z-index:1200; opacity:0; visibility:hidden; transition:opacity .18s ease; will-change:opacity; }
+  .modal.show{ opacity:1; visibility:visible; }
+  .modal__body{ position:relative; background:var(--bg); border:1px solid var(--line); border-radius:16px;
+    max-width:min(920px,96vw); max-height:90vh; padding:10px; will-change:transform; transform:translateZ(0); }
+  .modal__body img{ display:block; max-width:100%; max-height:72vh; border-radius:12px; }
+  .modal__close{ position:absolute; right:10px; top:10px; width:40px; height:40px; border-radius:12px;
+    border:1px solid var(--line); background:var(--chip); color:var(--chip-fg); font-size:22px; font-weight:900; cursor:pointer; }
+  .modal__caption{ margin-top:6px; text-align:center; }
+
+  /* === Carousel: smoother crossfade, no flash === */
+  .live-box{ position:relative; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:color-mix(in oklab, var(--bg) 96%, transparent); }
+  #liveCarousel .slide{ position:absolute; inset:0; opacity:0; transform:scale(1.01) translateZ(0); transition:opacity .4s ease, transform .4s ease; will-change:opacity,transform; backface-visibility:hidden; }
+  #liveCarousel .slide.active{ opacity:1; transform:scale(1) translateZ(0); }
+  #liveDots{ position:absolute; left:50%; bottom:10px; transform:translateX(-50%); display:flex; gap:6px; z-index:2; }
+  #liveDots .dot{ width:8px; height:8px; border-radius:50%; background:color-mix(in oklab, var(--fg) 24%, transparent); border:0; cursor:pointer; }
+  #liveDots .dot.active{ background:var(--fg); }
+
+  /* More responsive animation helper */
+  @media (prefers-reduced-motion: reduce){
+    .reveal, #liveCarousel .slide{ transition:none !important }
+    .modal{ transition:none !important }
+  }
+
+</style>
 
     <style>
       /* photo modal styles */
@@ -691,36 +725,88 @@
     
 
 
-    function setupLiveCarousel(){
-      const box  = document.getElementById('liveCarousel');
-      const dots = document.getElementById('liveDots');
-      if(!box) return;
-      
-      // Clear any existing content
-      box.innerHTML = '';
-      dots.innerHTML = '';
-      
-      let i = 0; const slides=[], bullets=[];
-      liveImages.forEach((src,idx)=>{
-        const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
-        const im=new Image(); im.src=src; im.alt='Live '+(idx+1);
-        Object.assign(im.style,{width:'100%',height:'100%',objectFit:'cover'}); im.loading='lazy';
-        s.appendChild(im); box.appendChild(s); slides.push(s);
-        const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
-      });
-      
-      // Add dots container to box
-      box.appendChild(dots);
-      
-      
-      // Touch / swipe handlers
-      let startX=0, startY=0, deltaX=0, deltaY=0, isTouching=false;
-      const THRESH = 40; // px to trigger swipe
+    
+function setupLiveCarousel(){
+  const box  = document.getElementById('liveCarousel');
+  const dots = document.getElementById('liveDots');
+  if(!box) return;
 
-      function onTouchStart(e){
-        const t = e.touches ? e.touches[0] : e;
-        startX = t.clientX; startY = t.clientY; deltaX = 0; deltaY = 0; isTouching = true;
-      }
+  // ensure container classes
+  box.classList.add('live-box');
+
+  // Clear any existing content
+  box.innerHTML = '';
+  dots.innerHTML = '';
+
+  // local loader
+  const overlay = document.createElement('div');
+  overlay.className = 'loader-overlay';
+  overlay.innerHTML = '<span class="loader--ring" aria-hidden="true"></span>';
+  box.appendChild(overlay);
+
+  let i = 0; const slides=[], bullets=[];
+  liveImages.forEach((src,idx)=>{
+    const s = document.createElement('div'); s.className='slide'+(idx===0?' active':'');
+    const im=new Image();
+    im.alt='Live '+(idx+1);
+    im.decoding='async';
+    im.loading= idx===0 ? 'eager' : 'lazy';
+    im.fetchPriority = idx===0 ? 'high' : 'low';
+    im.style.width='100%'; im.style.height='100%'; im.style.objectFit='cover';
+    im.addEventListener('load', ()=>{ if(idx===0){ overlay.classList.add('hidden'); } });
+    im.src=src;
+    s.appendChild(im);
+    box.appendChild(s); slides.push(s);
+
+    const b=document.createElement('button'); b.className='dot'+(idx===0?' active':''); b.addEventListener('click',()=>go(idx)); dots.appendChild(b); bullets.push(b);
+  });
+  box.appendChild(dots);
+
+  function go(n){
+    if(n===i || n<0 || n>=slides.length) return;
+    const cur=slides[i], nxt=slides[n];
+    // Preload next image if not complete
+    const img = nxt.querySelector('img');
+    if(img && !img.complete){ overlay.classList.remove('hidden'); img.addEventListener('load', ()=>overlay.classList.add('hidden'), {once:true}); }
+
+    // double-rAF to ensure class transition
+    requestAnimationFrame(()=>{
+      cur.classList.remove('active');
+      nxt.classList.add('active');
+      bullets[i]?.classList.remove('active');
+      bullets[n]?.classList.add('active');
+      i=n;
+    });
+  }
+
+  // Touch / swipe handlers
+  let startX=0, startY=0, deltaX=0, deltaY=0, isTouching=false;
+  const THRESH = 40; // px to trigger swipe
+
+  function onTouchStart(e){
+    const t = e.touches ? e.touches[0] : e;
+    startX = t.clientX; startY = t.clientY; deltaX = 0; deltaY = 0; isTouching = true;
+  }
+  function onTouchMove(e){
+    if(!isTouching) return;
+    const t = e.touches ? e.touches[0] : e;
+    deltaX = t.clientX - startX;
+    deltaY = t.clientY - startY;
+  }
+  function onTouchEnd(){
+    if(!isTouching) return;
+    isTouching = false;
+    if(Math.abs(deltaX) > Math.max(THRESH, Math.abs(deltaY))){
+      if(deltaX < 0){ go((i+1)%slides.length); } else { go((i-1+slides.length)%slides.length); }
+    }
+  }
+  box.addEventListener('touchstart', onTouchStart, {passive:true});
+  box.addEventListener('touchmove', onTouchMove, {passive:true});
+  box.addEventListener('touchend', onTouchEnd, {passive:true});
+
+  // Expose programmatic controls if needed
+  box.dataset.carouselReady = "1";
+}
       function onTouchMove(e){
         if(!isTouching) return;
         const t = e.touches ? e.touches[0] : e;
@@ -1261,7 +1347,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
             row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
   </div>`;
             body.appendChild(row);
           });
@@ -1291,7 +1377,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
   </div>`;
                 subBody.appendChild(row);
               });
@@ -1310,7 +1396,7 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
     <div class="price">${it.price||""}</div>
-    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24"><path d="M12 5l2 2h3a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9a2 2 0 01-2-2h3l2-2zM12 11a3 3 0 100 6 3 3 0 000-6z" fill="currentColor"/></svg> Foto</button>`:""}
+    ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
   </div>`;
                 body.appendChild(row);
               });
@@ -1553,15 +1639,27 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
         img.setAttribute('decoding','async');
         img.setAttribute('fetchpriority','low');
       }
+      
       function openModal(src, caption){
         const {modal, img, cap} = els();
         if(!modal || !img || !cap) return;
         ensureImgAttrs(img);
+        // local loader
+        let ml = modal.querySelector('.loader-overlay');
+        if(!ml){
+          ml = document.createElement('div'); ml.className='loader-overlay';
+          ml.innerHTML='<span class="loader--ring" aria-hidden="true"></span>';
+          modal.querySelector('.modal__body').appendChild(ml);
+        }
+        ml.classList.remove('hidden');
+        img.style.opacity='0';
+        img.onload = ()=>{ img.style.opacity='1'; ml.classList.add('hidden'); };
         img.src = src;
         cap.textContent = caption || '';
         modal.classList.add('show');
         modal.setAttribute('aria-hidden','false');
       }
+
       function closeModal(){
         const {modal, img, cap} = els();
         if(!modal) return;
@@ -1663,6 +1761,12 @@ function go(n){ slides[i].classList.remove('active'); bullets[i]?.classList.remo
       <img id="modalPhoto" alt="Foto prodotto">
       <div id="modalCaption" class="modal__caption meta"></div>
     </div>
+  </div>
+
+
+  <!-- Global loader (hidden by default) -->
+  <div id="globalLoader" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.35);z-index:1300">
+    <span class="loader--ring" aria-label="Caricamento"></span>
   </div>
 
 </body>
