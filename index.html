@@ -135,7 +135,22 @@
     .menu-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
     .menu-item .mi-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
     .menu-item:last-child{border-bottom:0}
-    .price{color:var(--accent);font-weight:800}
+    /* Prezzo: inline su desktop, va a capo su mobile */
+.price{
+  color:var(--accent);
+  font-weight:800;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.price .part{ white-space:nowrap; }
+@media (max-width:520px){
+  .price{
+    flex-direction:column;
+    align-items:flex-end;
+  }
+}
 
     /* Events */
     .event{position:relative;display:grid;gap:10px;align-items:start;border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab, var(--bg) 96%, transparent);transition:box-shadow .2s, transform .2s, border-color .2s; touch-action:manipulation; user-select:none; -webkit-user-select:none}
@@ -1329,17 +1344,153 @@ function setupLiveCarousel(){
   }
         ]
       },
-      { 
-        badge:'DRINKS', 
-        title:'Drinks', 
-        isMainCategory: true,
-        items:[
-          { name:'— In allestimento —', desc:'', price:'' , photo: null}
-        ]
-      }
+      {
+  badge:'DRINKS',
+  title:'Drinks',
+  isMainCategory: true,
+  groups:[
+    // ——— VINI ———
+    { title:'Vini Bianchi', collapsed:true, items:[
+      { name:"Pecorino Bio · Cascina del Colle", desc:"Vitigno: Pecorino • Zona: Abruzzo • 13% • Profilo: agrumi e fiori bianchi, spiccata sapidità.", price:"Calice €6,00 • Bottiglia €22,00" },
+      { name:"Ribolla Gialla Collio · Pighin", desc:"Vitigno: Ribolla Gialla • Zona: Collio (Friuli) • 13% • Profilo: mela verde e fiori di campo; secco, fresco, finale citrino.", price:"Calice €7,00 • Bottiglia €24,00" },
+      { name:"Riesling Fallwind · St. Michael-Eppan", desc:"Vitigno: Riesling • Zona: Alto Adige • 13,5% • Profilo: pesca/albicocca, agrumi, vena minerale.", price:"Solo bottiglia €26,00" },
+      { name:"Gewürztraminer · Cantina Aldeno", desc:"Vitigno: Gewürztraminer • Zona: Trentino • 12,5% • Profilo: rosa e litchi, speziato, morbido.", price:"Solo bottiglia €23,00" },
+      { name:"Sauvignon · Altùris", desc:"Vitigno: Sauvignon Blanc • Zona: Friuli • 12,5% • Profilo: salvia, foglia di pomodoro, pompelmo; fresco e sapido.", price:"Calice €7,00 • Bottiglia €23,00" },
+      { name:"Roero Arneis · Bel Colle", desc:"Vitigno: Arneis • Zona: Piemonte (Roero) • ~13% • Profilo: pera e erbe bianche; secco ed elegante.", price:"Solo bottiglia €22,00" },
+      { name:"Chardonnay ‘Duca Minimo’ · Cascina del Colle", desc:"Vitigno: Chardonnay • Zona: Abruzzo • 12,5% • Profilo: frutta gialla, morbido, finale pulito.", price:"Calice €6,00 • Bottiglia €20,00" },
+      { name:"Grillo · Fatascià", desc:"Vitigno: Grillo • Zona: Sicilia • ~13% • Profilo: agrumi (limone/pompelmo) ed erbe mediterranee; sapido.", price:"Calice €7,00 • Bottiglia €20,00" },
+      { name:"Gelso Bianco · Tenuta i Gelsi", desc:"Vitigno: Malvasia Bianca • Zona: Basilicata (Vulture) • 13% • Profilo: fiori bianchi, pesca, tocco minerale vulcanico.", price:"Calice €7,00 • Bottiglia €20,00" },
+      { name:"‘12 e mezzo’ Malvasia Bianca · Varvaglione", desc:"Vitigno: Malvasia Bianca • Zona: Puglia • 12,5% • Profilo: aromatico e fruttato (pesca/pera), morbido.", price:"Calice €7,00 • Bottiglia €23,00" }
+    ]},
+    { title:'Vini Rosati', collapsed:true, items:[
+      { name:"Free Free Frizzante · Cascina del Colle", desc:"Rosato frizzante • Zona: Abruzzo • Profilo: fruttato e fresco, perlage fine.", price:"Solo bottiglia €22,00" },
+      { name:"Susumaniello Rosé · Varvaglione", desc:"Vitigno: Susumaniello • Zona: Puglia • Profilo: fragolina e rosa; secco, rinfrescante.", price:"Solo bottiglia €22,00" }
+    ]},
+    { title:'Vini Rossi', collapsed:true, items:[
+      { name:"Primitivo di Manduria ‘Sua Maestà’ · Erario", desc:"Vitigno: Primitivo • Zona: Puglia • 15% • Profilo: prugna/confettura, spezie dolci; avvolgente.", price:"Calice €7,00 • Bottiglia €22,00" },
+      { name:"Pinot Nero · Altùris", desc:"Vitigno: Pinot Nero • Zona: Friuli • 13% • Profilo: ribes/ lampone, tannino fine, beva elegante.", price:"Calice €7,00 • Bottiglia €23,00" },
+      { name:"Valpolicella Superiore · Domìni Veneti", desc:"Corvina, Corvinone, Rondinella • Zona: Veneto • 13% • Profilo: ciliegia rossa e spezie leggere; secco, scorrevole.", price:"Calice €8,00 • Bottiglia €24,00" },
+      { name:"Morellino ‘Mentore’ · Mantellassi", desc:"Sangiovese (Morellino) con uvaggi • Zona: Toscana • 14% • Profilo: frutto rosso e lieve spezia; tipico e gastronomico.", price:"Calice €7,00 • Bottiglia €23,00" },
+      { name:"Cabernet Sauvignon · Altùris", desc:"Vitigno: Cabernet Sauvignon • Zona: Friuli • 13% • Profilo: frutti scuri, cenni di cacao/pepe, struttura media.", price:"Solo bottiglia €23,00" },
+      { name:"Negroamaro ‘Sua Maestà’ · Erario", desc:"Vitigno: Negroamaro • Zona: Puglia • 15% • Profilo: mora e prugna, sfumature speziate; morbido.", price:"Solo bottiglia €25,00" },
+      { name:"Montepulciano ‘Duca Minimo’ · Cascina del Colle", desc:"Vitigno: Montepulciano • Zona: Abruzzo • 12,5% • Profilo: amarena/viola, medio corpo.", price:"Calice €6,00 • Bottiglia €20,00" },
+      { name:"Nero d’Avola ‘Aprimonio’ · Fatascià", desc:"Vitigno: Nero d’Avola • Zona: Sicilia • 12% • Profilo: ciliegia nera e spezia dolce; rotondo.", price:"Calice €6,00 • Bottiglia €23,00" },
+      { name:"‘12 e mezzo’ Malvasia Nera · Varvaglione", desc:"Vitigno: Malvasia Nera • Zona: Puglia • 12,5% • Profilo: frutti rossi maturi/melagrana; morbido.", price:"Calice €6,00 • Bottiglia €23,00" }
+    ]},
+    { title:'Spumanti', collapsed:true, items:[
+      { name:"Le Rosé Metodo Classico · Barbatèrre", desc:"Pinot Nero • Emilia • lungo affinamento sui lieviti • 12,5% • Fragolina, crosta di pane, elegante.", price:"Solo bottiglia €39,00" },
+      { name:"Blanc de Blanc Metodo Classico · Barbatèrre", desc:"Sauvignon Blanc • Emilia • affinamento prolungato sui lieviti • 12,5% • Agrumi e fiori bianchi, brioche fine.", price:"Solo bottiglia €34,00" },
+      { name:"Blanc de Noir Metodo Classico · Barbatèrre", desc:"Pinot Nero • Emilia • affinamento sui lieviti • 12,5% • Piccoli frutti rossi, note di panificazione.", price:"Solo bottiglia €34,00" },
+      { name:"Metodo Classico · Bacio della Luna (Cantine di Ora)", desc:"Chardonnay (metodo classico) • Trentino-Alto Adige • 11% • Pera, crosta di pane; bollicina fine.", price:"Calice €8,00 • Bottiglia €28,00" },
+      { name:"Franciacorta ‘Rosita’ · Ugo Vezzoli", desc:"Pinot Nero • Lombardia • 12,5% • Frutti rossi delicati, sorsi tesi e salini.", price:"Solo bottiglia €34,00" },
+      { name:"Franciacorta Brut · Ugo Vezzoli", desc:"Chardonnay, Pinot Nero • Lombardia • 12,5% • Agrumi/pasticceria, secco e verticale.", price:"Solo bottiglia €35,00" },
+      { name:"Franciacorta Satèn · Ugo Vezzoli", desc:"Chardonnay • Lombardia • 12,5% • Stile Satèn: più cremoso e setoso (pressione più bassa).", price:"Solo bottiglia €38,00" },
+      { name:"Prosecco Millesimato Extra Dry", desc:"Glera • Veneto • 11% • Pera e mela, bollicina fresca.", price:"Calice €5,00 • Bottiglia €25,00" }
+    ]},
+
+    // --- GIN & TONIC ---
+    { title:'Gin Tonic', collapsed:true, items:[
+      { name:"Bombay Sapphire", desc:"London Dry agrumato e speziato, bilanciato.", price:"€10,00" },
+      { name:"Nordés", desc:"Gin atlantico (Galizia) con uva Albariño, aromatico e morbido.", price:"€10,00" },
+      { name:"Plymouth", desc:"Stile Plymouth: più morbido e terroso del classico London Dry.", price:"€10,00" },
+      { name:"Tanqueray", desc:"London Dry classico: ginepro netto e finale secco.", price:"€10,00" },
+      { name:"Etsu", desc:"Gin giapponese: yuzu e botaniche orientali.", price:"€12,00" },
+      { name:"Hendrick’s", desc:"Infusione di rosa e cetriolo, profilo floreale.", price:"€12,00" },
+      { name:"Gin Mare", desc:"Mediterraneo: oliva, rosmarino, basilico.", price:"€12,00" },
+      { name:"Monkey 47", desc:"Foresta Nera: 47 botaniche, molto complesso.", price:"€12,00" },
+      { name:"No.3 London Dry", desc:"Ginepro-coriandolo-agrumi, taglio molto secco.", price:"€12,00" },
+      { name:"The Botanist", desc:"Islay: 22 botaniche locali, floreale/erbaceo.", price:"€12,00" }
+    ]},
+
+    // --- RUM / RHUM (60 ml) ---
+    { title:'Rum • 60 ml', collapsed:true, items:[
+      { name:"Barceló Imperial", desc:"Rum dominicano invecchiato: vaniglia e frutta secca.", price:"€12,00" },
+      { name:"Captain Morgan", desc:"Spiced rum: dolce-speziato.", price:"€8,00" },
+      { name:"Diplomático", desc:"Venezuela: morbido, note di toffee/caramello.", price:"€10,00" },
+      { name:"Don Papa Baroko", desc:"Filippine: vaniglia e scorza d’arancia, dolce.", price:"€10,00" },
+      { name:"Kraken", desc:"Spiced dark rum: speziato e intenso.", price:"€8,00" },
+      { name:"Rhum J.M XO", desc:"Agricole AOC Martinica: canna da zucchero, legno e spezie.", price:"€10,00" }
+    ]},
+
+    // --- WHISKY (60 ml) ---
+    { title:'Whisky • 60 ml', collapsed:true, items:[
+      { name:"Bulleit Rye", desc:"Segale: speziato e secco.", price:"€10,00" },
+      { name:"Jameson IPA Edition", desc:"Finish in botti IPA: note lievemente luppolate.", price:"€10,00" },
+      { name:"Jack Daniel’s Honey", desc:"Tennessee whiskey al miele: morbido e dolce.", price:"€10,00" },
+      { name:"Jameson", desc:"Irish blended: rotondo e accessibile.", price:"€8,00" },
+      { name:"Jim Beam Bourbon", desc:"Bourbon classico: vaniglia e legno.", price:"€8,00" },
+      { name:"Maker’s Mark", desc:"Wheated bourbon: vellutato, dolcezza equilibrata.", price:"€12,00" },
+      { name:"Nikka", desc:"Japanese whisky: stile equilibrato, cenni di frutta/graffite.", price:"€15,00" },
+      { name:"Talisker Skye", desc:"Single malt marino: sapidità e lieve fumo.", price:"€12,00" },
+      { name:"Yukisato Blended", desc:"Blended giapponese: morbido e pulito.", price:"€14,00" }
+    ]},
+
+    // --- AMARI ---
+    { title:'Amari', collapsed:true, items:[
+      { name:"Amaro del Capo", desc:"Digestivo calabrese.", price:"€4,00" },
+      { name:"Della Rocca Arancio", desc:"Liquore all’arancia.", price:"€5,00" },
+      { name:"Della Rocca Erbe", desc:"Amaro alle erbe.", price:"€5,00" },
+      { name:"Dente di Leone", desc:"Liquore al tarassaco.", price:"€5,00" },
+      { name:"Fernet", desc:"Bitter digestivo classico.", price:"€4,00" },
+      { name:"Jägermeister", desc:"Erbe officinali (speziato).", price:"€4,00" },
+      { name:"Jefferson", desc:"Amaro artigianale calabrese.", price:"€5,00" },
+      { name:"Montenegro", desc:"Amaro tradizionale italiano.", price:"€4,00" },
+      { name:"Kaciuto", desc:"Amaro.", price:"€5,00" }
+    ]},
+
+    // --- COCKTAIL CLASSICI (senza spritz, senza mojito) ---
+    { title:'Cocktail Classici', collapsed:true, items:[
+      { name:"Americano", desc:"Vermouth rosso; bitter; soda; scorza d’arancia.", price:"€9,00" },
+      { name:"Negroni", desc:"Gin; vermouth rosso; bitter; scorza d’arancia.", price:"€10,00" },
+      { name:"Negroni Sbagliato", desc:"Prosecco; vermouth rosso; bitter.", price:"€9,00" },
+      { name:"Moscow Mule", desc:"Vodka; ginger beer; succo di lime.", price:"€10,00" },
+      { name:"Whiskey Sour", desc:"Bourbon; succo di limone; zucchero; albume opzionale.", price:"€10,00" },
+      { name:"Margarita", desc:"Tequila; triple sec; succo di lime; bordo di sale.", price:"€10,00" },
+      { name:"Daiquiri", desc:"Rum bianco; succo di lime; zucchero.", price:"€10,00" },
+      { name:"Martini Dry", desc:"Gin; vermouth dry; oliva o twist di limone.", price:"€10,00" },
+      { name:"Vodka Lemon", desc:"Vodka; lemon soda.", price:"€9,00" },
+      { name:"Vodka Tonic", desc:"Vodka; acqua tonica; lime.", price:"€9,00" },
+      { name:"Gin Lemon", desc:"Gin; lemon soda.", price:"€9,00" },
+      { name:"Gin Tonic (base)", desc:"Gin base; acqua tonica; lime.", price:"€9,00" }
+    ]},
+
+    // --- SPRITZ SPECIAL (inclusi Aperol/Campari/Hugo) ---
+    { title:'Spritz Special', collapsed:true, items:[
+      { name:"Aperol Spritz", desc:"Prosecco; Aperol; soda; fetta d’arancia.", price:"€9,00" },
+      { name:"Campari Spritz", desc:"Prosecco; Campari; soda; fetta d’arancia.", price:"€9,00" },
+      { name:"Hugo", desc:"Prosecco; sciroppo di sambuco; soda; menta e lime.", price:"€9,00" },
+      { name:"Green Spritz", desc:"Prosecco; liquore Galliano; succo di ananas; liquore al melone.", price:"€9,00" },
+      { name:"Violetta Spritz", desc:"Liquore alla violetta; succo fresco di lime; succo di mela; prosecco.", price:"€9,00" },
+      { name:"Orange Spritz", desc:"Aperitivo; liquore all’arancia; prosecco; succo di arancia.", price:"€9,00" },
+      { name:"Passoã Spritz", desc:"Liquore al passion fruit (Passoã); prosecco; sciroppo al passion fruit.", price:"€9,00" },
+      { name:"Little Spritz", desc:"Prosecco; liquore di bergamotto; sciroppo di peperoncino homemade.", price:"€9,00" },
+      { name:"Rabarbaro Spritz", desc:"Prosecco; liquore al rabarbaro; sciroppo di fragola.", price:"€9,00" },
+      { name:"Sorrento Spritz", desc:"Prosecco; limoncello di Sorrento; sciroppo di granatina.", price:"€9,00" }
+    ]},
+
+    // --- ANALCOLICI (senza Virgin Mojito) ---
+    { title:'Analcolici', collapsed:true, items:[
+      { name:"Tourist Mango", desc:"Succo mango; sciroppo cocco; sciroppo lampone; lime fresco.", price:"€8,00" },
+      { name:"Raspberry Orange", desc:"Succo d’arancia; granatina; lime fresco; zucchero; sciroppo lampone.", price:"€8,00" },
+      { name:"Un Colpo di Cooler", desc:"Lime a spicchi; arancia a fette; mix sugar; ginger beer.", price:"€8,00" },
+      { name:"Tropical Breakfast", desc:"Marmellata albicocche; succo ananas; mix sour; yogurt greco.", price:"€8,00" },
+      { name:"Baby Margarita", desc:"Sciroppo d’agave; lime fresco; sale; pompelmo rosa.", price:"€8,00" }
+    ]}
+  ]
+}
     ];
 
-    function renderMenu(){
+    function renderPrice(price){
+  if(!price) return '';
+  if(typeof price === 'string' && price.includes('•')){
+    return price.split('•')
+      .map(s => `<span class="part">${s.trim()}</span>`)
+      .join('');
+  }
+  return `<span class="part">${price}</span>`;
+}
+
+function renderMenu(){
       const wrap = document.getElementById('menuAccordions');
       wrap.innerHTML = '';
       
@@ -1362,7 +1513,7 @@ function setupLiveCarousel(){
             row.className = 'menu-item';
             row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
-    <div class="price">${it.price||""}</div>
+    <div class="price">${renderPrice(it.price)}</div>
     ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}"
       data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
   </div>
@@ -1394,7 +1545,7 @@ function setupLiveCarousel(){
                 row.className = 'menu-item';
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
-    <div class="price">${it.price||""}</div>
+    <div class="price">${renderPrice(it.price)}</div>
     ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}"
       data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
   </div>
@@ -1415,7 +1566,7 @@ function setupLiveCarousel(){
                 row.className = 'menu-item';
                 row.innerHTML = `<div class="mi-left">${it.name} <span class="meta">${it.desc||""}</span></div>
   <div class="mi-right">
-    <div class="price">${it.price||""}</div>
+    <div class="price">${renderPrice(it.price)}</div>
     ${it.photo?`<button type="button" class="photo-btn" data-photo="${it.photo}"
       data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>`:""}
   </div>
