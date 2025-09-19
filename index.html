@@ -1290,54 +1290,68 @@ function setupLiveCarousel(){
           ]}
         ]
       },
-      { 
-        badge:'GASTRONOMY', 
-        title:'Gastronomia', 
-        isMainCategory: true,
-        items:[
-           { 
-    "name": "Classic Club", 
-    "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", 
-    "price": "€8,00"
-  },
-  { 
-    "name": "Classic Club + Patate", 
-    "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", 
-    "price": "€12,00" ,
-    photo:"/media/clubsandwich.webp"
-  },
-  { 
-    "name": "Classic Club", 
-    "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", 
-    "price": "€8,00" 
-  },
-  { 
-    "name": "Classic Club + Patate", 
-    "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", 
-    "price": "€12,00" 
-  },
-  { 
-    "name": "Special Club", 
-    "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", 
-    "price": "€9,00" 
-  },
-  { 
-    "name": "Special Club + Patate", 
-    "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", 
-    "price": "€12,00" 
-  },
-  { 
-    "name": "Special Club", 
-    "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", 
-    "price": "€9,00" 
-  },
-  { 
-    "name": "Special Club + Patate", 
-    "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", 
-    "price": "€12,00" 
-  }
-        ]
-      },
+    { 
+  badge:'GASTRONOMY', 
+  title:'Gastronomia', 
+  isMainCategory: true,
+  groups:[
+    { title:'Club Sandwiches', collapsed: true, items:[
+      { "name": "Classic Club", "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", "price": "€8,00" },
+      { "name": "Classic Club + Patate", "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", "price": "€12,00", "photo":"/media/clubsandwich.webp" },
+      { "name": "Classic Club", "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", "price": "€8,00" },
+      { "name": "Classic Club + Patate", "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", "price": "€12,00" },
+      { "name": "Special Club", "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", "price": "€9,00" },
+      { "name": "Special Club + Patate", "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", "price": "€12,00" },
+      { "name": "Special Club", "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", "price": "€9,00" },
+      { "name": "Special Club + Patate", "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", "price": "€12,00" }
+    ]},
+    { title:'Taglieri & Focacce', collapsed: true, items:[
+      { "name": "Gran Tagliere", "desc": "Selezione di affettati e formaggi", "price": "€25" },
+      { "name": "Tagliere Misto", "desc": "Selezione di affettati", "price": "€15" },
+      { "name": "Tagliere Nostrano", "desc": "Prosciutto crudo stagionato e bufala", "price": "€12" },
+      { "name": "Focaccia Bianca", "desc": "Con olio e rosmarino", "price": "€5" }
+    ]},
+    { title:'Primi Piatti', collapsed: true, items:[
+      { "name": "Lasagna alla Bolognese", "price": "€10" },
+      { "name": "Lasagna Vegetariana", "price": "€10" },
+      { "name": "Parmigiana di Melanzane", "price": "€10" },
+      { "name": "Ravioli al Ragù Bianco", "price": "€13" },
+      { "name": "Tortelloni Cacio e Pepe", "price": "€13" },
+      { "name": "Tortelloni al Ragù di Agnello", "price": "€14" }
+    ]},
+    { title:'Secondi Piatti', collapsed: true, items:[
+      { "name": "Pollo al Curry", "price": "€9" },
+      { "name": "Tagliata di Pollo alle Erbe", "price": "€9" },
+      { "name": "Guancia di Manzo al Vino Rosso", "price": "€14" },
+      { "name": "Spezzatino alla Cacciatora", "price": "€14" },
+      { "name": "Bocconcini alle Prugne", "price": "€14" },
+      { "name": "Polpette al Vino Bianco", "price": "€10" },
+      { "name": "Polpette al Sugo", "price": "€10" },
+      { "name": "Polpette Cacio e Pepe", "price": "€10" }
+    ]},
+    { title:'Contorni', collapsed: true, items:[
+      { "name": "Cicoria Ripassata", "price": "€7" },
+      { "name": "Scarola alla Partenopea", "price": "€7" },
+      { "name": "Broccoli Siciliani Ripassati", "price": "€7" },
+      { "name": "Patate al Forno", "price": "€6" },
+      { "name": "Verdure Grigliate", "price": "€6" }
+    ]},
+    { title:'Piatto Unico', collapsed: true, items:[
+      { "name": "Piatto Unico", "price": "€12" }
+    ]},
+    { title:'Tartare', collapsed: true, items:[
+      { "name": "Piemontese", "desc": "Carne di Fassona", "price": "€14" },
+      { "name": "Esotica", "desc": "Tonno", "price": "€14" },
+      { "name": "17/19", "desc": "Salmone", "price": "€14" }
+    ]},
+    { title:'Insalate', collapsed: true, items:[
+      { "name": "Nordica", "desc": "Salmone, avocado, mozzarella", "price": "€10" },
+      { "name": "Mista", "desc": "Pomodoro, carote, cetriolo, finocchio", "price": "€9" },
+      { "name": "Caesar", "desc": "Pollo, salsa Caesar, crostini e grana", "price": "€10" }
+    ]}
+  ]
+}
+
       { 
         badge:'DRINKS', 
         title:'Drinks', 
@@ -1445,9 +1459,9 @@ function setupLiveCarousel(){
     /* ========== EVENTI ========== */
     const events = [
      
-      { dateISO: '2025-09-10', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-      { dateISO: '2025-09-11', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
-      { dateISO: '2025-09-12', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-10-1', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-10-3', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
+      { dateISO: '2025-10-4', booking:'soon',  venue: '17/19 URBAN BISTROT', title: 'XXX',               genres: ['XXX'],                      start: 'XX:XX', curatedBy: 'XXX',                headliner: 'XXX',                 guests: ['XXX'],    sponsors: [{text:'XXX'}] },
     ];
 
     function pickNextEvent(){
