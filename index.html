@@ -1655,7 +1655,7 @@ function setupLiveCarousel(){
     }
 
     function updateEventCountsFromStore(){
-      $('#eventsList .event').forEach(el=>{
+      document.querySelectorAll('#eventsList .event').forEach(el=>{
         const eid = el.dataset.eid;
         el.querySelector('.vote-badge .n').textContent = Store.getFlameCount(eid);
         el.classList.toggle('event--voted', !!Store.getMyFlame(eid));
@@ -1732,6 +1732,7 @@ function setupLiveCarousel(){
         const {modal, img, cap} = els();
         if(!modal || !img || !cap) return;
         ensureImgAttrs(img);
+        window.__lastPhotoTrigger = document.activeElement;
         // local loader
         let ml = modal.querySelector('.loader-overlay');
         if(!ml){
@@ -1745,14 +1746,14 @@ function setupLiveCarousel(){
         img.src = src;
         cap.textContent = caption || '';
         modal.classList.add('show');
-        modal.setAttribute('aria-hidden','false');
+        modal.removeAttribute('hidden');
       }
 
       function closeModal(){
         const {modal, img, cap} = els();
         if(!modal) return;
         modal.classList.remove('show');
-        modal.setAttribute('aria-hidden','true');
+        modal.setAttribute('hidden','');
         if(img) img.src = '';
         if(cap) cap.textContent = '';
       }
@@ -1764,7 +1765,7 @@ function setupLiveCarousel(){
 
         // Stato visivo/ARIA
         modal.classList.remove('show');
-        modal.setAttribute('aria-hidden','true');
+        modal.setAttribute('hidden','');
 
         // Reset immagine e caption
         if(img){
@@ -1908,7 +1909,7 @@ if(e.target && e.target.closest && e.target.closest('.modal__close')){
 
 
   <!-- Product Photo Modal -->
-  <div class="modal" id="photoModal" aria-hidden="true">
+  <div class="modal" id="photoModal" hidden>
     <div class="modal__body">
       <button class="modal__close" type="button" aria-label="Chiudi">×</button>
       <img id="modalPhoto" alt="Foto prodotto">
