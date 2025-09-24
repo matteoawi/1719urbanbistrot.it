@@ -410,101 +410,7 @@ img[loading="lazy"]{ decoding:async; }
   }
 }
 </style>
-<style id="universal-responsive-v1">
-  /* ---- Base container & safe-area ---- */
-  :root{
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-    --vh: 1vh; /* settata via JS */
-    --max: clamp(960px, 92vw, 1280px); /* più respiro sui desktop */
-  }
-  body{ padding-bottom: max(0px, var(--safe-bottom) * 0); }
 
-  header{ padding-top: max(0px, var(--safe-top)); }
-  .fab{ bottom: calc(16px + var(--safe-bottom)); }
-
-  /* ---- Griglie “a prova di buco” ---- */
-  .grid{ gap: clamp(10px, 2.4vw, 16px); }
-  .grid-2{ grid-template-columns: 1fr; }
-  @media (min-width: 640px){
-    .grid-2{ grid-template-columns: 1.1fr .9fr; }
-  }
-  @media (min-width: 880px){
-    .grid-2{ grid-template-columns: 1.2fr .8fr; }
-  }
-
-  /* ---- Hero media & poster: scala su tutte le altezze ---- */
-  .hero{ padding: calc(var(--header-h) + 8px) 0 24px; } /* ribadito per coerenza */
-  .poster-frame{ margin-bottom: clamp(8px, 2vw, 16px); }
-  .poster-canvas{
-    /* usa l’altezza reale della viewport, ma non sfora */
-    height: min(62dvh, 120vw, 620px);
-  }
-  .hero-media{
-    aspect-ratio: 4 / 5;
-  }
-  @media (min-width: 768px){
-    .hero-media{ aspect-ratio: 16 / 9; }
-    .poster-canvas{ height: min(58dvh, 56vw, 540px); }
-  }
-
-  /* ---- Telefoni piccoli (<360) e zoom display ---- */
-  @media (max-width: 360px){
-    h1{ font-size: clamp(1.8rem, 7vw, 2.4rem); }
-    .poster-canvas{ height: min(55dvh, 128vw, 520px); }
-    .time-cards{ grid-template-columns: 1fr; }
-  }
-
-  /* ---- Telefoni “wide” 431–480 (iPhone 16/Pro/Max) ---- */
-  @media (min-width: 431px) and (max-width: 480px){
-    .hero-media{ aspect-ratio: 4 / 5; }
-    .poster-canvas{ height: min(64dvh, 110vw, 600px); }
-  }
-
-  /* ---- Landscape phone (schermi bassi) ---- */
-  @media (max-height: 700px) and (orientation: landscape){
-    .grid-2{ grid-template-columns: 1fr 1fr; }
-    .poster-canvas{ height: min(60dvh, 46vw, 420px); }
-    .hero-media{ aspect-ratio: 16 / 10; }
-    .tag{ font-size: .9rem; }
-  }
-
-  /* ---- Tablet 768–1024 ---- */
-  @media (min-width: 768px) and (max-width: 1024px){
-    .container{ padding-inline: clamp(16px, 3vw, 28px); }
-    .poster-canvas{ height: min(60dvh, 54vw, 560px); }
-  }
-
-  /* ---- Desktop medi 1025–1439 ---- */
-  @media (min-width: 1025px) and (max-width: 1439px){
-    :root{ --max: clamp(1040px, 86vw, 1280px); }
-  }
-
-  /* ---- Desktop grandi 1440–1919 ---- */
-  @media (min-width: 1440px) and (max-width: 1919px){
-    :root{ --max: clamp(1180px, 80vw, 1380px); }
-    .poster-canvas{ height: min(62dvh, 48vw, 620px); }
-  }
-
-  /* ---- Ultrawide ≥1920 ---- */
-  @media (min-width: 1920px){
-    :root{ --max: clamp(1280px, 72vw, 1560px); }
-    .container{ padding-inline: clamp(24px, 3vw, 40px); }
-    .poster-canvas{ height: min(62dvh, 40vw, 680px); }
-  }
-
-  /* ---- Schermi estremamente bassi (notebook 11"/12") ---- */
-  @media (max-height: 600px){
-    .poster-canvas{ height: min(50dvh, 48vw, 420px); }
-    .hero{ padding: calc(var(--header-h) + 4px) 0 16px; }
-  }
-
-  /* ---- Micro-fix overflow & contenuti lunghi ---- */
-  html, body{ max-width: 100%; overflow-x: hidden; } /* già presente: lo ribadiamo */
-  .tag, .poster-logos{ flex-wrap: wrap; }
-  .event{ contain: layout paint; } /* evita salti quando compaiono badge */
-  .sheet__inner{ overscroll-behavior: contain; } /* evita “elastico” su iOS */
-</style>
 
 </head>
 <body>
@@ -1895,14 +1801,11 @@ function setupLiveCarousel(){
           closeModal();
           return;
         }
-        // Close if clicking on overlay
-        // Close if clicking on overlay (fuori dal contenuto): comportati come la X
+       // Close if clicking on overlay (fuori dal contenuto): comportati come la X
 var overlay = e.target && e.target.closest ? e.target.closest('#photoModal') : null;
 if(overlay && !e.target.closest('.modal__body')){
   e.preventDefault();
-  // Evita che il tap “passi sotto” e triggeri aperture o altri handler
   e.stopPropagation();
-  if(typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
   closeModalHard();
   return;
 }
@@ -1911,7 +1814,6 @@ if(overlay && !e.target.closest('.modal__body')){
 if(e.target && e.target.closest && e.target.closest('.modal__close')){
   e.preventDefault();
   e.stopPropagation();
-  if(typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
   closeModalHard();
   return;
 }
