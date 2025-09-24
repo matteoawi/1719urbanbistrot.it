@@ -1986,12 +1986,16 @@ if(e.target && e.target.closest && e.target.closest('.modal__close')){
       modal.removeEventListener("transitionend", onEnd);
       modal.style.visibility = "hidden";
       modal.dataset.state = "";
-      imgEl.removeAttribute("src");
+      if(imgEl) imgEl.removeAttribute("src");
     }, {once:true});
   }
 
-  modal.addEventListener("click", function(ev){
-    if(ev.target === modal || ev.target.closest("[data-close]")) closeModal();
+modal.addEventListener("click", function(ev){
+    if(ev.target === modal || ev.target.closest("[data-close]")) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      closeModal();
+    }
   });
   window.addEventListener("keydown", function(ev){ if(ev.key === "Escape" && modal.style.visibility === "visible") closeModal(); });
 
