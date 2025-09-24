@@ -467,7 +467,11 @@
       background: var(--chip);
       border: 1px solid var(--line);
     }
-
+/* AUTO: passa a 2 col solo quando c'è spazio sufficiente */
+.time-cards.--auto {
+  /* cambia 260px se vuoi anticipare/posticipare lo switch */
+  grid-template-columns: repeat(auto-fit, minmax(var(--time-min, 260px), 1fr));
+}
     /* ===== MENU ACCORDION ===== */
     .badge {
       display: inline-block;
