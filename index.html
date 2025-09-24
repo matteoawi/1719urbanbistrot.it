@@ -365,6 +365,51 @@ img[loading="lazy"]{ decoding:async; }
   .modal *{ transition:none !important; }
 }
 </style>
+<style id="hero-ios-fixes-v1">
+/* ===== Responsive hero fixes (iPhone mini / iPhone 16 Pro Max) ===== */
+
+/* Spaziatura hero che considera l’header fisso */
+.hero{ padding: calc(var(--header-h) + 8px) 0 20px; }
+
+/* Evita “salti” e overflow tra poster e live carousel */
+.poster-frame{ margin-bottom: 12px; }
+
+/* Mobile “universale” fino a 430px (iPhone mini compresi) */
+@media (max-width: 430px){
+  /* Poster canvas: scala in base alla finestra reale, senza sballare */
+  .poster-canvas{
+    /* priorità alle unità dinamiche per iOS Safari */
+    height: min(58dvh, 120vw, 560px);
+  }
+  /* Live carousel più verticale per schermi stretti */
+  .hero-media{ aspect-ratio: 3 / 4; }
+}
+
+/* Ultra-compact (alcuni mini / zoom display) */
+@media (max-width: 360px){
+  h1{ font-size: clamp(1.9rem, 7.5vw, 2.6rem); }
+  .poster-head .series{ font-size: clamp(1.6rem, 9vw, 2.4rem); }
+  .poster-head .date{ font-size: clamp(.82rem, 3.8vw, 1rem); }
+  .tag{ font-size: .9rem; }
+}
+
+/* 431–480px (iPhone 16/16 Pro/Max in modalità più “wide”) */
+@media (min-width: 431px) and (max-width: 480px){
+  .poster-canvas{ height: min(64dvh, 110vw, 600px); }
+  /* qui va bene 4:5, mantiene coerenza con poster verticale */
+  .hero-media{ aspect-ratio: 4 / 5; }
+}
+
+/* iOS Safari: piccole correzioni “solo iPhone” */
+@supports (-webkit-touch-callout: none){
+  /* Evita che la barra URL causi ricalcoli bruschi */
+  .sheet, .poster-canvas, .hero-media{
+    contain: layout paint;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+}
+</style>
 
 </head>
 <body>
@@ -1296,14 +1341,12 @@ function setupLiveCarousel(){
   isMainCategory: true,
   groups:[
     { title:'Club Sandwiches', collapsed: true, items:[
-      { "name": "Classic Club", "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", "price": "€8,00" },
-      { "name": "Classic Club + Patate", "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", "price": "€12,00", "photo":"/media/clubsandwich.webp" },
-      { "name": "Classic Club", "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", "price": "€8,00" },
-      { "name": "Classic Club + Patate", "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", "price": "€12,00" },
-      { "name": "Special Club", "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", "price": "€9,00" },
-      { "name": "Special Club + Patate", "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", "price": "€12,00" },
-      { "name": "Special Club", "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", "price": "€9,00" },
-      { "name": "Special Club + Patate", "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", "price": "€12,00" }
+         { "name": "ClubSandwich + Patate", "desc": "Scegli uno dei gusti che più preferisci, e affianco troverai una produzione di chips di nostra produzione con salse incluse", "price": "€12,00", "photo":"/media/clubsandwich.webp" },
+      { "name": "Classic Club", "desc": "Prosciutto e formaggio, insalata con pomodoro e pancetta", "price": "€8,00", "photo":"/media/Club%20Sandwich%20Cotto.webp" },
+      { "name": "Tonno Club", "desc": "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", "price": "€8,00", "photo":"/media/Club%20Sandwich%20tonno.webp" },
+      { "name": "Salmone Club", "desc": "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", "price": "€9,00", "photo":"/media/Club%20Sandwich%20salmone.webp" },
+      { "name": "Hummus Club", "desc": "Hummus di nostra produzione, Melanzane, Zucchine", "price": "€9,00", "photo":"/media/Club%20Sandwich%20hummus.webp" },
+      { "name": "Pollo Club", "desc": "Insalata di pollo, salsa bernese, insalata di pomodoro, peperoni grigliati", "price": "€9,00", "photo":"/media/Club%20Sandwich%20Pollo.webp"}
     ]},
     { title:'Taglieri & Focacce', collapsed: true, items:[
       { "name": "Gran Tagliere", "desc": "Selezione di affettati e formaggi", "price": "€25" },
