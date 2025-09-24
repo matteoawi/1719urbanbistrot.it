@@ -102,7 +102,7 @@
     body.menu-open{overflow:hidden} body.menu-open > :not(.sheet){filter: blur(10px) saturate(1.06); transition: filter .25s ease; transform: translateZ(0)}
 
     /* Hero */
-    .hero{padding:72px 0 24px}
+    .hero img{padding:72px 0 24px}
     .tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:800;color:var(--chip-fg)}
     h1{font-family:'Montserrat',system-ui,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(2.1rem,8vw,3.6rem);line-height:1.1;margin:12px 0 10px}
     .lead{color:var(--fg);font-size:clamp(1rem,4.5vw,1.18rem);margin:8px 0 14px}
@@ -411,6 +411,36 @@ img[loading="lazy"]{ decoding:async; }
 }
 </style>
 
+
+
+<style id="hero-421-700-fix-v1">
+/* ===== Hero/container fix for 421–768px ===== */
+@media (min-width: 421px) and (max-width: 767.98px){
+  /* Keep single column to avoid cramped two-col layouts */
+  .hero{ 
+    padding: calc(var(--header-h) + 10px) 0 20px; 
+    min-height: clamp(460px, 92dvh, 920px);
+  }
+  .container.grid.grid-2{ grid-template-columns: 1fr; }
+
+  /* Media block: a bit wider/taller to prevent letterboxing */
+  .hero-media{ aspect-ratio: 5 / 3; }
+
+  /* Poster canvas scales smoothly in this range */
+  .poster-canvas{ height: min(60dvh, 120vw, 620px); }
+
+  /* Slightly adjust lead size for readability */
+  .lead{ font-size: clamp(1rem, 3.8vw, 1.15rem); }
+}
+
+/* iOS safe-area reinforcement */
+@supports(padding:max(0px)){
+  .hero{
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+</style>
 
 </head>
 <body>
