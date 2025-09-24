@@ -432,46 +432,46 @@
 
     .hero-right { display: grid; gap: 12px; }
 
-    /* ===== TIME CARDS ===== */
-    .time-cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 6px;
-    }
-
-
-    .time-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 10px 12px;
-      background: color-mix(in oklab, var(--bg) 98%, transparent);
-    }
-
-    .time-card .l {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .time-card .i {
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      background: var(--chip);
-      border: 1px solid var(--line);
-    }
-/* AUTO: passa a 2 col solo quando c'è spazio sufficiente */
-.time-cards.--auto {
-  /* cambia 260px se vuoi anticipare/posticipare lo switch */
-  grid-template-columns: repeat(auto-fit, minmax(var(--time-min, 260px), 1fr));
+/* ===== TIME CARDS (auto 1↔2 colonne) ===== */
+.time-cards {
+  display: grid;
+  /* passa a 2 colonne solo quando ogni card può avere almeno 260px */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+  /* evita overflow delle card in grid */
+  align-items: stretch;
 }
+.time-cards > * { min-width: 0; }
+
+/* Card */
+.time-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: color-mix(in oklab, var(--bg) 98%, transparent);
+}
+
+.time-card .l {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-card .i {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: var(--chip);
+  border: 1px solid var(--line);
+}
+
     /* ===== MENU ACCORDION ===== */
     .badge {
       display: inline-block;
