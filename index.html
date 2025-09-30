@@ -23,6 +23,8 @@
 
   <style>
     /* ===== VARIABLES & BASE STYLES ===== */
+    .notranslate { unicode-bidi: isolate; }
+
     :root {
       --menu-blur: 18px; --menu-dim: 0.68;
       --bg: #ffffff; --fg: #0b0b0b; --muted: #6b7280; --line: #e5e7eb;
@@ -2695,7 +2697,7 @@
             const row = document.createElement('div');
             row.className = 'menu-item';
             row.innerHTML = `
-              <div class="mi-left">${it.name} <span class="meta">${it.desc || ""}</span></div>
+              <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
               <div class="mi-right">
                 <div class="price">${it.price || ""}</div>
                 ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
@@ -2727,7 +2729,7 @@
                 const row = document.createElement('div');
                 row.className = 'menu-item';
                 row.innerHTML = `
-                  <div class="mi-left">${it.name} <span class="meta">${it.desc || ""}</span></div>
+                  <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
                   <div class="mi-right">
                     <div class="price">${it.price || ""}</div>
                     ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
@@ -2749,7 +2751,7 @@
                 const row = document.createElement('div');
                 row.className = 'menu-item';
                 row.innerHTML = `
-                  <div class="mi-left">${it.name} <span class="meta">${it.desc || ""}</span></div>
+                  <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
                   <div class="mi-right">
                     <div class="price">${it.price || ""}</div>
                     ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
