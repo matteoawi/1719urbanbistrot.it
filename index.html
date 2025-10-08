@@ -2338,7 +2338,6 @@
       return `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(ev))}`;
     }
 
-    // ===== MENU DATA =====
     const menuData = [
       {
         badge: 'BREAKFAST',
@@ -2361,44 +2360,44 @@
             title: 'Bakery',
             collapsed: true,
             items: [
-              { name: "Pancake con sciroppo d'acero o d'agave", price: "€4,00" },
-              { name: "Pancake con crema, cioccolata o crema di pistacchio e panna", price: "€5,00" },
-              { name: "Pancake con confettura o marmellata e frutta fresca", price: "€5,00" },
-              { name: "Pasticceria da tè (al pz.)", price: "€1,50" },
-              { name: "Crostata di marmellata (al pz.)", price: "€3,50" },
-              { name: "Croissant mignon semplice o farcito", price: "€1,50" },
-              { name: "Mini muffin classico o farcito", price: "€1,50" },
-              { name: "Mini bombetta o mini ciambellina", price: "€1,50" }
+              { name:"Pancake con sciroppo d'acero o d'agave", desc:"§§AUTO§§ Pancake con sciroppo d'acero o d'agave", price: "€4,00" },
+              { name:"Pancake con crema, cioccolata o crema di pistacchio e panna", desc:"§§AUTO§§ Pancake con crema, cioccolata o crema di pistacchio e panna", price: "€5,00", photo: "/media/pancake-cioccolato-_2_.webp" },
+              { name:"Pancake con confettura o marmellata e frutta fresca", desc:"§§AUTO§§ Pancake con confettura o marmellata e frutta fresca", price: "€5,00", photo: "/media/pancake%20frutta.webp" },
+              { name:"Pasticceria da tè (al pz.)", desc:"§§AUTO§§ Pasticceria da tè (al pz.)", price: "€1,50" },
+              { name:"Crostata di marmellata (al pz.)", desc:"§§AUTO§§ Crostata di marmellata (al pz.)", price: "€3,50" },
+              { name:"Croissant mignon semplice o farcito", desc:"§§AUTO§§ Croissant mignon semplice o farcito", price: "€1,50", photo: "/media/croassaint.webp" },
+              { name:"Mini muffin classico o farcito", desc:"§§AUTO§§ Mini muffin classico o farcito", price: "€1,50" },
+              { name:"Mini bombetta o mini ciambellina", desc:"§§AUTO§§ Mini bombetta o mini ciambellina", price: "€1,50" }
             ]
           },
           {
             title: 'Cioccolata calda',
             collapsed: true,
             items: [
-              { name: "Classica oro", price: "€4,50" },
-              { name: "Caramello salato", price: "€4,50" },
-              { name: "Gianduia", price: "€4,50" },
-              { name: "Rose e lamponi", price: "€4,50" },
-              { name: "Arancia e cannella", price: "€4,50" },
-              { name: "Fondente o bianca al pistacchio", price: "€4,50" },
-              { name: "Menta", price: "€4,50" }
+              { name:"Classica oro", desc:"§§AUTO§§ Classica oro", price: "€4,50" },
+              { name:"Caramello salato", desc:"§§AUTO§§ Caramello salato", price: "€4,50" },
+              { name:"Gianduia", desc:"§§AUTO§§ Gianduia", price: "€4,50" },
+              { name:"Rose e lamponi", desc:"§§AUTO§§ Rose e lamponi", price: "€4,50" },
+              { name:"Arancia e cannella", desc:"§§AUTO§§ Arancia e cannella", price: "€4,50" },
+              { name:"Fondente o bianca al pistacchio", desc:"§§AUTO§§ Fondente o bianca al pistacchio", price: "€4,50" },
+              { name:"Menta", desc:"§§AUTO§§ Menta", price: "€4,50" }
             ]
           },
           {
             title: 'Caffetteria',
             collapsed: true,
             items: [
-              { name: "Espresso", price: "€1,50" },
-              { name: "Espresso decaffeinato", price: "€2,00" },
-              { name: "Espresso americano", price: "€2,50" },
-              { name: "Latte macchiato", price: "€2,50" },
-              { name: "Caffè latte", price: "€3,00" },
-              { name: "Caffè o cappuccino spécial", price: "€4,00" },
-              { name: "Cappuccino", price: "€2,00" },
-              { name: "Cappuccino vegetale di soya", price: "€3,00" },
-              { name: "Cappuccino senza lattosio", price: "€3,00" },
-              { name: "Orzo (piccolo / grande)", price: "€2,00 / €2,50" },
-              { name: "Ginseng (piccolo / grande)", price: "€2,00 / €2,50" },
+              { name:"Espresso", desc:"§§AUTO§§ Espresso", price: "€1,50" },
+              { name:"Espresso decaffeinato", desc:"§§AUTO§§ Espresso decaffeinato", price: "€2,00" },
+              { name:"Espresso americano", desc:"§§AUTO§§ Espresso americano", price: "€2,50" },
+              { name:"Latte macchiato", desc:"§§AUTO§§ Latte macchiato", price: "€2,50" },
+              { name:"Caffè latte", desc:"§§AUTO§§ Caffè latte", price: "€3,00" },
+              { name:"Caffè o cappuccino spécial", desc:"§§AUTO§§ Caffè o cappuccino spécial", price: "€4,00" },
+              { name:"Cappuccino", desc:"§§AUTO§§ Cappuccino", price: "€2,00" },
+              { name:"Cappuccino vegetale di soya", desc:"§§AUTO§§ Cappuccino vegetale di soya", price: "€3,00" },
+              { name:"Cappuccino senza lattosio", desc:"§§AUTO§§ Cappuccino senza lattosio", price: "€3,00" },
+              { name:"Orzo (piccolo / grande)", desc:"§§AUTO§§ Orzo (piccolo / grande)", price: "€2,00 / €2,50" },
+              { name:"Ginseng (piccolo / grande)", desc:"§§AUTO§§ Ginseng (piccolo / grande)", price: "€2,00 / €2,50" },
               { name: "Tè, rooibos o infuso d'erbe", price: "€4,00" }
             ]
           },
@@ -2406,21 +2405,113 @@
             title: 'Succhi & Frutta',
             collapsed: true,
             items: [
-              { name: "Spremuta di agrumi", price: "€4,00" },
-              { name: "Centrifugato", price: "€5,00" },
-              { name: "Macedonia o tagliata di frutta fresca", price: "€6,00" },
-              { name: "Granita", price: "€6,00" },
-              { name: "Milkshake", price: "€4,00" }
+              { name:"Spremuta di agrumi", desc:"§§AUTO§§ Spremuta di agrumi", price: "€4,00" },
+              { name:"Centrifugato", desc:"§§AUTO§§ Centrifugato", price: "€5,00" },
+              { name:"Macedonia o tagliata di frutta fresca", desc:"§§AUTO§§ Macedonia o tagliata di frutta fresca", price: "€6,00" },
+              { name:"Granita", desc:"§§AUTO§§ Granita", price: "€6,00" },
+              { name:"Milkshake", desc:"§§AUTO§§ Milkshake", price: "€4,00" }
             ]
           }
         ]
       },
       {
-        badge: 'GASTRONOMY',
-        title: 'Gastronomia',
+        badge: 'KITCHEN',
+        title: 'La nostra cucina',
         isMainCategory: true,
         groups: [
           {
+            title: 'Primi Piatti',
+            collapsed: false,
+            items: [
+              { name:"Lasagna alla Bolognese", desc:"§§AUTO§§ Lasagna alla Bolognese", price: "€10" },
+              { name:"Lasagna Vegetariana", desc:"§§AUTO§§ Lasagna Vegetariana", price: "€10" },
+              { name:"Lasagna proposta di stagione", desc:"§§AUTO§§ Lasagna proposta dello chef di stagione", price: "€10" },
+              { name:"Parmigiana di Melanzane", desc:"§§AUTO§§ Parmigiana di Melanzane", price: "€10" },
+              { name:"Ravioloni al sentore di Pistacchio con Ragù Bianco", desc:"§§AUTO§§ Ravioloni al sentore di Pistacchio con Ragù Bianco", price: "€13", photo: "/media/Club%20Sandwich%20Cotto.webp" },
+              { name:"Margherite di carciofi su salsa cacio e pepe", desc:"§§AUTO§§ Ravioli di carciofi su salsa cacio e pepe", price: "€13" },
+              { name:"Ravioli ricotta al pomodoro", desc:"§§AUTO§§ Ravioli ricotta al pomodoro", price: "€13" },
+              { name:"Ravioli al ragù di agnello", desc:"§§AUTO§§ Ravioli al ragù di agnello", price: "€14" },
+              { name:"Ravioli Cacio e Pepe", desc:"§§AUTO§§ Ravioli Cacio e Pepe", price: "€13", photo: "/media/reviolicacio1.webp" },
+              { name:"Ravioli Pomodoro e Basilico", desc:"§§AUTO§§ Ravioli Pomodoro e Basilico", price: "€13", photo: "/media/ravioli%20pomodoro%20e%20basilico.webp" },
+              { name:"Fuori menù", desc:"Cucina del giorno, chiedere allo staff le proposte del giorno", price: "€13" }
+            ]
+          },
+          {
+            title: 'Secondi Piatti',
+            collapsed: false,
+            items: [
+              { name:"Pollo al Curry", desc:"§§AUTO§§ Pollo al Curry", price: "€9" },
+              { name:"Pollo wok con verdure", desc:"§§AUTO§§ Pollo wok con verdure", price: "€14", photo: "/media/pollo-wok.webp" },
+              { name:"Tagliata di Pollo alle Erbe", desc:"§§AUTO§§ Tagliata di Pollo alle Erbe", price: "€9" },
+              { name:"Guancia di Manzo al Vino Rosso", desc:"§§AUTO§§ Guancia di Manzo al Vino Rosso", price: "€14" },
+              { name:"Spezzatino alla Cacciatora", desc:"§§AUTO§§ Spezzatino alla Cacciatora", price: "€14" },
+              { name:"Bocconcini alle Prugne", desc:"§§AUTO§§ Bocconcini alle Prugne", price: "€14", photo: "/media/bocconcini%20maiale%20con%20prugne.webp" },
+              { name:"Polpette al Vino Bianco", desc:"§§AUTO§§ Polpette al Vino Bianco", price: "€10", photo: "/media/polpette%20al%20vino.webp"  },
+              { name:"Polpette al Sugo", desc:"§§AUTO§§ Polpette al Sugo", price: "€10" },
+              { name:"Polpette Cacio e Pepe", desc:"§§AUTO§§ Polpette Cacio e Pepe", price: "€10", photo: "/media/poplpettecacioepepe.webp" },
+              { name:"Fuori menù", desc:"§§AUTO§§ Cucina del giorno, chiedere allo staff le proposte del giorno", price: "€13" }
+            ]
+          },
+          {
+            title: 'Contorni',
+            collapsed: true,
+            items: [
+              { name:"Cicoria Ripassata", desc:"§§AUTO§§ Cicoria Ripassata", price: "€7", photo: "/media/cicoria%20ripassata.webp"  },
+              { name:"Scarola alla Partenopea", desc:"§§AUTO§§ Scarola alla Partenopea", price: "€7", photo: "/media/scarolapartenopea.webp"  },
+              { name:"Broccoli Siciliani Ripassati", desc:"§§AUTO§§ Broccoli Siciliani Ripassati", price: "€7", photo: "/media/broccoli%20siciliani%20ripassati.webp" },
+              { name:"Patate al Forno", desc:"§§AUTO§§ Patate al Forno", price: "€6", photo:"/media/patate%20al%20forno.webp" },
+              { name:"Verdure Grigliate", desc:"§§AUTO§§ Verdure Grigliate", price: "€6" }
+            ]
+          },
+          {
+            title: 'Piatto Unico',
+            collapsed: true,
+            items: [
+              { name:"Piatto Unico", desc:"Piatto Unico riso thai, brunoise di verdure, pollo al curry", price: "€12", photo : "/media/piatto%20unico%20pollo%20curry.webp" }
+            ]
+          },
+          {
+          title: 'Al piatto',
+          collapsed: true,
+          items: [
+            { 
+              name: "Millefoglie di pane carasau", 
+              desc: "Con stracciatella, pomodorini confit e basilico", 
+              price: "€10" 
+            },
+            { 
+              name: "Hummus di ceci", 
+              desc: "Con crostini e brunoise di verdure", 
+              price: "€10" 
+            },
+            { 
+              name: "Caprese pugliese", 
+              desc: "Con burrata, pomodorini e crumble di taralli", 
+              price: "€10" ,
+              photo: "/media/caprese.webp"
+            },
+            { 
+              name: "Roast beef di angus affumicato", 
+              desc: "Con rucola e scaglie di grana", 
+              price: "€12" 
+            },
+            { 
+              name: "Crostone con burrata e alici del Cantabrico", 
+              desc: "§§AUTO§§ Crostone con burrata e alici del Cantabrico", 
+              price: "€10" 
+            }
+          ]
+        },
+          {
+            title: 'Insalate',
+            collapsed: true,
+            items: [
+              { name: "Nordica", desc: "Salmone, avocado, mozzarella", price: "€10", photo: "/media/insalata%20nordica.webp"},
+              { name: "Mista", desc: "Pomodoro, carote, cetriolo, finocchio", price: "€9" },
+              { name: "Caesar", desc: "Pollo, salsa Caesar, crostini e grana", price: "€10" }
+            ]
+          },
+            {
             title: 'Club Sandwiches',
             collapsed: true,
             items: [
@@ -2440,69 +2531,6 @@
               { name: "Tagliere Misto", desc: "Selezione di affettati", price: "€15" },
               { name: "Tagliere Nostrano", desc: "Prosciutto crudo stagionato e bufala", price: "€12" },
               { name: "Focaccia Bianca", desc: "Con olio e rosmarino", price: "€5" }
-            ]
-          },
-          {
-            title: 'Primi Piatti',
-            collapsed: true,
-            items: [
-              { name: "Lasagna alla Bolognese", price: "€10" },
-              { name: "Lasagna Vegetariana", price: "€10" },
-              { name: "Parmigiana di Melanzane", price: "€10" },
-              { name: "Ravioloni al sentore di Pistacchio con Ragù Bianco", price: "€13" },
-              { name: "Ravioli Cacio e Pepe", price: "€13" },
-              { name: "Ravioli Pomodoro e Basilico", price: "€13" }
-            ]
-          },
-          {
-            title: 'Secondi Piatti',
-            collapsed: true,
-            items: [
-              { name: "Pollo al Curry", price: "€9" },
-              { name: "Pollo wok con verdure", price: "€14" },
-              { name: "Tagliata di Pollo alle Erbe", price: "€9" },
-              { name: "Guancia di Manzo al Vino Rosso", price: "€14" },
-              { name: "Spezzatino alla Cacciatora", price: "€14" },
-              { name: "Bocconcini alle Prugne", price: "€14" },
-              { name: "Polpette al Vino Bianco", price: "€10" },
-              { name: "Polpette al Sugo", price: "€10" },
-              { name: "Polpette Cacio e Pepe", price: "€10" }
-            ]
-          },
-          {
-            title: 'Contorni',
-            collapsed: true,
-            items: [
-              { name: "Cicoria Ripassata", price: "€7" },
-              { name: "Scarola alla Partenopea", price: "€7" },
-              { name: "Broccoli Siciliani Ripassati", price: "€7" },
-              { name: "Patate al Forno", price: "€6" },
-              { name: "Verdure Grigliate", price: "€6" }
-            ]
-          },
-          {
-            title: 'Piatto Unico',
-            collapsed: true,
-            items: [
-              { name: "Piatto Unico", price: "€12" }
-            ]
-          },
-          {
-            title: 'Tartare',
-            collapsed: true,
-            items: [
-              { name: "Piemontese", desc: "Carne di Fassona", price: "€14" },
-              { name: "Esotica", desc: "Tonno", price: "€14" },
-              { name: "17/19", desc: "Salmone", price: "€14" }
-            ]
-          },
-          {
-            title: 'Insalate',
-            collapsed: true,
-            items: [
-              { name: "Nordica", desc: "Salmone, avocado, mozzarella", price: "€10" },
-              { name: "Mista", desc: "Pomodoro, carote, cetriolo, finocchio", price: "€9" },
-              { name: "Caesar", desc: "Pollo, salsa Caesar, crostini e grana", price: "€10" }
             ]
           }
         ]
@@ -2676,6 +2704,7 @@
 ]
       },
     ];
+
 
     function renderMenu() {
       const wrap = document.getElementById('menuAccordions');
