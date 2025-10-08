@@ -1153,7 +1153,88 @@
     @media (min-width: 980px) {
       #menuAccordions { grid-template-columns: 1fr 1fr; }
     }
-  </style>
+  
+/* ===== APERITIVO – DEAL CARDS ===== */
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.deal-card {
+  display: grid;
+  gap: 8px;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: color-mix(in oklab, var(--bg, #0b0b0b) 96%, transparent);
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+}
+
+.deal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.deal-title {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: .1px;
+}
+
+.deal-price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.deal-desc {
+  margin: 0;
+  line-height: 1.45;
+  opacity: .92;
+}
+
+#aperitivo .block-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+#aperitivo .block-title .meta {
+  font-size: .95rem;
+  opacity: .8;
+}
+
+.deals-note.meta {
+  margin-top: 8px;
+  opacity: .75;
+  font-size: .9rem;
+}
+
+
+/* ---- Deal media (image on top) ---- */
+.deal-media{
+  width:100%;
+  aspect-ratio: 16/10;
+  border-radius: 14px;
+  overflow:hidden;
+  background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.05));
+}
+
+.deal-media > img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit: cover;
+}
+
+
+/* Auto descriptions visibility control */
+html.lang-it .desc--auto { display: none !important; }
+
+</style>
 </head>
 <body>
   <!-- Header -->
@@ -1166,7 +1247,7 @@
         </a>
 
         <ul class="nav-desktop">
-          <li><a href="#about">About</a></li>
+<li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#events">Eventi</a></li>
           <li><a href="#contact">Contatti</a></li>
@@ -1175,7 +1256,8 @@
           <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
           <li><button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button></li>
           <li><button class="menu-toggle" id="menuToggleD" aria-label="Apri/chiudi menu"><span></span></button></li>
-        </ul>
+    <li><a href="#aperitivo">Aperitivo</a></li>
+</ul>
 
         <div class="only-mobile" style="gap:8px;align-items:center">
           <a href="#menu" class="pill pill--accent pill--wide" aria-label="Vai al menù">Menù</a>
@@ -1192,13 +1274,14 @@
       <button class="sheet__close" id="sheetClose" type="button" aria-label="Chiudi menu">×</button>
       <div class="sheet__inner">
         <ul class="sheet__list">
-          <li><a href="#about">About</a></li>
+<li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#music">Musica</a></li>
           <li><a href="#events">Eventi</a></li>
           <li><a href="#private">Eventi Privati</a></li>
           <li><a href="#contact">Contatti</a></li>
-        </ul>
+    <li><a href="#aperitivo">Aperitivo</a></li>
+</ul>
         <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
       </div>
     </div>
@@ -1305,15 +1388,99 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Menu Section -->
+  \1
+<script>
+document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
+  const s = img.getAttribute('data-src'); if(s) img.src = s;
+});
+</script>
+<!-- Menu Section -->
   <section id="menu">
     <div class="container">
       <div class="block-title" style="margin-bottom:6px"><h3>Il nostro menù</h3></div>
       <div id="menuAccordions" class="grid" style="gap:12px"></div>
     </div>
   </section>
+
+<section id="aperitivo">
+  <div class="container">
+    <div class="block-title" style="margin-bottom:6px">
+      <h3>Formule Aperitivo</h3>
+      <span class="meta">Perfette da condividere</span>
+    </div>
+
+    <div class="grid deals-grid">
+      <!-- Deal 1 -->
+      <article class="card deal-card">
+<figure class="deal-media">
+<img loading="lazy" alt="Club sandwich, chips e calici" src="media/CLUBECALICI.webp" />
+</figure>
+
+        <div class="deal-top">
+          <h4 class="deal-title">Per due — Club & Calici</h4>
+          <span class="deal-price">26&nbsp;€</span>
+        </div>
+        <p class="deal-desc">
+          Club sandwich, chips artigianali con salse, <strong>2 calici</strong> a scelta
+          (vino, spritz o birra).
+        </p>
+      </article>
+
+      <!-- Deal 2 -->
+      <article class="card deal-card">
+<figure class="deal-media">
+  <img loading="lazy" alt="Gran tagliere e calici" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23dddddd'/><stop offset='1' stop-color='%23bbbbbb'/></linearGradient></defs><rect width='1600' height='1000' fill='url(%23g)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='64' fill='%23666'>Aperitivo image</text></svg>" />
+</figure>
+
+        <div class="deal-top">
+          <h4 class="deal-title">Per due — Gran Tagliere & Calici</h4>
+          <span class="deal-price">46&nbsp;€</span>
+        </div>
+        <p class="deal-desc">
+          Gran tagliere (selezione di affettati e formaggi), focaccia, <strong>2 calici</strong>
+          (vino, spritz o birra).
+        </p>
+      </article>
+
+      <!-- Deal 3 -->
+      <article class="card deal-card">
+<figure class="deal-media">
+  <img loading="lazy" alt="Gran tagliere con bottiglia di vino" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23dddddd'/><stop offset='1' stop-color='%23bbbbbb'/></linearGradient></defs><rect width='1600' height='1000' fill='url(%23g)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='64' fill='%23666'>Aperitivo image</text></svg>" />
+</figure>
+
+        <div class="deal-top">
+          <h4 class="deal-title">Mega per due — Tagliere & Bottiglia</h4>
+          <span class="deal-price">55&nbsp;€</span>
+        </div>
+        <p class="deal-desc">
+          Gran tagliere (selezione di affettati e formaggi), focaccia, <strong>1 bottiglia</strong>
+          di vino selezionata.
+        </p>
+      </article>
+
+      <!-- Deal 4 -->
+      <article class="card deal-card">
+<figure class="deal-media">
+  <img loading="lazy" alt="Chips e calice" src="media/CHIPSECALICE.webp" />
+</figure>
+
+        <div class="deal-top">
+          <h4 class="deal-title">Chips & Calice</h4>
+          <span class="deal-price">11&nbsp;€</span>
+        </div>
+        <p class="deal-desc">
+          Chips artigianali con salse e <strong>1 calice</strong> (vino, spritz o birra).
+        </p>
+      </article>
+    </div>
+
+    <div class="deals-note meta" role="note" aria-label="note aperitivo">
+      Prezzi per formula. Immagini illustrative. Chiedi al banco le proposte del giorno.
+    </div>
+  </div>
+</section>
+
+
 
 <!-- LightWidget WIDGET --><script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="https://cdn.lightwidget.com/widgets/7e6a879b50645920bcae1d9dccaf9fc6.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
   
@@ -2338,6 +2505,7 @@
       return `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(ev))}`;
     }
 
+    // ===== MENU DATA =====
     const menuData = [
       {
         badge: 'BREAKFAST',
@@ -2427,11 +2595,11 @@
               { name:"Lasagna Vegetariana", desc:"§§AUTO§§ Lasagna Vegetariana", price: "€10" },
               { name:"Lasagna proposta di stagione", desc:"§§AUTO§§ Lasagna proposta dello chef di stagione", price: "€10" },
               { name:"Parmigiana di Melanzane", desc:"§§AUTO§§ Parmigiana di Melanzane", price: "€10" },
-              { name:"Ravioloni al sentore di Pistacchio con Ragù Bianco", desc:"§§AUTO§§ Ravioloni al sentore di Pistacchio con Ragù Bianco", price: "€13", photo: "/media/Club%20Sandwich%20Cotto.webp" },
+              { name:"Ravioloni al sentore di Pistacchio con Ragù Bianco", desc:"§§AUTO§§ Ravioloni al sentore di Pistacchio con Ragù Bianco", price: "€13", photo: "/media/ravioli-pistacchio-ragù-bianco.webp" },
               { name:"Margherite di carciofi su salsa cacio e pepe", desc:"§§AUTO§§ Ravioli di carciofi su salsa cacio e pepe", price: "€13" },
               { name:"Ravioli ricotta al pomodoro", desc:"§§AUTO§§ Ravioli ricotta al pomodoro", price: "€13" },
               { name:"Ravioli al ragù di agnello", desc:"§§AUTO§§ Ravioli al ragù di agnello", price: "€14" },
-              { name:"Ravioli Cacio e Pepe", desc:"§§AUTO§§ Ravioli Cacio e Pepe", price: "€13", photo: "/media/reviolicacio1.webp" },
+              { name:"Ravioli Cacio e Pepe", desc:"§§AUTO§§ Ravioli Cacio e Pepe", price: "€13", photo: "/media/reviolicacio1%20(1).webp" },
               { name:"Ravioli Pomodoro e Basilico", desc:"§§AUTO§§ Ravioli Pomodoro e Basilico", price: "€13", photo: "/media/ravioli%20pomodoro%20e%20basilico.webp" },
               { name:"Fuori menù", desc:"Cucina del giorno, chiedere allo staff le proposte del giorno", price: "€13" }
             ]
@@ -2704,7 +2872,6 @@
 ]
       },
     ];
-
 
     function renderMenu() {
       const wrap = document.getElementById('menuAccordions');
@@ -3258,141 +3425,95 @@
     };
   </script>
 
-  <script>
-/**
- * AUTO descriptions for multi-language via GTranslate
- * Behavior:
- *  - Elements whose text includes "§§AUTO§§" are shown only when lang !== 'it'
- *  - When lang === 'it' they are hidden
- *  - Token is stripped from the visible text
- */
-(function() {
-  const TOKEN = '§§AUTO§§';
-  const SCAN_SELECTORS = [
-    '[data-auto-desc]','[data-desc-auto]','[data-desc]',
-    '.mi-desc','.desc','.menu-item .desc','.menu-item [class*="desc"]',
-    '.menu-item .mi-right > *','.menu-item .mi-left > *',
-    'p','span','li','div'
-  ].join(',');
 
-  // --- language detection (GTranslate cookie first, fallback to <html lang>)
+
+
+<script>
+(function() {
+  var MARK = '§§AUTO§§';
   function getCookie(name) {
-    return document.cookie
-      .split(';')
-      .map(v => v.trim())
-      .find(v => v.startsWith(name + '='))?.split('=').slice(1).join('=');
+    const m = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\\/\+^])/g, '\$1') + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
   }
   function currentLang() {
-    // googtrans has form "/source/target" (e.g., "/it/en")
-    const gt = getCookie('googtrans');
-    if (gt && gt.split('/').length >= 3) {
-      const tgt = gt.split('/').pop();
-      return (tgt || '').toLowerCase().split('-')[0] || 'it';
+    const goog = getCookie('googtrans'); // e.g. "/it/en" or "/auto/it"
+    if (goog && goog.indexOf('/') !== -1) {
+      const parts = goog.split('/').filter(Boolean);
+      if (parts.length) return parts[parts.length - 1].toLowerCase();
     }
-    const htmlLang = (document.documentElement.getAttribute('lang') || 'it').toLowerCase();
-    return htmlLang.split('-')[0];
+    const l = (document.documentElement.getAttribute('lang') || navigator.language || 'it').toLowerCase();
+    return l.split('-')[0];
   }
-
-  // --- scan DOM, mark & normalize AUTO elements
-  function scanAutoDescriptions(root = document) {
-    const nodes = Array.from(root.querySelectorAll(SCAN_SELECTORS));
-    nodes.forEach(el => {
-      if (el.dataset.autoInit === '1') return;
-      const txt = (el.textContent || '').trim();
-      if (!txt.includes(TOKEN)) return;
-
-      // Store original + normalized text (without token)
-      const normalized = txt.replace(TOKEN, '').trim();
-      el.dataset.autoInit = '1';
-      el.dataset.autoRaw = txt;
-      el.dataset.autoText = normalized;
-
-      // Render without token for non-IT; visibility handled separately
-      el.textContent = normalized;
-
-      // Remember original display to restore later
-      const cs = getComputedStyle(el);
-      el.dataset.autoDisplay = (el.style.display && el.style.display !== 'none')
-        ? el.style.display
-        : (cs.display === 'none' ? '' : '');
+  function applyLangClass() {
+    const isIt = currentLang() === 'it';
+    document.documentElement.classList.toggle('lang-it', isIt);
+    // Also directly hide/show auto descs regardless of CSS
+    document.querySelectorAll('.desc--auto').forEach(el => {
+      el.style.display = isIt ? 'none' : '';
+      el.style.visibility = isIt ? 'hidden' : '';
     });
   }
-
-  function applyVisibility() {
-    const lang = currentLang();
-    const hide = (lang === 'it');
-    const all = document.querySelectorAll('[data-auto-init="1"]');
-
-    all.forEach(el => {
-      if (hide) {
-        // hide in Italian
-        el.style.display = 'none';
-      } else {
-        // show in non-Italian
-        el.style.display = el.dataset.autoDisplay || '';
-        // Ensure token is stripped (safety)
-        if (el.dataset.autoText && el.textContent.trim() !== el.dataset.autoText) {
-          el.textContent = el.dataset.autoText;
-        }
-      }
+  // Convert any text nodes containing the marker into <span class="desc--auto"> and strip the marker
+  function transformMarkers(root) {
+    const walker = document.createTreeWalker(root || document.body, NodeFilter.SHOW_TEXT, null);
+    const nodes = [];
+    while (walker.nextNode()) {
+      const n = walker.currentNode;
+      if (n.nodeValue && n.nodeValue.indexOf(MARK) !== -1) nodes.push(n);
+    }
+    nodes.forEach(node => {
+      const txt = node.nodeValue;
+      const idx = txt.indexOf(MARK);
+      if (idx === -1) return;
+      // content after marker (allow optional space)
+      let content = txt.slice(idx + MARK.length);
+      if (content.startsWith(' ')) content = content.slice(1);
+      const parent = node.parentNode;
+      if (!parent) return;
+      // Insert text before the marker if any
+      const before = txt.slice(0, idx);
+      if (before) parent.insertBefore(document.createTextNode(before), node);
+      // Create the span for auto description
+      const span = document.createElement('span');
+      span.className = 'desc--auto';
+      span.textContent = content;
+      parent.insertBefore(span, node);
+      // Remove original text node
+      parent.removeChild(node);
     });
   }
-
-  // --- observe for language changes (GTranslate) and dynamic content
-  let lastLang = null;
-  function tick() {
-    const lang = currentLang();
-    if (lang !== lastLang) {
-      lastLang = lang;
-      // re-scan (in case GTranslate reflows content) then apply
-      scanAutoDescriptions(document);
-      applyVisibility();
-    }
+  function runOnce() {
+    transformMarkers(document.getElementById('menuAccordions') || document.body);
+    applyLangClass();
   }
-
-  // MutationObserver: if menu items are injected later, we re-scan quickly
-  const mo = new MutationObserver((mutations) => {
-    let needScan = false;
-    for (const m of mutations) {
-      if (m.type === 'childList' && (m.addedNodes?.length || 0) > 0) {
-        needScan = true; break;
-      }
-      if (m.type === 'characterData') {
-        needScan = true; break;
-      }
-    }
-    if (needScan) {
-      scanAutoDescriptions(document);
-      applyVisibility();
-    }
+  // Run on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runOnce);
+  } else {
+    runOnce();
+  }
+  // Observe DOM changes and re-apply
+  const target = document.getElementById('menuAccordions') || document.body;
+  const mo = new MutationObserver(() => {
+    transformMarkers(target);
+    applyLangClass();
   });
+  mo.observe(target, { childList: true, subtree: true, characterData: true });
+  // Also poll language switching
+  setInterval(applyLangClass, 500);
+})();
+</script>
 
-  // --- init
-  document.addEventListener('DOMContentLoaded', () => {
-    // first pass
-    scanAutoDescriptions(document);
-    applyVisibility();
-    lastLang = currentLang();
 
-    // language polling (lightweight)
-    const POLL_MS = 600;
-    setInterval(tick, POLL_MS);
-
-    // also hook user interaction on the gtranslate widget to speed up reaction
-    const w = document.querySelector('.gtranslate_wrapper');
-    if (w) {
-      w.addEventListener('click', () => {
-        // burst checks for a few seconds right after a click
-        let n = 0;
-        const burst = setInterval(() => {
-          tick();
-          if (++n > 10) clearInterval(burst);
-        }, 250);
-      }, true);
-    }
-
-    // observe DOM for dynamic menu/description nodes
-    mo.observe(document.body, { childList: true, subtree: true, characterData: true });
+<script>
+(function(){
+  function triggerLangUpdate(){ try{ if (window.applyLangClass) window.applyLangClass(); }catch(e){} }
+  window.addEventListener('hashchange', () => setTimeout(triggerLangUpdate, 150));
+  document.addEventListener('visibilitychange', () => setTimeout(triggerLangUpdate, 150));
+  // Some widgets add click handlers on language anchors; we capture clicks globally
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href*="#googtrans"]');
+    if (a) setTimeout(triggerLangUpdate, 300);
   });
 })();
 </script>
