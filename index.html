@@ -3257,5 +3257,145 @@
       }
     };
   </script>
+
+  <script>
+/**
+ * AUTO descriptions for multi-language via GTranslate
+ * Behavior:
+ *  - Elements whose text includes "§§AUTO§§" are shown only when lang !== 'it'
+ *  - When lang === 'it' they are hidden
+ *  - Token is stripped from the visible text
+ */
+(function() {
+  const TOKEN = '§§AUTO§§';
+  const SCAN_SELECTORS = [
+    '[data-auto-desc]','[data-desc-auto]','[data-desc]',
+    '.mi-desc','.desc','.menu-item .desc','.menu-item [class*="desc"]',
+    '.menu-item .mi-right > *','.menu-item .mi-left > *',
+    'p','span','li','div'
+  ].join(',');
+
+  // --- language detection (GTranslate cookie first, fallback to <html lang>)
+  function getCookie(name) {
+    return document.cookie
+      .split(';')
+      .map(v => v.trim())
+      .find(v => v.startsWith(name + '='))?.split('=').slice(1).join('=');
+  }
+  function currentLang() {
+    // googtrans has form "/source/target" (e.g., "/it/en")
+    const gt = getCookie('googtrans');
+    if (gt && gt.split('/').length >= 3) {
+      const tgt = gt.split('/').pop();
+      return (tgt || '').toLowerCase().split('-')[0] || 'it';
+    }
+    const htmlLang = (document.documentElement.getAttribute('lang') || 'it').toLowerCase();
+    return htmlLang.split('-')[0];
+  }
+
+  // --- scan DOM, mark & normalize AUTO elements
+  function scanAutoDescriptions(root = document) {
+    const nodes = Array.from(root.querySelectorAll(SCAN_SELECTORS));
+    nodes.forEach(el => {
+      if (el.dataset.autoInit === '1') return;
+      const txt = (el.textContent || '').trim();
+      if (!txt.includes(TOKEN)) return;
+
+      // Store original + normalized text (without token)
+      const normalized = txt.replace(TOKEN, '').trim();
+      el.dataset.autoInit = '1';
+      el.dataset.autoRaw = txt;
+      el.dataset.autoText = normalized;
+
+      // Render without token for non-IT; visibility handled separately
+      el.textContent = normalized;
+
+      // Remember original display to restore later
+      const cs = getComputedStyle(el);
+      el.dataset.autoDisplay = (el.style.display && el.style.display !== 'none')
+        ? el.style.display
+        : (cs.display === 'none' ? '' : '');
+    });
+  }
+
+  function applyVisibility() {
+    const lang = currentLang();
+    const hide = (lang === 'it');
+    const all = document.querySelectorAll('[data-auto-init="1"]');
+
+    all.forEach(el => {
+      if (hide) {
+        // hide in Italian
+        el.style.display = 'none';
+      } else {
+        // show in non-Italian
+        el.style.display = el.dataset.autoDisplay || '';
+        // Ensure token is stripped (safety)
+        if (el.dataset.autoText && el.textContent.trim() !== el.dataset.autoText) {
+          el.textContent = el.dataset.autoText;
+        }
+      }
+    });
+  }
+
+  // --- observe for language changes (GTranslate) and dynamic content
+  let lastLang = null;
+  function tick() {
+    const lang = currentLang();
+    if (lang !== lastLang) {
+      lastLang = lang;
+      // re-scan (in case GTranslate reflows content) then apply
+      scanAutoDescriptions(document);
+      applyVisibility();
+    }
+  }
+
+  // MutationObserver: if menu items are injected later, we re-scan quickly
+  const mo = new MutationObserver((mutations) => {
+    let needScan = false;
+    for (const m of mutations) {
+      if (m.type === 'childList' && (m.addedNodes?.length || 0) > 0) {
+        needScan = true; break;
+      }
+      if (m.type === 'characterData') {
+        needScan = true; break;
+      }
+    }
+    if (needScan) {
+      scanAutoDescriptions(document);
+      applyVisibility();
+    }
+  });
+
+  // --- init
+  document.addEventListener('DOMContentLoaded', () => {
+    // first pass
+    scanAutoDescriptions(document);
+    applyVisibility();
+    lastLang = currentLang();
+
+    // language polling (lightweight)
+    const POLL_MS = 600;
+    setInterval(tick, POLL_MS);
+
+    // also hook user interaction on the gtranslate widget to speed up reaction
+    const w = document.querySelector('.gtranslate_wrapper');
+    if (w) {
+      w.addEventListener('click', () => {
+        // burst checks for a few seconds right after a click
+        let n = 0;
+        const burst = setInterval(() => {
+          tick();
+          if (++n > 10) clearInterval(burst);
+        }, 250);
+      }, true);
+    }
+
+    // observe DOM for dynamic menu/description nodes
+    mo.observe(document.body, { childList: true, subtree: true, characterData: true });
+  });
+})();
+</script>
+
 </body>
 </html>
