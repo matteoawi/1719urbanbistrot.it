@@ -2978,7 +2978,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
 
     // ===== EVENTS/PROSSIMI EVENTI =====
     const events = [
-      { dateISO: '2025-10-24', booking: 'true', venue: '17/19 URBAN BISTROT', title: 'Cocktails e vinili', genres: ['eLECTRONIC'], start: '22:00', curatedBy: 'Riccardo Battaglia', headliner: 'XXX', guests: ['XXX'], sponsors: [{ text: 'XXX' }] },
+      { dateISO: '2025-10-24', booking: 'open', venue: '17/19 URBAN BISTROT', title: 'COCKTAILS E VINILI', genres: ['Electronic'], start: '22:00', curatedBy: 'Riccardo Battaglia', headliner: 'XXX', guests: ['XXX'], sponsors: [{ text: 'XXX' }] },
       { dateISO: '2025-10-25', booking: 'soon', venue: '17/19 URBAN BISTROT', title: 'XXX', genres: ['XXX'], start: 'XX:XX', curatedBy: 'XXX', headliner: 'XXX', guests: ['XXX'], sponsors: [{ text: 'XXX' }] },
       { dateISO: '2025-10-26', booking: 'soon', venue: '17/19 URBAN BISTROT', title: 'XXX', genres: ['XXX'], start: 'XX:XX', curatedBy: 'XXX', headliner: 'XXX', guests: ['XXX'], sponsors: [{ text: 'XXX' }] },
     ];
@@ -3055,7 +3055,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         if (ev.booking === 'open') {
           cta = document.createElement('a');
           cta.className = 'pill pill--ghost event__cta';
-          cta.href = `https://wa.me/393298252092?text=${encodeURIComponent('Ciao 17/19 Urban Bistrot, vorrei prenotare per: ' + ev.title + ' • ' + formatLongIt(ev.dateISO))}`;
+          cta.href = `https://wa.me/3931389130?text=${encodeURIComponent('Ciao 17/19 Urban Bistrot, vorrei prenotare per: ' + ev.title + ' • ' + formatLongIt(ev.dateISO))}`;
           cta.target = '_blank';
           cta.rel = 'noopener';
           cta.textContent = 'Prenota';
