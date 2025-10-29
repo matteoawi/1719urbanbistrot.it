@@ -2594,11 +2594,12 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               { name:"Lasagna proposta di stagione", desc:"§§AUTO§§ Lasagna proposta dello chef di stagione", price: "€10" },
               { name:"Parmigiana di Melanzane", desc:"§§AUTO§§ Parmigiana di Melanzane", price: "€10", photo: "/media/parmigiana%20di%20melanzane.webp" },
               { name:"Ravioloni al sentore di Pistacchio con Ragù Bianco", desc:"§§AUTO§§ Ravioloni al sentore di Pistacchio con Ragù Bianco", price: "€13", photo: "/media/ravioli-pistacchio-ragù-bianco.webp" },
-              { name:"Margherite di carciofi su salsa cacio e pepe", desc:"§§AUTO§§ Ravioli di carciofi su salsa cacio e pepe", price: "€13" },
               { name:"Ravioli al ragù di agnello", desc:"§§AUTO§§ Ravioli al ragù di agnello", price: "€14" },
               { name:"Ravioli Cacio e Pepe", desc:"§§AUTO§§ Ravioli Cacio e Pepe", price: "€13", photo: "/media/reviolicacio1%20(1).webp" },
-              { name:"Ravioli Pomodoro e Basilico", desc:"§§AUTO§§ Ravioli Pomodoro e Basilico", price: "€13", photo: "/media/ravioli%20pomodoro%20e%20basilico.webp" },
-              { name:"Fuori menù", desc:"Cucina del giorno, chiedere allo staff le proposte del giorno", price: "€13" }
+              { name:"Ravioli Porro e Salsiccia", desc:"§§AUTO§§ Ravioli Porro e Salsiccia", price: "€14" },
+              { name:"Ravioli Amatriciana", desc:"§§AUTO§§ Ravioli Amatriciana", price: "€13" },
+              { name:"Ravioli Zucca e Amaretti con salsa burro e salvia", desc:"§§AUTO§§ Ravioli Zucca e Amaretti con salsa burro e salvia", price: "€14" },
+              { name:"Ravioli Pomodoro e Basilico", desc:"§§AUTO§§ Ravioli Pomodoro e Basilico", price: "€13", photo: "/media/ravioli%20pomodoro%20e%20basilico.webp" }
             ]
           },
           {
@@ -2611,11 +2612,12 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               { name:"Tagliata di Pollo alle Erbe", desc:"§§AUTO§§ Tagliata di Pollo alle Erbe", price: "€9" },
               { name:"Guancia di Manzo al Vino Rosso", desc:"§§AUTO§§ Guancia di Manzo al Vino Rosso", price: "€14" },
               { name:"Spezzatino alla Cacciatora", desc:"§§AUTO§§ Spezzatino alla Cacciatora", price: "€14" },
+              { name:"Coda alla vaccinara (su disponibilità)", desc:"§§AUTO§§ Coda alla vaccinara", price: "€17" },
+              { name:"Trippa romana (su disponibilità)", desc:"§§AUTO§§ Trippa romana", price: "€11" },
               { name:"Bocconcini alle Prugne", desc:"§§AUTO§§ Bocconcini alle Prugne", price: "€14", photo: "/media/bocconcini%20maiale%20con%20prugne.webp" },
               { name:"Polpette al Vino Bianco", desc:"§§AUTO§§ Polpette al Vino Bianco", price: "€10", photo: "/media/polpette%20al%20vino.webp"  },
-              { name:"Polpette al Sugo", desc:"§§AUTO§§ Polpette al Sugo", price: "€10" },
-              { name:"Polpette Cacio e Pepe", desc:"§§AUTO§§ Polpette Cacio e Pepe", price: "€10", photo: "/media/poplpettecacioepepe.webp" },
-              { name:"Fuori menù", desc:"§§AUTO§§ Cucina del giorno, chiedere allo staff le proposte del giorno", price: "€13" }
+              { name:"Polpette al Sugo", desc:"§§AUTO§§ Polpette al Sugo", price: "€10", photo: "/media/polpettealsugo.webp" },
+              { name:"Polpette Cacio e Pepe", desc:"§§AUTO§§ Polpette Cacio e Pepe", price: "€10", photo: "/media/poplpettecacioepepe.webp" }
             ]
           },
           {
@@ -2637,7 +2639,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             ]
           },
           {
-          title: 'Al piatto',
+          title: 'Dessert al piatto',
           collapsed: true,
           items: [
             { 
@@ -2671,8 +2673,8 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             collapsed: true,
             items: [
               { name: "Nordica", desc: "Salmone, avocado, mozzarella", price: "€10", photo: "/media/insalata%20nordica.webp"},
-              { name: "Mista", desc: "Pomodoro, carote, cetriolo, finocchio", price: "€9" },
-              { name: "Caesar", desc: "Pollo, salsa Caesar, crostini e grana", price: "€10" }
+              { name: "Mista", desc: "Pomodoro, carote, cetriolo, finocchio", price: "€9", photo: "/media/insalatamista.webp" },
+              { name: "Caesar", desc: "Pollo, salsa Caesar, crostini e grana", price: "€10", photo: "/media/ceasarsalad.webp" }
             ]
           },
             {
@@ -2716,7 +2718,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         groups: [
        // ——— VINI ———
 { title:'Vini Bianchi', collapsed: true, items:[
-  { name:"Pecorino Bio Cascina del Colle", desc:"Vitigno: Pecorino • Zona: Abruzzo • 13%", price:"Calice €6,00 • Bottiglia €22,00" },
   { name:"Ribolla Gialla Collio Pighin", desc:"Vitigno: Ribolla Gialla • Zona: Friuli • 13%", price:"Calice €7,00 • Bottiglia €24,00" },
   { name:"Riesling Fallwind St.Michael-Eppan", desc:"Vitigno: Riesling • Zona: Alto Adige • 13,5%", price:"Solo bottiglia €26,00" },
   { name:"Gewürztraminer Aldeno", desc:"Vitigno: Gewürztraminer • Zona: Trentino • 12,5%", price:"Solo bottiglia €23,00" },
@@ -2820,7 +2821,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
   ]
 },
 {
-  title:'PreDinner Spritz',
+  title:'Spritz',
   collapsed: true,
   items:[
     { name:"Aperol Spritz", desc:"Prosecco; Aperol; soda", price:"€8,00" },
