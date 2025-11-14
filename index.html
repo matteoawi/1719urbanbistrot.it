@@ -2695,18 +2695,19 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               { name: "Caesar", desc: "Pollo, salsa Caesar, crostini e grana", price: "€10", photo: "/media/ceasarsalad.webp" }
             ]
           },
-            {
-            title: 'Club Sandwiches',
-            collapsed: true,
-            items: [
-              { name: "ClubSandwich + Patate", desc: "Scegli uno dei gusti che più preferisci, e affianco troverai una produzione di chips di nostra produzione con salse incluse", price: "€12,00", photo: "/media/Clubsandwichpatate.webp" },
-              { name: "Classic Club", desc: "Prosciutto e formaggio, insalata con pomodoro e pancetta", price: "€8,00", photo: "/media/Club%20Sandwich%20Cotto.webp" },
-              { name: "Tonno Club", desc: "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", price: "€8,00", photo: "/media/Club%20Sandwich%20tonno.webp" },
-              { name: "Salmone Club", desc: "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", price: "€9,00", photo: "/media/Club%20Sandwich%20salmone.webp" },
-              { name: "Hummus Club", desc: "Hummus di nostra produzione, Melanzane, Zucchine", price: "€9,00", photo: "/media/Club%20Sandwich%20hummus.webp" },
-              { name: "Pollo Club", desc: "Insalata di pollo, salsa bernese, pomodoro, peperoni grigliati", price: "€9,00", photo: "/media/Club%20Sandwich%20Pollo.webp" }
-            ]
-          },
+           {
+              title: 'Club Sandwiches',
+              collapsed: true,
+              renderAs: 'deal-cards', // <-- Ecco la riga aggiunta
+              items: [
+                { name: "ClubSandwich + Patate", desc: "Scegli uno dei gusti che più preferisci, e affianco troverai una produzione di chips di nostra produzione con salse incluse", price: "€12,00", photo: "/media/Clubsandwichpatate.webp" },
+                { name: "Classic Club", desc: "Prosciutto e formaggio, insalata con pomodoro e pancetta", price: "€8,00", photo: "/media/Club%20Sandwich%20Cotto.webp" },
+                { name: "Tonno Club", desc: "Insalata di tonno con radicchio, uovo sodo, salsa tartara, insalata e pomodoro", price: "€8,00", photo: "/media/Club%20Sandwich%20tonno.webp" },
+                { name: "Salmone Club", desc: "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", price: "€9,00", photo: "/media/Club%20Sandwich%20salmone.webp" },
+                { name: "Hummus Club", desc: "Hummus di nostra produzione, Melanzane, Zucchine", price: "€9,00", photo: "/media/Club%20Sandwich%20hummus.webp" },
+                { name: "Pollo Club", desc: "Insalata di pollo, salsa bernese, pomodoro, peperoni grigliati", price: "€9,00", photo: "/media/Club%20Sandwich%20Pollo.webp" }
+              ]
+            },
           {
             title: 'Taglieri & Focacce',
             collapsed: true,
@@ -2948,7 +2949,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       }
     ];
 
-    function renderMenu() {
+function renderMenu() {
       const wrap = document.getElementById('menuAccordions');
       wrap.innerHTML = '';
 
@@ -2999,21 +3000,59 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               const subBody = document.createElement('div');
               subBody.className = 'menu-body';
 
-              gr.items.forEach(it => {
-                const row = document.createElement('div');
-                row.className = 'menu-item';
-                row.innerHTML = `
-                  <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
-                  <div class="mi-right">
-                    <div class="price">${it.price || ""}</div>
-                    ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
-                  </div>
-                `;
-                subBody.appendChild(row);
-              });
+              // ===== LOGICA AGGIUNTA QUI (IF) =====
+              if (gr.renderAs === 'deal-cards') {
+                const grid = document.createElement('div');
+                grid.className = 'grid deals-grid';
+                grid.style.gap = '10px';
+                grid.style.padding = '8px 0 0';
+
+                gr.items.forEach(it => {
+                  const card = document.createElement('article');
+                  card.className = 'card deal-card';
+                  
+                  let photoHtml = '';
+                  if (it.photo) {
+                    photoHtml = `
+                    <figure class="deal-media">
+                        <img loading="lazy" alt="${it.name}" src="${it.photo}" />
+                    </figure>`;
+                  }
+                  
+                  card.innerHTML = `
+                      ${photoHtml}
+                      <div class="deal-top">
+                          <h4 class="deal-title notranslate">${it.name}</h4>
+                          <span class="deal-price">${it.price || ''}</span>
+                      </div>
+                      <p class="deal-desc">${it.desc || ''}</p>
+                  `;
+                  grid.appendChild(card);
+                });
+                subBody.appendChild(grid);
+              } else {
+                // ===== FINE LOGICA AGGIUNTA (IF) =====
+
+                // ===== INIZIO BLOCCO SPOSTATO IN 'ELSE' =====
+                gr.items.forEach(it => {
+                  const row = document.createElement('div');
+                  row.className = 'menu-item';
+                  row.innerHTML = `
+                    <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
+                    <div class="mi-right">
+                      <div class="price">${it.price || ""}</div>
+                      ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
+                    </div>
+                  `;
+                  subBody.appendChild(row);
+                });
+                // ===== FINE BLOCCO SPOSTATO IN 'ELSE' =====
+              
+              } // ===== CHIUSURA 'ELSE' =====
 
               subDetails.appendChild(subBody);
               body.appendChild(subDetails);
+
             } else {
               // Regular group title + items
               const gt = document.createElement('div');
@@ -3021,18 +3060,55 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               gt.textContent = gr.title;
               body.appendChild(gt);
 
-              gr.items.forEach(it => {
-                const row = document.createElement('div');
-                row.className = 'menu-item';
-                row.innerHTML = `
-                  <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
-                  <div class="mi-right">
-                    <div class="price">${it.price || ""}</div>
-                    ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
-                  </div>
-                `;
-                body.appendChild(row);
-              });
+              // ===== LOGICA AGGIUNTA QUI (IF) =====
+              if (gr.renderAs === 'deal-cards') {
+                const grid = document.createElement('div');
+                grid.className = 'grid deals-grid';
+                grid.style.gap = '10px';
+                grid.style.padding = '8px 0 0';
+
+                gr.items.forEach(it => {
+                  const card = document.createElement('article');
+                  card.className = 'card deal-card';
+                  
+                  let photoHtml = '';
+                  if (it.photo) {
+                    photoHtml = `
+                    <figure class="deal-media">
+                        <img loading="lazy" alt="${it.name}" src="${it.photo}" />
+                    </figure>`;
+                  }
+                  
+                  card.innerHTML = `
+                      ${photoHtml}
+                      <div class="deal-top">
+                          <h4 class="deal-title notranslate">${it.name}</h4>
+                          <span class="deal-price">${it.price || ''}</span>
+                      </div>
+                      <p class="deal-desc">${it.desc || ''}</p>
+                  `;
+                  grid.appendChild(card);
+                });
+                body.appendChild(grid);
+              } else {
+                // ===== FINE LOGICA AGGIUNTA (IF) =====
+
+                // ===== INIZIO BLOCCO SPOSTATO IN 'ELSE' =====
+                gr.items.forEach(it => {
+                  const row = document.createElement('div');
+                  row.className = 'menu-item';
+                  row.innerHTML = `
+                    <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
+                    <div class="mi-right">
+                      <div class="price">${it.price || ""}</div>
+                      ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
+                    </div>
+                  `;
+                  body.appendChild(row);
+                });
+                // ===== FINE BLOCCO SPOSTATO IN 'ELSE' =====
+              
+              } // ===== CHIUSURA 'ELSE' =====
             }
           });
         }
@@ -3044,7 +3120,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       document.querySelectorAll('.reveal:not(.active)').forEach(el => io.observe(el));
       if (window.afterMenuRender) window.afterMenuRender();
     }
-
+    
     // ===== EVENTS/PROSSIMI EVENTI =====
     const events = [
       { dateISO: '2025-11-01', booking: 'open', venue: '17/19 URBAN BISTROT', title: 'APE E VINILI', genres: ['Electronic'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'XXX', guests: ['XXX'], sponsors: [{ text: 'Apericena, Cocktails, Chill vibes' }] },
