@@ -2622,7 +2622,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             title: '🥩 Secondi Piatti',
             collapsed: true,
             items: [
-             { groupTitle: "Piatti Caldi" },
               { name:"Pollo al Curry", desc:"§§AUTO§§ Pollo al Curry", price: "€9" },
               { name:"Pollo wok con verdure", desc:"§§AUTO§§ Pollo wok con verdure", price: "€14", photo: "/media/pollo-wok.webp" },
               { name:"Tagliata di Pollo alle Erbe", desc:"§§AUTO§§ Tagliata di Pollo alle Erbe", price: "€9" },
@@ -2632,10 +2631,33 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               { name:"Bocconcini di maiale con le Prugne", desc:"§§AUTO§§ Bocconcini di maiale con le Prugne", price: "€14", photo: "/media/bocconcini%20maiale%20con%20prugne.webp" },
               { name:"Polpette al Vino Bianco", desc:"§§AUTO§§ Polpette al Vino Bianco", price: "€10", photo: "/media/polpette%20al%20vino.webp"  },
               { name:"Polpette al Sugo", desc:"§§AUTO§§ Polpette al Sugo", price: "€10", photo: "/media/polpettealsugo.webp" },
-              { name:"Polpette Cacio e Pepe", desc:"§§AUTO§§ Polpette Cacio e Pepe", price: "€10", photo: "/media/poplpettecacioepepe.webp" },
-
-              { groupTitle: "Piatti Freddi" },
-               { 
+              { name:"Polpette Cacio e Pepe", desc:"§§AUTO§§ Polpette Cacio e Pepe", price: "€10", photo: "/media/poplpettecacioepepe.webp" }
+            ]
+          },
+          {
+            title: '🥦 Contorni',
+            collapsed: true,
+            items: [
+              { name:"Cicoria Ripassata", desc:"§§AUTO§§ Cicoria Ripassata", price: "€7", photo: "/media/cicoria%20ripassata.webp"  },
+              { name:"Scarola alla Partenopea", desc:"§§AUTO§§ Scarola alla Partenopea", price: "€7", photo: "/media/scarolapartenopea.webp"  },
+              { name:"Broccoli Siciliani Ripassati", desc:"§§AUTO§§ Broccoli Siciliani Ripassati", price: "€7", photo: "/media/broccoli%20siciliani%20ripassati.webp" },
+              { name:"Patate al Forno", desc:"§§AUTO§§ Patate al Forno", price: "€6", photo:"/media/patate%20al%20forno.webp" },
+              { name:"Verdure Grigliate", desc:"§§AUTO§§ Verdure Grigliate", price: "€6", photo:"/media/verdure%20grigliate.webp"  }
+            ]
+          },
+          {
+            title: '🍛 Piatto Unico',
+            collapsed: true,
+            items: [
+              { name:"Variante 1", desc:"Piatto Unico riso thai, brunoise di verdure, pollo al curry", price: "€12", photo : "/media/piatto%20unico%20pollo%20curry%202.webp" },
+              { name:"Variante 2", desc:"Piatto Unico riso thai con brunoise di verdure, verdure grigliate ebocconcini di pollo riduzione allo yogurt", price: "€12", photo : "/media/PIATTO%20UNICO%202.webp" }
+            ]
+          },
+          {
+            title: '🧊 Piatti freddi',
+            collapsed: true,
+            items: [
+              { 
                 name: "Millefoglie di pane carasau", 
                 desc: "Con stracciatella, pomodorini confit e basilico", 
                 price: "€10" ,
@@ -2659,29 +2681,8 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
                 price: "€10" ,
                 photo: "/media/crostone%20burrata.webp"
               }
-
             ]
           },
-          {
-            title: '🥦 Contorni',
-            collapsed: true,
-            items: [
-              { name:"Cicoria Ripassata", desc:"§§AUTO§§ Cicoria Ripassata", price: "€7", photo: "/media/cicoria%20ripassata.webp"  },
-              { name:"Scarola alla Partenopea", desc:"§§AUTO§§ Scarola alla Partenopea", price: "€7", photo: "/media/scarolapartenopea.webp"  },
-              { name:"Broccoli Siciliani Ripassati", desc:"§§AUTO§§ Broccoli Siciliani Ripassati", price: "€7", photo: "/media/broccoli%20siciliani%20ripassati.webp" },
-              { name:"Patate al Forno", desc:"§§AUTO§§ Patate al Forno", price: "€6", photo:"/media/patate%20al%20forno.webp" },
-              { name:"Verdure Grigliate", desc:"§§AUTO§§ Verdure Grigliate", price: "€6", photo:"/media/verdure%20grigliate.webp"  }
-            ]
-          },
-          {
-            title: '🍛 Piatto Unico',
-            collapsed: true,
-            items: [
-              { name:"Variante 1", desc:"Piatto Unico riso thai, brunoise di verdure, pollo al curry", price: "€12", photo : "/media/piatto%20unico%20pollo%20curry%202.webp" },
-              { name:"Variante 2", desc:"Piatto Unico riso thai con brunoise di verdure, verdure grigliate ebocconcini di pollo riduzione allo yogurt", price: "€12", photo : "/media/PIATTO%20UNICO%202.webp" }
-            ]
-          },
-          
           {
             title: '🥗 Insalate',
             collapsed: true,
