@@ -382,11 +382,23 @@
       text-align: center;
     }
 
-    @media (min-width: 768px) {
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-      }
+    .hero-actions .hero-menu-cta {
+      grid-column: 1 / -1;
+      min-height: 58px;
+      font-size: 1.08rem;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .hero-menu-cta svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      transition: transform .16s ease;
+    }
+
+    .hero-menu-cta:where(:hover, :focus-visible) svg {
+      transform: translateY(2px);
     }
 
     h1 {
@@ -1553,8 +1565,13 @@ html.lang-it .desc--auto { display: none !important; }
           Roma • Via di Santa Costanza 17/19
         </span>
         <div class="hero-actions" aria-label="Azioni principali">
-          <a class="pill pill--accent" href="#menu">Vedi menù</a>
-          <a class="pill" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
+          <a class="pill pill--accent hero-menu-cta" href="#menu">
+            <span>Vai al menù</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 5v14"/>
+              <path d="m19 12-7 7-7-7"/>
+            </svg>
+          </a>
           <a class="pill" href="#aperitivo">Aperitivo</a>
           <a class="pill" href="#private">Eventi privati</a>
         </div>
