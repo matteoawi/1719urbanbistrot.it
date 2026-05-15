@@ -1249,7 +1249,6 @@ html.lang-it .desc--auto { display: none !important; }
         <ul class="nav-desktop">
 <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
-          <li><a href="#events">Eventi</a></li>
           <li><a href="#contact">Contatti</a></li>
           <li><a href="#private">Eventi Privati</a></li>
           <li><a class="pill pill--accent" href="#menu">Menù</a></li>
@@ -1276,8 +1275,6 @@ html.lang-it .desc--auto { display: none !important; }
         <ul class="sheet__list">
 <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
-          <li><a href="#music">Musica</a></li>
-          <li><a href="#events">Eventi</a></li>
           <li><a href="#private">Eventi Privati</a></li>
           <li><a href="#contact">Contatti</a></li>
     <li><a href="#aperitivo">Aperitivo</a></li>
@@ -1285,19 +1282,6 @@ html.lang-it .desc--auto { display: none !important; }
         <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
       </div>
     </div>
-  </div>
-
-  <!-- Toast -->
-  <div id="tipsToast" class="toast" role="region" aria-live="polite" aria-label="Interazioni">
-    <div style="display:flex;align-items:center;gap:8px">
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 7h-4v11H9V10H5l7-7z" fill="currentColor"/></svg>
-      <strong>Interazioni</strong>
-    </div>
-    <div class="meta">
-      Fai <strong>doppio tap</strong> per interagire con il nome dell'artista o sulla data dell'evento🔥<br/>
-      Tante interazioni = tanto supporto!
-    </div>
-    <button class="x" aria-label="Chiudi">Chiudi</button>
   </div>
 
   <!-- Hero Section -->
@@ -1384,7 +1368,7 @@ html.lang-it .desc--auto { display: none !important; }
 
         <div id="about" class="card reveal">
           <div class="block-title"><h3>Urban Bistrot</h3></div>
-          <p style="margin:0">17/19 è un bistrot con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Facciamo anche eventi con musica dal vivo — line-up curata dai nostri <strong>resident DJ</strong>. Spazio polifunzionale aperto a tutti.</p>
+          <p style="margin:0">17/19 è un bistrot con cucina contemporanea: si pranza e si cena, si passa per un caffè, si resta per cocktail, aperitivo e dopocena. Accogliamo anche eventi privati in uno spazio polifunzionale aperto a tutti.</p>
         </div>
       </div>
     </div> 
@@ -1516,7 +1500,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             <span>🎓 Feste di laurea</span>
             <span>🍽️ Cene di gruppo e aziendali</span>
             <span>🎉 Aperitivi e cocktail party</span>
-            <span>🎵 Eventi con DJ set personalizzati</span>
           </div>
           <p style="margin:12px 0 16px;font-size:.95rem;color:var(--muted)">
             Spazio dedicato al piano superiore, servizio alla carta o catering, impianto audio e atmosfera unica nel cuore di Roma.
@@ -1525,17 +1508,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             Richiedi Preventivo
           </a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Events Section -->
-  <section id="events">
-    <div class="container">
-      <div class="block-title" style="margin-bottom:6px"><h3>Prossimi Eventi</h3></div>
-      <div class="grid" id="eventsList" style="gap:12px"></div>
-      <div class="events-more">
-        <button id="eventsMoreBtn" class="pill pill--ghost" type="button">Mostra altri</button>
       </div>
     </div>
   </section>
@@ -1571,7 +1543,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
 
   <!-- Footer -->
   <footer>
-    <div class="container"><p>&copy; 2025 17/19 Urban Bistrot Roma</p></div>
+    <div class="container"><p>&copy; 2026 17/19 Urban Bistrot Roma</p></div>
   </footer>
 
   <!-- WhatsApp FAB -->
@@ -1602,7 +1574,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       SHOW_SPONSORS_IN_CARD: false,
       KEY: 'eventreactions1719',
       PERSIST_REMOTE: {
-        enabled: true,
+        enabled: false,
         endpoint: 'https://script.google.com/macros/s/AKfycbyukoQfi8AKrj0dtGGU4gRCCjWMA8Aik1E1s1ssTmWazIEGk0yJjdavqsWd4LE0_Z4/exec?key=eventreactions1719'
       },
       SHOW_POSTER: false, // false = mostra live shots, true = mostra poster
@@ -1780,24 +1752,27 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
     let toastTimer = null;
 
     function openToast() {
+      if (!toast) return;
       toast.classList.add('show');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 10000);
     }
 
     function closeToast() {
+      if (!toast) return;
       toast.classList.remove('show');
       clearTimeout(toastTimer);
     }
 
     function toggleToast() {
+      if (!toast) return;
       if (toast.classList.contains('show')) closeToast();
       else openToast();
     }
 
     document.getElementById('tipsBtn')?.addEventListener('click', toggleToast);
     document.getElementById('tipsBtnM')?.addEventListener('click', toggleToast);
-    toast.querySelector('.x').addEventListener('click', closeToast);
+    toast?.querySelector('.x')?.addEventListener('click', closeToast);
 
     // ===== LIVE CAROUSEL =====
     const liveImages = [
@@ -2114,11 +2089,11 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
     // ===== POSTER/BOUNCERS =====
     const posterData = {
       venue: '17/19 URBAN BISTROT',
-      series: 'ELECTRO TECHNO NIGHT',
-      date: 'WEDNESDAY 03/09',
-      tagline: 'TECHNO • ELECTRO • VINYL',
-      curatedBy: 'CURATED BY RESIDENT DJS',
-      logos: [{ text: 'CASAMIGOS' }, { text: 'ORGANICS' }, { text: 'UPVOTES' }]
+      series: '',
+      date: '',
+      tagline: '',
+      curatedBy: '',
+      logos: []
     };
 
     let currentPosterEventCtx = null;
@@ -3121,10 +3096,8 @@ function renderMenu() {
       if (window.afterMenuRender) window.afterMenuRender();
     }
     
-    // ===== EVENTS/PROSSIMI EVENTI =====
-    const events = [
-      { dateISO: '2025-11-01', booking: 'open', venue: '17/19 URBAN BISTROT', title: 'APE E VINILI', genres: ['Electronic'], start: '18:00', curatedBy: 'Riccardo Battaglia', headliner: 'XXX', guests: ['XXX'], sponsors: [{ text: 'Apericena, Cocktails, Chill vibes' }] },
-    ];
+    // ===== PUBLIC EVENTS DISABLED =====
+    const events = [];
 
     function pickNextEvent() {
       const today = new Date();
@@ -3133,7 +3106,7 @@ function renderMenu() {
       const upcoming = events.filter(e => !isNaN(new Date(e.dateISO)) && new Date(e.dateISO) >= today)
                            .sort((a, b) => new Date(a.dateISO) - new Date(b.dateISO));
       
-      return upcoming[0] || events.sort((a, b) => new Date(a.dateISO) - new Date(b.dateISO))[0];
+      return upcoming[0] || null;
     }
 
     function eventId(ev) {
@@ -3345,13 +3318,14 @@ function renderMenu() {
 
     // ===== INITIALIZATION =====
     function bindPosterFromEvent(ev) {
+      if (!ev) return;
       const names = [ev.headliner].concat(ev.guests || []).filter(Boolean).map(s => s.toUpperCase());
       
       posterData.venue = (ev.venue || '17/19 URBAN BISTROT').toUpperCase();
       posterData.series = (ev.title || '').toUpperCase();
       posterData.date = formatPosterDate(ev.dateISO);
-      posterData.tagline = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : 'TECHNO • ELECTRO • VINYL').toUpperCase();
-      posterData.curatedBy = ('Curated by ' + (ev.curatedBy || 'Resident DJs')).toUpperCase();
+      posterData.tagline = (ev.genres && ev.genres.length ? ev.genres.join(' • ') : '').toUpperCase();
+      posterData.curatedBy = ev.curatedBy ? ('Curated by ' + ev.curatedBy).toUpperCase() : '';
       posterData.logos = (ev.sponsors || []).map(s => ({ text: (s.text || '').toUpperCase() }));
       
       currentPosterEventCtx = { eid: eventId(ev), title: ev.title, dateISO: ev.dateISO };
@@ -3380,11 +3354,9 @@ function renderMenu() {
 
     function renderEverything() {
       renderMenu();
-      renderEvents();
-      bindPosterFromEvent(pickNextEvent());
       setupHeroDisplay();
       
-      $('#eventsMoreBtn').addEventListener('click', () => {
+      $('#eventsMoreBtn')?.addEventListener('click', () => {
         eventsExpanded = !eventsExpanded;
         renderEvents();
         updateEventCountsFromStore();
