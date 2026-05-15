@@ -535,17 +535,47 @@
       border-radius: 999px;
       font-size: .75rem;
       font-weight: 900;
+      letter-spacing: .04em;
     }
 
     details.menu-acc {
       border: 1px solid var(--line);
       border-radius: 16px;
-      background: color-mix(in oklab, var(--bg) 96%, transparent);
+      background: color-mix(in oklab, var(--fg) 3%, var(--bg));
       padding: 12px;
     }
 
     details.menu-acc + details.menu-acc { margin-top: 12px; }
-    details.menu-acc[open] { background: color-mix(in oklab, var(--bg) 98%, transparent); }
+    details.menu-acc[open] {
+      background: color-mix(in oklab, var(--fg) 2%, var(--bg));
+      border-color: color-mix(in oklab, var(--fg) 18%, var(--line));
+    }
+
+    details.menu-acc--category {
+      border-left: 4px solid color-mix(in oklab, var(--fg) 18%, var(--line));
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
+    }
+
+    details.menu-acc--category[open] {
+      border-left-color: color-mix(in oklab, var(--fg) 34%, var(--line));
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .09);
+    }
+
+    details.menu-acc--group {
+      margin: 12px 0;
+      padding: 10px;
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--fg) 5%, var(--bg));
+      border-color: color-mix(in oklab, var(--fg) 10%, var(--line));
+      border-left: 3px solid color-mix(in oklab, var(--fg) 24%, var(--line));
+      box-shadow: none;
+    }
+
+    details.menu-acc--group[open] {
+      background: color-mix(in oklab, var(--fg) 4%, var(--bg));
+      border-color: color-mix(in oklab, var(--fg) 18%, var(--line));
+      border-left-color: color-mix(in oklab, var(--fg) 42%, var(--line));
+    }
 
     summary.menu-sum {
       list-style: none;
@@ -553,20 +583,43 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      min-height: 48px;
+      min-width: 0;
     }
 
     summary.menu-sum::-webkit-details-marker { display: none; }
 
-    .menu-sum h3 { margin: 8px 0 0; font-family: 'Montserrat', system-ui, sans-serif; }
+    .menu-sum__copy,
+    .group-title-wrap {
+      display: grid;
+      min-width: 0;
+    }
+
+    .menu-sum h3 {
+      margin: 0;
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-size: 1.08rem;
+      line-height: 1.12;
+    }
+
+    .menu-acc--category > summary.menu-sum h3 {
+      font-size: 1.12rem;
+    }
+
+    .menu-acc--group > summary.menu-sum .group-title {
+      color: color-mix(in oklab, var(--fg) 90%, var(--bg));
+      font-size: 1rem;
+    }
 
     .menu-sum .chev {
       margin-left: auto;
+      flex: 0 0 auto;
       transition: transform .2s;
     }
 
-    details[open] .menu-sum .chev { transform: rotate(180deg); }
+    details[open] > summary.menu-sum .chev { transform: rotate(180deg); }
 
-    .menu-body { padding: 8px 4px 2px; }
+    .menu-body { padding: 10px 4px 2px; }
 
     .menu-jump {
       position: sticky;
@@ -609,15 +662,27 @@
 
     #menu details.menu-acc { scroll-margin-top: calc(var(--header-h) + 68px); }
 
-    .group-title { margin: 8px 0 4px; font-weight: 800; }
+    .group-title { font-weight: 900; line-height: 1.2; }
+
+    .group-heading {
+      display: grid;
+      margin: 12px 0 8px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      border-left: 4px solid color-mix(in oklab, var(--fg) 38%, var(--line));
+      background: color-mix(in oklab, var(--fg) 6%, var(--bg));
+    }
 
     .menu-item {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 10px;
       align-items: start;
-      padding: 12px 0;
-      border-bottom: 1px dashed var(--line);
+      margin-top: 8px;
+      padding: 11px;
+      border: 1px solid color-mix(in oklab, var(--fg) 8%, var(--line));
+      border-radius: 12px;
+      background: color-mix(in oklab, var(--fg) 2.5%, var(--bg));
     }
 
     .menu-item.has-photo {
@@ -640,22 +705,33 @@
 
     .menu-item .mi-name {
       font-weight: 800;
-      line-height: 1.28;
+      font-size: 1.02rem;
+      line-height: 1.3;
       overflow-wrap: anywhere;
     }
 
     .menu-item .mi-desc {
       display: block;
-      line-height: 1.35;
+      color: color-mix(in oklab, var(--fg) 72%, var(--bg));
+      font-size: .94rem;
+      line-height: 1.42;
       overflow-wrap: anywhere;
     }
 
-    .menu-item:last-child { border-bottom: 0; }
+    .menu-item:first-child { margin-top: 0; }
 
     .price {
+      display: inline-block;
+      flex: 0 1 auto;
       color: var(--accent);
       font-weight: 800;
-      white-space: nowrap;
+      max-width: min(48%, 230px);
+      padding: 4px 8px;
+      border: 1px solid color-mix(in oklab, var(--accent) 26%, var(--line));
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--accent) 9%, var(--bg));
+      line-height: 1.2;
+      text-align: center;
       font-variant-numeric: tabular-nums;
     }
 
@@ -1285,8 +1361,11 @@
 
     @media (max-width: 520px) {
       details.menu-acc { padding: 10px; }
-      .menu-body { padding: 8px 0 0; }
-      .menu-item { padding: 12px 0; }
+      details.menu-acc--group { padding: 9px; }
+      .badge { font-size: .68rem; padding: 5px 8px; }
+      .menu-sum h3 { font-size: 1.02rem; }
+      .menu-body { padding: 10px 0 0; }
+      .menu-item { padding: 10px; }
       .menu-item.has-photo {
         grid-template-columns: 72px minmax(0, 1fr);
         gap: 10px;
@@ -1296,9 +1375,9 @@
         border-radius: 12px;
       }
       .menu-item .mi-head { gap: 8px; }
-      .menu-item .mi-name { font-size: .98rem; }
-      .menu-item .mi-desc { font-size: .86rem; }
-      .price { font-size: .98rem; }
+      .menu-item .mi-name { font-size: 1rem; }
+      .menu-item .mi-desc { font-size: .9rem; }
+      .price { font-size: .95rem; max-width: 50%; }
     }
 
     @media (max-width: 360px) {
@@ -1309,6 +1388,7 @@
         align-items: flex-start;
         gap: 2px;
       }
+      .price { max-width: 100%; }
     }
 
     @media (min-width: 980px) {
@@ -3182,12 +3262,12 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       menuData.forEach((cat, catIndex) => {
         // Main category accordion
         const details = document.createElement('details');
-        details.className = 'menu-acc reveal';
+        details.className = 'menu-acc menu-acc--category reveal';
         details.id = 'menu-' + slug(cat.badge || cat.title || catIndex);
         
         const sum = document.createElement('summary');
         sum.className = 'menu-sum';
-        sum.innerHTML = `<span class="badge">${cat.badge}</span><h3>${cat.title}</h3><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
+        sum.innerHTML = `<span class="badge">${escapeHtml(cat.badge)}</span><span class="menu-sum__copy"><h3>${escapeHtml(cat.title)}</h3></span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
         details.appendChild(sum);
 
         let categoryBtn = null;
@@ -3239,13 +3319,11 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             if (gr.collapsed) {
               // Create sub-accordion for collapsed groups
               const subDetails = document.createElement('details');
-              subDetails.className = 'menu-acc';
-              subDetails.style.margin = '8px 0';
-              subDetails.style.fontSize = '0.95em';
+              subDetails.className = 'menu-acc menu-acc--group';
 
               const subSum = document.createElement('summary');
               subSum.className = 'menu-sum';
-              subSum.innerHTML = `<span class="group-title">${gr.title}</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
+              subSum.innerHTML = `<span class="group-title-wrap"><span class="group-title">${escapeHtml(gr.title)}</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
               subDetails.appendChild(subSum);
               subDetails.addEventListener('toggle', () => {
                 if (!subDetails.open) return;
@@ -3306,8 +3384,8 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             } else {
               // Regular group title + items
               const gt = document.createElement('div');
-              gt.className = 'group-title';
-              gt.textContent = gr.title;
+              gt.className = 'group-heading';
+              gt.innerHTML = `<span class="group-title">${escapeHtml(gr.title)}</span>`;
               body.appendChild(gt);
 
               // ===== LOGICA AGGIUNTA QUI (IF) =====
