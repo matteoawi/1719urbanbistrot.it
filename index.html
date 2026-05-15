@@ -3109,6 +3109,15 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       if (firstSubGroup) firstSubGroup.open = true;
     }
 
+    function closeSiblingAccordions(details) {
+      if (!details?.parentElement) return;
+      Array.from(details.parentElement.children).forEach(sibling => {
+        if (sibling !== details && sibling.matches?.('details.menu-acc')) {
+          sibling.open = false;
+        }
+      });
+    }
+
     function renderMenu() {
       const wrap = document.getElementById('menuAccordions');
       const categoryNav = document.getElementById('menuCategoryNav');
@@ -3150,7 +3159,15 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
           categoryNav.appendChild(categoryBtn);
         }
 
-        sum.addEventListener('click', () => {
+        details.addEventListener('toggle', () => {
+          if (!details.open) {
+            if (categoryBtn?.classList.contains('is-active')) {
+              categoryBtn.classList.remove('is-active');
+            }
+            return;
+          }
+          closeSiblingAccordions(details);
+          openFirstMenuGroup(details);
           if (categoryBtn) setActiveCategoryButton(categoryBtn);
         });
 
@@ -3182,6 +3199,9 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               subSum.className = 'menu-sum';
               subSum.innerHTML = `<span class="group-title">${gr.title}</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
               subDetails.appendChild(subSum);
+              subDetails.addEventListener('toggle', () => {
+                if (subDetails.open) closeSiblingAccordions(subDetails);
+              });
 
               const subBody = document.createElement('div');
               subBody.className = 'menu-body';
