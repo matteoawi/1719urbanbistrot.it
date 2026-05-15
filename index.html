@@ -523,23 +523,52 @@
     .group-title { margin: 8px 0 4px; font-weight: 800; }
 
     .menu-item {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 10px;
-      padding: 10px 0;
+      align-items: start;
+      padding: 12px 0;
       border-bottom: 1px dashed var(--line);
     }
 
-    .menu-item .mi-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+    .menu-item.has-photo {
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .menu-item .mi-main {
+      min-width: 0;
+      display: grid;
       gap: 6px;
+    }
+
+    .menu-item .mi-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .menu-item .mi-name {
+      font-weight: 800;
+      line-height: 1.28;
+      overflow-wrap: anywhere;
+    }
+
+    .menu-item .mi-desc {
+      display: block;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
 
     .menu-item:last-child { border-bottom: 0; }
 
-    .price { color: var(--accent); font-weight: 800; }
+    .price {
+      color: var(--accent);
+      font-weight: 800;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
 
     /* ===== EVENTS ===== */
     .event {
@@ -958,23 +987,38 @@
 
     .toast .k { font-weight: 900; opacity: .95; }
 
-    /* ===== PHOTO BUTTON & MODAL ===== */
+    /* ===== PRODUCT PHOTOS & MODAL ===== */
     .photo-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      appearance: none;
+      -webkit-appearance: none;
+      display: block;
+      width: 76px;
+      aspect-ratio: 1;
       border: 1px solid var(--line);
       background: var(--chip);
-      color: var(--chip-fg);
-      border-radius: 999px;
-      padding: 3px 8px;
-      font-weight: 800;
-      font-size: 1rem;
-      margin-left: 8px;
+      border-radius: 14px;
+      padding: 0;
+      overflow: hidden;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+      touch-action: manipulation;
     }
 
-    .photo-btn svg { width: 16px; height: 16px; }
+    .photo-btn img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .18s ease;
+    }
+
+    .photo-btn:hover img,
+    .photo-btn:active img { transform: scale(1.04); }
+
+    .photo-btn:focus-visible {
+      outline: 3px solid color-mix(in oklab, var(--accent) 55%, transparent);
+      outline-offset: 2px;
+    }
 
     .modal {
       position: fixed;
@@ -1149,6 +1193,34 @@
 
     /* ===== MENU ACCORDIONS GRID ===== */
     #menuAccordions { grid-template-columns: 1fr; }
+
+    @media (max-width: 520px) {
+      details.menu-acc { padding: 10px; }
+      .menu-body { padding: 8px 0 0; }
+      .menu-item { padding: 12px 0; }
+      .menu-item.has-photo {
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 10px;
+      }
+      .photo-btn {
+        width: 72px;
+        border-radius: 12px;
+      }
+      .menu-item .mi-head { gap: 8px; }
+      .menu-item .mi-name { font-size: .98rem; }
+      .menu-item .mi-desc { font-size: .86rem; }
+      .price { font-size: .98rem; }
+    }
+
+    @media (max-width: 360px) {
+      .menu-item.has-photo { grid-template-columns: 66px minmax(0, 1fr); }
+      .photo-btn { width: 66px; border-radius: 10px; }
+      .menu-item .mi-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+    }
 
     @media (min-width: 980px) {
       #menuAccordions { grid-template-columns: 1fr 1fr; }
@@ -2924,7 +2996,39 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
     ];
 
 
-function renderMenu() {
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[ch]);
+    }
+
+    function renderMenuItem(it) {
+      const name = escapeHtml(it.name);
+      const desc = it.desc ? `<span class="meta mi-desc">${escapeHtml(it.desc)}</span>` : '';
+      const price = it.price ? `<span class="price">${escapeHtml(it.price)}</span>` : '';
+      const photo = it.photo ? `
+        <button type="button" class="photo-btn" data-photo="${escapeHtml(it.photo)}" data-caption="${name}" aria-label="Apri foto di ${name}">
+          <img loading="lazy" decoding="async" alt="${name}" src="${escapeHtml(it.photo)}" />
+        </button>
+      ` : '';
+
+      return `
+        ${photo}
+        <div class="mi-main">
+          <div class="mi-head">
+            <span class="mi-name notranslate">${name}</span>
+            ${price}
+          </div>
+          ${desc}
+        </div>
+      `;
+    }
+
+    function renderMenu() {
       const wrap = document.getElementById('menuAccordions');
       wrap.innerHTML = '';
 
@@ -2945,14 +3049,8 @@ function renderMenu() {
         if (cat.items) {
           cat.items.forEach(it => {
             const row = document.createElement('div');
-            row.className = 'menu-item';
-            row.innerHTML = `
-              <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
-              <div class="mi-right">
-                <div class="price">${it.price || ""}</div>
-                ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
-              </div>
-            `;
+            row.className = `menu-item${it.photo ? ' has-photo' : ''}`;
+            row.innerHTML = renderMenuItem(it);
             body.appendChild(row);
           });
         }
@@ -3011,14 +3109,8 @@ function renderMenu() {
                 // ===== INIZIO BLOCCO SPOSTATO IN 'ELSE' =====
                 gr.items.forEach(it => {
                   const row = document.createElement('div');
-                  row.className = 'menu-item';
-                  row.innerHTML = `
-                    <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
-                    <div class="mi-right">
-                      <div class="price">${it.price || ""}</div>
-                      ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
-                    </div>
-                  `;
+                  row.className = `menu-item${it.photo ? ' has-photo' : ''}`;
+                  row.innerHTML = renderMenuItem(it);
                   subBody.appendChild(row);
                 });
                 // ===== FINE BLOCCO SPOSTATO IN 'ELSE' =====
@@ -3071,14 +3163,8 @@ function renderMenu() {
                 // ===== INIZIO BLOCCO SPOSTATO IN 'ELSE' =====
                 gr.items.forEach(it => {
                   const row = document.createElement('div');
-                  row.className = 'menu-item';
-                  row.innerHTML = `
-                    <div class="mi-left"><span class="notranslate">${it.name}</span> <span class="meta">${it.desc || ""}</span></div>
-                    <div class="mi-right">
-                      <div class="price">${it.price || ""}</div>
-                      ${it.photo ? `<button type="button" class="photo-btn" data-photo="${it.photo}" data-caption="${it.name}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Foto</button>` : ""}
-                    </div>
-                  `;
+                  row.className = `menu-item${it.photo ? ' has-photo' : ''}`;
+                  row.innerHTML = renderMenuItem(it);
                   body.appendChild(row);
                 });
                 // ===== FINE BLOCCO SPOSTATO IN 'ELSE' =====
