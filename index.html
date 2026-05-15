@@ -3104,11 +3104,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       return String(title || '').replace(/^[^A-Za-zÀ-ÿ0-9]+/, '').trim();
     }
 
-    function openFirstMenuGroup(details) {
-      const firstSubGroup = details?.querySelector(':scope > .menu-body > details.menu-acc');
-      if (firstSubGroup) firstSubGroup.open = true;
-    }
-
     function closeSiblingAccordions(details) {
       if (!details?.parentElement) return;
       Array.from(details.parentElement.children).forEach(sibling => {
@@ -3116,6 +3111,20 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
           sibling.open = false;
         }
       });
+    }
+
+    function scrollAccordionIntoView(details) {
+      if (!details) return;
+      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      const delay = reduceMotion ? 0 : 260;
+      window.setTimeout(() => {
+        requestAnimationFrame(() => {
+          details.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+          });
+        });
+      }, delay);
     }
 
     function renderMenu() {
@@ -3136,7 +3145,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         const details = document.createElement('details');
         details.className = 'menu-acc reveal';
         details.id = 'menu-' + slug(cat.badge || cat.title || catIndex);
-        if (catIndex === 0) details.open = true;
         
         const sum = document.createElement('summary');
         sum.className = 'menu-sum';
@@ -3147,14 +3155,16 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         if (categoryNav) {
           categoryBtn = document.createElement('button');
           categoryBtn.type = 'button';
-          categoryBtn.className = `menu-jump__btn${catIndex === 0 ? ' is-active' : ''}`;
+          categoryBtn.className = 'menu-jump__btn';
           categoryBtn.textContent = menuCategoryLabel(cat.title);
           categoryBtn.setAttribute('aria-controls', details.id);
           categoryBtn.addEventListener('click', () => {
+            const wasOpen = details.open;
             details.open = true;
-            openFirstMenuGroup(details);
-            setActiveCategoryButton(categoryBtn);
-            requestAnimationFrame(() => details.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+            if (wasOpen) {
+              setActiveCategoryButton(categoryBtn);
+              scrollAccordionIntoView(details);
+            }
           });
           categoryNav.appendChild(categoryBtn);
         }
@@ -3167,8 +3177,8 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             return;
           }
           closeSiblingAccordions(details);
-          openFirstMenuGroup(details);
           if (categoryBtn) setActiveCategoryButton(categoryBtn);
+          scrollAccordionIntoView(details);
         });
 
         const body = document.createElement('div');
@@ -3193,14 +3203,15 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               subDetails.className = 'menu-acc';
               subDetails.style.margin = '8px 0';
               subDetails.style.fontSize = '0.95em';
-              if (catIndex === 0 && groupIndex === 0) subDetails.open = true;
 
               const subSum = document.createElement('summary');
               subSum.className = 'menu-sum';
               subSum.innerHTML = `<span class="group-title">${gr.title}</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
               subDetails.appendChild(subSum);
               subDetails.addEventListener('toggle', () => {
-                if (subDetails.open) closeSiblingAccordions(subDetails);
+                if (!subDetails.open) return;
+                closeSiblingAccordions(subDetails);
+                scrollAccordionIntoView(subDetails);
               });
 
               const subBody = document.createElement('div');
