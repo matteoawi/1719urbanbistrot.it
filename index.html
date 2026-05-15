@@ -3117,12 +3117,29 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
     function scrollAccordionIntoView(details) {
       if (!details) return;
       const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-      const delay = reduceMotion ? 0 : 260;
+      const delay = reduceMotion ? 0 : 240;
       window.setTimeout(() => {
         requestAnimationFrame(() => {
-          details.scrollIntoView({
-            behavior: reduceMotion ? 'auto' : 'smooth',
-            block: 'start'
+          const summary = details.querySelector(':scope > summary') || details;
+          const rect = summary.getBoundingClientRect();
+          const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 64;
+          const menuJump = document.getElementById('menuCategoryNav');
+          const jumpVisible = !!(menuJump && menuJump.offsetParent !== null);
+          const topGuard = headerH + (jumpVisible ? menuJump.offsetHeight : 0) + 14;
+          const bottomGuard = 28;
+          const maxBottom = window.innerHeight - bottomGuard;
+          let delta = 0;
+
+          if (rect.top < topGuard) {
+            delta = rect.top - topGuard;
+          } else if (rect.bottom > maxBottom) {
+            delta = rect.bottom - maxBottom;
+          }
+
+          if (Math.abs(delta) < 12) return;
+          window.scrollBy({
+            top: delta,
+            behavior: reduceMotion ? 'auto' : 'smooth'
           });
         });
       }, delay);
