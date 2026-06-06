@@ -1687,9 +1687,24 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
     <div class="grid deals-grid">
       <!-- Deal 1 -->
       <article class="card deal-card">
-<figure class="deal-media">
-<img loading="lazy" alt="Club sandwich, chips e calici" src="media/CLUBECALICI.webp" />
-</figure>
+        <figure class="deal-media">
+          <img loading="lazy" alt="Chips e calice" src="media/CHIPSECALICE.webp" />
+        </figure>
+
+        <div class="deal-top">
+          <h4 class="deal-title">Chips & Calice</h4>
+          <span class="deal-price">11&nbsp;€</span>
+        </div>
+        <p class="deal-desc">
+          Chips artigianali con salse e <strong>1 calice</strong> (vino, spritz o birra).
+        </p>
+      </article>
+
+      <!-- Deal 2 -->
+      <article class="card deal-card">
+        <figure class="deal-media">
+          <img loading="lazy" alt="Club sandwich, chips e calici" src="media/CLUBECALICI.webp" />
+        </figure>
 
         <div class="deal-top">
           <h4 class="deal-title">Per due — Club & Calici</h4>
@@ -1701,11 +1716,28 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         </p>
       </article>
 
-      <!-- Deal 2 -->
+      <!-- Deal 3 -->
       <article class="card deal-card">
-<figure class="deal-media">
-<img loading="lazy" alt="GranTagliere, focaccia e calici" src="/media/calici%20e%20tagliere.webp" />
-</figure>
+        <figure class="deal-media">
+          <img loading="lazy" alt="GranTagliere, focaccia e calici" src="/media/aperitivo-veg.webp" />
+        </figure>
+
+        <div class="deal-top">
+          <h4 class="deal-title">Per due — Tagliere Veg & Calici</h4>
+          <span class="deal-price">38&nbsp;€</span>
+        </div>
+        <p class="deal-desc">
+          Tagliere vegetariano (selezione di affettati e verdure grigliate), focaccia, <strong>2 calici</strong>
+          (vino, spritz o birra).
+        </p>
+      </article>
+
+      <!-- Deal 4 -->
+      <article class="card deal-card">
+        <figure class="deal-media">
+          <img loading="lazy" alt="GranTagliere, focaccia e calici" src="/media/calici%20e%20tagliere.webp" />
+        </figure>
+
         <div class="deal-top">
           <h4 class="deal-title">Per due — Gran Tagliere & Calici</h4>
           <span class="deal-price">46&nbsp;€</span>
@@ -1716,11 +1748,11 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         </p>
       </article>
 
-      <!-- Deal 3 -->
+      <!-- Deal 5 -->
       <article class="card deal-card">
-<figure class="deal-media">
-<img loading="lazy" alt="GranTagliere, focaccia e bottiglia" src="/media/bottiglia%20e%20tagliere.webp" />
-</figure>
+        <figure class="deal-media">
+          <img loading="lazy" alt="GranTagliere, focaccia e bottiglia" src="/media/bottiglia%20e%20tagliere.webp" />
+        </figure>
 
         <div class="deal-top">
           <h4 class="deal-title">Mega per due — Tagliere & Bottiglia</h4>
@@ -1731,39 +1763,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
           di vino selezionata.
         </p>
       </article>
-
-      <!-- Deal 4 -->
-      <article class="card deal-card">
-<figure class="deal-media">
-  <img loading="lazy" alt="Chips e calice" src="media/CHIPSECALICE.webp" />
-</figure>
-
-        <div class="deal-top">
-          <h4 class="deal-title">Chips & Calice</h4>
-          <span class="deal-price">11&nbsp;€</span>
-        </div>
-        <p class="deal-desc">
-          Chips artigianali con salse e <strong>1 calice</strong> (vino, spritz o birra).
-        </p>
-      </article>
-
-
-
-         <!-- Deal 5 -->
-      <article class="card deal-card">
-      <figure class="deal-media">
-      <img loading="lazy" alt="GranTagliere, focaccia e calici" src="/media/aperitivo-veg.webp" />
-      </figure>
-              <div class="deal-top">
-                <h4 class="deal-title">Per due — Tagliere Veg & Calici</h4>
-                <span class="deal-price">38&nbsp;€</span>
-              </div>
-              <p class="deal-desc">
-                Tagliere vegetariano (selezione di affettati e verdure grigliate), focaccia, <strong>2 calici</strong>
-                (vino, spritz o birra).
-              </p>
-            </article>
-          </div>
+    </div>
 
     <div class="deals-note meta" role="note" aria-label="note aperitivo">
      Chiedi al banco le proposte del giorno.
@@ -2799,7 +2799,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             title: '🍳 Colazioni Special',
             collapsed: true,
             items: [
-              { name: "Colazione all'Italiana", desc: "Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price: "€10,00" },
+              { name: "Colazione all'Italiana", desc: "Tris di mieli italiani selezionati e frutta fresca; latticino con pan dolce/integrale e frutta secca; latte aromatizzato e caffè", price: "€12,00" },
               { name: "French Breakfast", desc: "Tè o infuso d'erbe; pan piastrato o pan brioche con burro; selezione di marmellate/composte/confetture", price: "€7,00", photo: "/media/colazione%20francese.webp" },
               { name: "Danish Breakfast", desc: "Spremuta; toast o pancake con sciroppo d'acero; caffè", price: "€7,00", photo: "/media/colazione-danese.webp" },
               { name: "American Breakfast Salata", desc: "Bacon e uova strapazzate; pan piastrato, burro e confetture/composte; caffè americano", price: "€12,00", photo: "/media/colazione%20americana%20salata-updtd.webp" },
