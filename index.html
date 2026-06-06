@@ -738,11 +738,36 @@
       gap: 10px;
     }
 
+    .menu-item .mi-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 0;
+    }
+
     .menu-item .mi-name {
       font-weight: 800;
       font-size: 1.02rem;
       line-height: 1.3;
       overflow-wrap: anywhere;
+    }
+
+    .mi-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 20px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--line));
+      background: color-mix(in oklab, var(--accent) 9%, var(--bg));
+      color: var(--accent);
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .menu-item .mi-desc {
@@ -1693,7 +1718,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
 
         <div class="deal-top">
           <h4 class="deal-title">Chips & Calice</h4>
-          <span class="deal-price">11&nbsp;€</span>
+          <span class="deal-price">10&nbsp;€</span>
         </div>
         <p class="deal-desc">
           Chips artigianali con salse e <strong>1 calice</strong> (vino, spritz o birra).
@@ -1707,12 +1732,12 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         </figure>
 
         <div class="deal-top">
-          <h4 class="deal-title">Frittini & Drink</h4>
-          <span class="deal-price">12&nbsp;€</span>
+          <h4 class="deal-title">Chips, frittini & Calice</h4>
+          <span class="deal-price">13&nbsp;€</span>
         </div>
         <p class="deal-desc">
-          Piatto di frittini, patatine e <strong>1 drink</strong> a scelta
-          (spritz, calice o birra).
+          Piatto di frittini, patatine e <strong>1 calice</strong>
+          (vino, spritz o birra).
         </p>
       </article>
 
@@ -2891,19 +2916,19 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               { name:"Ravioli Pomodoro e Basilico", desc:"§§AUTO§§ Ravioli Pomodoro e Basilico", price: "€13", photo: "/media/ravioli%20pomodoro%20e%20basilico.webp" },
               { name:"Ravioli Amatriciana", desc:"§§AUTO§§ Ravioli Amatriciana", price: "€13", photo: "/media/ravioliamatriciana.webp" },
               { name:"Ravioli Cacio e Pepe", desc:"§§AUTO§§ Ravioli Cacio e Pepe", price: "€13", photo: "/media/cacioepepe.webp" },
-              { name:"Ravioloni al sentore di Pistacchio con Ragù Bianco", desc:"§§AUTO§§ Ravioloni al sentore di Pistacchio con Ragù Bianco", price: "€13", photo: "/media/ravioli-pistacchio-ragù-bianco.webp" },
               { name:"Ravioli al ragù di agnello", desc:"Ravioli al ragù di agnello al sentore di carciofo", price: "€14", photo: "/media/ravioliagnello.webp" },
-              { name:"Ravioli crema di Porro e Salsiccia", desc:"§§AUTO§§ Ravioli crema di Porro e Salsiccia", price: "€14", photo: "/media/ravioli%20porro%20e%20salsiccia.webp" },
               { name:"Ravioli con borragine e noci", desc:"Saltati burro e salvia con besciamella", price: "€14", photo: "/media/ravioli-con-borragine.webp"  },
+              { name:"Ravioli di ricotta alla Norma", price: "€14" },
               { name:"Lasagna alla Bolognese", desc:"Lasagna alla Bolognese con ragù", price: "€10", photo: "/media/lasagna%20bolognese.webp" },
               { name:"Lasagna Vegetariana", desc:"Lasagna Vegetariana con scamorza e zucchine", price: "€10", photo: "/media/lasagna%20vegetariana.webp"  },
+              { name:"Variante 1", tag:"Piatto unico", desc:"Riso thai, brunoise di verdure, pollo al curry", price: "€12", photo : "/media/piatto%20unico%20pollo%20curry%202.webp" },
+              { name:"Variante 2", tag:"Piatto unico", desc:"Riso thai con brunoise di verdure, verdure grigliate e bocconcini di pollo riduzione allo yogurt", price: "€12", photo : "/media/PIATTO%20UNICO%202.webp" }
           ]
           },
           {
             title: '🥩 Secondi Piatti',
             collapsed: true,
             items: [
-              { name:"Pollo al Curry", desc:"§§AUTO§§ Pollo al Curry", price: "€9", photo: "/media/pollocurry.webp" },
               { name:"Pollo wok con verdure", desc:"§§AUTO§§ Pollo wok con verdure", price: "€14", photo: "/media/pollo-wok.webp" },
               { name:"Tagliata di Pollo alle Erbe con patate", desc:"§§AUTO§§ Tagliata di Pollo alle Erbe con patate", price: "€14", photo: "/media/polloalleerbe.webp"  },
               { name:"Straccetti e rucola con scaglie di Grana Padano", desc:"§§AUTO§§ Straccetti e rucola con scaglie di Grana Padano", price: "€15", photo: "/media/straccetti%20rucola.webp"},
@@ -2927,51 +2952,26 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
             ]
           },
           {
-            title: '🍛 Piatto Unico',
+            title: '🧊 Piatti freddi & Insalate',
             collapsed: true,
             items: [
-              { name:"Variante 1", desc:"Piatto Unico riso thai, brunoise di verdure, pollo al curry", price: "€12", photo : "/media/piatto%20unico%20pollo%20curry%202.webp" },
-              { name:"Variante 2", desc:"Piatto Unico riso thai con brunoise di verdure, verdure grigliate ebocconcini di pollo riduzione allo yogurt", price: "€12", photo : "/media/PIATTO%20UNICO%202.webp" }
-            ]
-          },
-          {
-            title: '🧊 Piatti freddi',
-            collapsed: true,
-            items: [
-              { 
-                name: "Millefoglie di pane carasau", 
-                desc: "Con stracciatella, pomodorini confit e basilico", 
-                price: "€10" ,
-                photo: "/media/millefoglie%20carasau.webp"
-              },
-              { 
-                name: "Hummus di ceci", 
-                desc: "Con crostini e brunoise di verdure", 
-                price: "€10" ,
-                photo: "/media/hummus.webp"
-              },
-              { 
-                name: "Caprese pugliese", 
-                desc: "Con burrata, pomodorini e crumble di taralli", 
-                price: "€10" ,
-                photo: "/media/caprese.webp"
-              },
-              { 
-                name: "Crostone con burrata e alici del Cantabrico", 
-                desc: "§§AUTO§§ Crostone con burrata e alici del Cantabrico", 
-                price: "€10" ,
-                photo: "/media/crostone%20burrata.webp"
-              }
-            ]
-          },
-          {
-            title: '🥗 Insalate',
-            collapsed: true,
-            items: [
+              { name: "Millefoglie di pane carasau", desc: "Con stracciatella, pomodorini confit e basilico", price: "€10", photo: "/media/millefoglie%20carasau.webp" },
+              { name: "Hummus di ceci", desc: "Con crostini e brunoise di verdure", price: "€10", photo: "/media/hummus.webp" },
+              { name: "Caprese pugliese", desc: "Con burrata, pomodorini e crumble di taralli", price: "€10", photo: "/media/caprese.webp" },
+              { name: "Crostone con burrata e alici del Cantabrico", desc: "§§AUTO§§ Crostone con burrata e alici del Cantabrico", price: "€10", photo: "/media/crostone%20burrata.webp" },
+              { name: "Tagliere Nostrano", desc: "Prosciutto crudo stagionato e bufala", price: "€12", photo: "/media/tagliere%20nostrano.webp" },
               { name: "Nordica", desc: "Salmone, avocado, mozzarella", price: "€10", photo: "/media/insalata%20nordica.webp"},
               { name: "Mista", desc: "Pomodoro, carote, cetriolo, finocchio", price: "€9", photo: "/media/insalatamista.webp" },
               { name: "Insalata mista con tonno", desc: "Pomodoro, carote, cetriolo, finocchio e tonno", price: "€10", photo: "/media/insalata-con-tonno.webp" },
               { name: "Caesar", desc: "Pollo, salsa Caesar, crostini e grana", price: "€10", photo: "/media/ceasarsalad.webp" }
+            ]
+          },
+          {
+            title: '🍞 Focaccia e fritti',
+            collapsed: true,
+            items: [
+              { name: "Focaccia Bianca", desc: "Con olio e rosmarino", price: "€5", photo:"/media/focaccia%20bianca%20(1).webp" },
+              { name: "Piatto frittini", desc: "Frittini misti", price: "€6", photo:"/media/piatto-frittini.webp" }
             ]
           },
           {
@@ -2985,16 +2985,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
               { name: "Salmone Club", desc: "Salmone affumicato, Philadelphia, uovo sodo, insalata e pomodoro", price: "€9,00", photo: "/media/Club%20Sandwich%20salmone.webp" },
               { name: "Hummus Club", desc: "Hummus di nostra produzione, Melanzane, Zucchine", price: "€9,00", photo: "/media/Club%20Sandwich%20hummus.webp" },
               { name: "Pollo Club", desc: "Insalata di pollo, salsa bernese, pomodoro, peperoni grigliati", price: "€9,00", photo: "/media/Club%20Sandwich%20Pollo.webp" }
-            ]
-          },
-          {
-            title: '🧀 Taglieri & Focacce',
-            collapsed: true,
-            items: [
-              { name: "La nostra selezione", desc: "Tagliere con selezione di affettati e formaggi", price: "€25", photo:"/media/grantagliere.webp" },
-              { name: "Tagliere vegetariano", desc: "Tagliere con selezione di formaggi e verdure grigliate", price: "€18", photo:"/media/tagliere-veg.webp" },
-              { name: "Tagliere Nostrano", desc: "Prosciutto crudo stagionato e bufala", price: "€12", photo: "/media/tagliere%20nostrano.webp" },
-              { name: "Focaccia Bianca", desc: "Con olio e rosmarino", price: "€5", photo:"/media/focaccia%20bianca%20(1).webp" }
             ]
           },
           {
@@ -3244,6 +3234,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
       const name = escapeHtml(it.name);
       const desc = it.desc ? `<span class="meta mi-desc">${escapeHtml(it.desc)}</span>` : '';
       const price = it.price ? `<span class="price">${escapeHtml(it.price)}</span>` : '';
+      const tag = it.tag ? `<span class="mi-tag">${escapeHtml(it.tag)}</span>` : '';
       const photo = it.photo ? `
         <button type="button" class="photo-btn" data-photo="${escapeHtml(it.photo)}" data-caption="${name}" aria-label="Apri foto di ${name}">
           <img loading="lazy" decoding="async" alt="${name}" src="${escapeHtml(it.photo)}" />
@@ -3254,7 +3245,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         ${photo}
         <div class="mi-main">
           <div class="mi-head">
-            <span class="mi-name notranslate">${name}</span>
+            <span class="mi-title"><span class="mi-name notranslate">${name}</span>${tag}</span>
             ${price}
           </div>
           ${desc}
