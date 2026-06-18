@@ -9,9 +9,9 @@
     "height": 1350
   },
   "production_notes": [
-    "Final posts use the original dish assets.",
+    "Final posts use the official dish assets already referenced by the site.",
     "The dish photos were not regenerated or altered with new ingredients.",
-    "Only layout, 4:5 canvas fitting, readability shading, and text overlay were added."
+    "Only 4:5 fitting and copy overlay were added directly on top of each image."
   ],
   "posts": [
     {

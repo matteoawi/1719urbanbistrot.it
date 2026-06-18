@@ -2,7 +2,7 @@
 
 Pacchetto creato il 18 giugno 2026 per 1719 Urban Bistrot.
 
-Nota produzione: le immagini finali usano gli asset originali dei piatti, senza generare o aggiungere ingredienti. Il lavoro grafico applicato è solo composizione 4:5 e copy sovrapposto.
+Nota produzione: le immagini finali usano gli asset ufficiali già presenti nel sito, senza generare o aggiungere ingredienti. Il lavoro grafico applicato è solo adattamento al formato 4:5 e copy sovrapposto direttamente sopra la foto.
 
 ## 1. Ravioli Pomodoro e Basilico
 
