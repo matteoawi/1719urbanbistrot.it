@@ -1,0 +1,48 @@
+{
+  "package": "instagram-primi-piatti",
+  "brand": "1719 Urban Bistrot",
+  "created_at": "2026-06-18",
+  "format": {
+    "platform": "Instagram",
+    "aspect_ratio": "4:5",
+    "width": 1080,
+    "height": 1350
+  },
+  "production_notes": [
+    "Final posts use the original dish assets.",
+    "The dish photos were not regenerated or altered with new ingredients.",
+    "Only layout, 4:5 canvas fitting, readability shading, and text overlay were added."
+  ],
+  "posts": [
+    {
+      "id": "post-01",
+      "dish": "Ravioli Pomodoro e Basilico",
+      "source_asset": "media/ravioli pomodoro e basilico.webp",
+      "output": "post-01-ravioli-pomodoro-basilico.jpg",
+      "image_copy": "Pomodoro, basilico, ravioli."
+    },
+    {
+      "id": "post-02",
+      "dish": "Ravioli Amatriciana",
+      "source_asset": "media/ravioliamatriciana.webp",
+      "output": "post-02-ravioli-amatriciana.jpg",
+      "image_copy": "Amatriciana in formato ravioli."
+    },
+    {
+      "id": "post-03",
+      "dish": "Ravioli Cacio e Pepe",
+      "source_asset": "media/cacioepepe.webp",
+      "output": "post-03-ravioli-cacio-e-pepe.jpg",
+      "image_copy": "Cacio e pepe, cremosi."
+    },
+    {
+      "id": "post-04",
+      "dish": "Ravioli con borragine e noci",
+      "source_asset": "media/ravioli-con-borragine.webp",
+      "output": "post-04-ravioli-borragine-noci.jpg",
+      "image_copy": "Borragine e noci."
+    }
+  ],
+  "contact_sheet": "contact-sheet-primi-piatti.jpg",
+  "descriptions": "descrizioni.md"
+}
