@@ -1,0 +1,52 @@
+{
+  "package": "instagram-secondi-aperitivo",
+  "brand": "1719 Urban Bistrot",
+  "created_at": "2026-06-19",
+  "format": {
+    "platform": "Instagram",
+    "aspect_ratio": "4:5",
+    "width": 1080,
+    "height": 1350
+  },
+  "production_notes": [
+    "Final posts use the official dish and aperitivo assets already referenced by the site.",
+    "The photos were not regenerated or altered with new ingredients.",
+    "Only 4:5 fitting and copy overlay were added directly on top of each image."
+  ],
+  "posts": [
+    {
+      "id": "post-01",
+      "category": "Secondi piatti",
+      "dish": "Guancia di Manzo al Vino Rosso",
+      "source_asset": "media/guancia.webp",
+      "output": "post-01-guancia-vino-rosso.jpg",
+      "image_copy": "Guancia al vino rosso."
+    },
+    {
+      "id": "post-02",
+      "category": "Secondi piatti",
+      "dish": "Spezzatino di vitella alla Cacciatora",
+      "source_asset": "media/cacciatora.webp",
+      "output": "post-02-spezzatino-cacciatora.jpg",
+      "image_copy": "Cacciatora, senza fretta."
+    },
+    {
+      "id": "post-03",
+      "category": "Formule aperitivo",
+      "dish": "Chips, frittini & Calice",
+      "source_asset": "media/aperitivo-frittini.webp",
+      "output": "post-03-aperitivo-frittini-calice.jpg",
+      "image_copy": "Frittini, chips e calice."
+    },
+    {
+      "id": "post-04",
+      "category": "Formule aperitivo",
+      "dish": "Per due - Gran Tagliere & Calici",
+      "source_asset": "media/calici e tagliere.webp",
+      "output": "post-04-gran-tagliere-calici.jpg",
+      "image_copy": "Gran tagliere e calici."
+    }
+  ],
+  "contact_sheet": "contact-sheet-secondi-aperitivo.jpg",
+  "descriptions": "descrizioni.md"
+}
