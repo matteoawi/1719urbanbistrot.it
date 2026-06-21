@@ -203,6 +203,62 @@
       color: var(--accent-fg);
     }
 
+    .pill--thefork {
+      background: #ffffff;
+      border-color: #00a082;
+      color: #007a5a;
+      box-shadow: 0 8px 22px rgba(0, 160, 130, .14);
+    }
+
+    .thefork-booking {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .thefork-cta {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 54px;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .thefork-cta__brand {
+      font-size: .8rem;
+      font-weight: 900;
+      text-transform: lowercase;
+      letter-spacing: .02em;
+    }
+
+    .thefork-cta__action {
+      font-size: .95rem;
+      font-weight: 900;
+    }
+
+    .thefork-microcopy {
+      color: #007a5a;
+      font-size: .88rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .nav-desktop .thefork-cta {
+      flex-direction: row;
+      min-height: 40px;
+      gap: 6px;
+      padding-inline: .85rem;
+      box-shadow: none;
+    }
+
+    .nav-desktop .thefork-cta__action {
+      font-size: .82rem;
+    }
+
     .pill--ghost { background: transparent; }
     .pill--disabled { opacity: .55; pointer-events: none; }
 
@@ -328,6 +384,15 @@
       margin-top: 18px;
     }
 
+    .sheet__booking {
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .sheet__booking .thefork-microcopy {
+      color: #f4fffb;
+    }
+
     .sheet.active .sheet__inner {
       opacity: 1;
       transform: none;
@@ -391,6 +456,11 @@
       font-size: 1.08rem;
       gap: 10px;
       white-space: nowrap;
+    }
+
+    .hero-actions .thefork-booking {
+      grid-column: 1 / -1;
+      align-items: stretch;
     }
 
     .hero-menu-cta svg {
@@ -1578,6 +1648,12 @@ html.lang-it .desc--auto { display: none !important; }
         <ul class="nav-desktop nav-desktop--right">
           <li><a href="#hours">Orari</a></li>
           <li><a href="#contact">Dove siamo</a></li>
+          <li>
+            <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
+              <span class="thefork-cta__brand">the fork</span>
+              <span class="thefork-cta__action">Prenota</span>
+            </a>
+          </li>
           <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
           <li><button id="themeToggle" class="toggle" aria-label="Tema: automatico"></button></li>
         </ul>
@@ -1603,6 +1679,13 @@ html.lang-it .desc--auto { display: none !important; }
           <li><a href="#contact">Dove siamo</a></li>
           <li><a href="#about">Il locale</a></li>
         </ul>
+        <div class="thefork-booking sheet__booking">
+          <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
+            <span class="thefork-cta__brand">the fork</span>
+            <span class="thefork-cta__action">Prenota con The Fork</span>
+          </a>
+          <span class="thefork-microcopy">Ottieni fino al 20% di sconto!</span>
+        </div>
         <a class="pill pill--accent sheet__cta" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a>
       </div>
     </div>
@@ -1644,6 +1727,13 @@ html.lang-it .desc--auto { display: none !important; }
               <path d="m19 12-7 7-7-7"/>
             </svg>
           </a>
+          <div class="thefork-booking">
+            <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
+              <span class="thefork-cta__brand">the fork</span>
+              <span class="thefork-cta__action">Prenota con The Fork</span>
+            </a>
+            <span class="thefork-microcopy">Ottieni fino al 20% di sconto!</span>
+          </div>
           <a class="pill" href="#aperitivo">Aperitivo</a>
           <a class="pill" href="#private">Eventi privati</a>
         </div>
@@ -1871,6 +1961,13 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         <div class="block-title"><h3>Contatti</h3></div>
         <p><strong>Indirizzo</strong><br/>Via di Santa Costanza 17/19 – 00198 Roma</p>
         <p><strong>Prenotazioni</strong><br/>
+          <span class="thefork-booking">
+            <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
+              <span class="thefork-cta__brand">the fork</span>
+              <span class="thefork-cta__action">Prenota con The Fork</span>
+            </a>
+            <span class="thefork-microcopy">Ottieni fino al 20% di sconto!</span>
+          </span><br/>
           WhatsApp: <a class="pill" href="https://wa.me/393298252092" target="_blank" rel="noopener">+39 329 825 2092</a><br/>
         </p>
         <p><strong>Social</strong><br/>
