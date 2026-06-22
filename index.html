@@ -219,20 +219,19 @@
 
     .thefork-cta {
       display: inline-flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 2px;
+      gap: 10px;
       min-height: 54px;
       text-align: center;
       line-height: 1.1;
     }
 
-    .thefork-cta__brand {
-      font-size: .8rem;
-      font-weight: 900;
-      text-transform: lowercase;
-      letter-spacing: .02em;
+    .thefork-logo {
+      width: 92px;
+      height: auto;
+      flex: 0 0 auto;
     }
 
     .thefork-cta__action {
@@ -248,11 +247,14 @@
     }
 
     .nav-desktop .thefork-cta {
-      flex-direction: row;
       min-height: 40px;
       gap: 6px;
       padding-inline: .85rem;
       box-shadow: none;
+    }
+
+    .nav-desktop .thefork-logo {
+      width: 72px;
     }
 
     .nav-desktop .thefork-cta__action {
@@ -1207,31 +1209,13 @@
       .map iframe { height: 360px; }
     }
 
-    /* ===== FOOTER & FAB ===== */
+    /* ===== FOOTER ===== */
     footer {
       border-top: 1px solid var(--line);
       padding: 28px 0;
       color: var(--muted);
       text-align: center;
     }
-
-    .fab {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      background: var(--accent);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, .15);
-      text-decoration: none;
-      z-index: 80;
-    }
-
-    .fab svg { width: 26px; height: 26px; }
-    .fab path { fill: var(--accent-fg); }
 
     #gt_float_wrapper {
       top: 10px !important;
@@ -1650,8 +1634,8 @@ html.lang-it .desc--auto { display: none !important; }
           <li><a href="#contact">Dove siamo</a></li>
           <li>
             <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
-              <span class="thefork-cta__brand">the fork</span>
-              <span class="thefork-cta__action">Prenota</span>
+              <img class="thefork-logo" src="media/thefork-logo.png" alt="" aria-hidden="true">
+              <span class="thefork-cta__action">Prenota con The Fork</span>
             </a>
           </li>
           <li><a class="pill pill--accent" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot%2C%20vorrei%20prenotare" target="_blank" rel="noopener">Prenota</a></li>
@@ -1681,7 +1665,7 @@ html.lang-it .desc--auto { display: none !important; }
         </ul>
         <div class="thefork-booking sheet__booking">
           <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
-            <span class="thefork-cta__brand">the fork</span>
+            <img class="thefork-logo" src="media/thefork-logo.png" alt="" aria-hidden="true">
             <span class="thefork-cta__action">Prenota con The Fork</span>
           </a>
           <span class="thefork-microcopy">Ottieni fino al 20% di sconto!</span>
@@ -1729,7 +1713,7 @@ html.lang-it .desc--auto { display: none !important; }
           </a>
           <div class="thefork-booking">
             <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
-              <span class="thefork-cta__brand">the fork</span>
+              <img class="thefork-logo" src="media/thefork-logo.png" alt="" aria-hidden="true">
               <span class="thefork-cta__action">Prenota con The Fork</span>
             </a>
             <span class="thefork-microcopy">Ottieni fino al 20% di sconto!</span>
@@ -1963,7 +1947,7 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
         <p><strong>Prenotazioni</strong><br/>
           <span class="thefork-booking">
             <a class="pill pill--thefork thefork-cta" href="https://www.thefork.it/ristorante/urban-bistrot-17-19-r864049" target="_blank" rel="noopener">
-              <span class="thefork-cta__brand">the fork</span>
+              <img class="thefork-logo" src="media/thefork-logo.png" alt="" aria-hidden="true">
               <span class="thefork-cta__action">Prenota con The Fork</span>
             </a>
             <span class="thefork-microcopy">Ottieni fino al 20% di sconto!</span>
@@ -1994,14 +1978,6 @@ document.querySelectorAll('#aperitivo .deal-media img[data-src]').forEach(img=>{
   <footer>
     <div class="container"><p>&copy; 2026 17/19 Urban Bistrot Roma</p></div>
   </footer>
-
-  <!-- WhatsApp FAB -->
-  <a class="fab" href="https://wa.me/393298252092?text=Ciao%2017%2F19%20Urban%20Bistrot" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 1.5c5.8 0 10.5 4.7 10.5 10.5S17.8 22.5 12 22.5A10.5 10.5 0 0 1 6.99 21.23L3 21l.82-3.89A10.45 10.45 0 0 1 1.5 12C1.5 6.2 6.2 1.5 12 1.5Z" fill="currentColor" opacity=".96"/>
-      <path d="M16.63 14.62c-.19-.1-1.13-.6-1.3-.66-.17-.06-.29-.1-.42.1s-.49.66-.6.8c-.11.13-.22.15-.41.06-.19-.1-.81-.3-1.55-.98-.57-.51-.95-1.13-1.06-1.31-.11-.19-.01-.29.09-.39.09-.09.2-.24.29-.36.1-.12.13-.2.19-.33.06-.13.03-.25-.02-.35-.05-.1-.44-1.05-.6-1.45-.16-.39-.33-.33-.45-.34h-.38c-.13 0-.33.05-.5.24-.17.19-.66.65-.66 1.59 0 .94.68 1.85.78 2 .1.13 1.31 2.07 3.2 2.91.45.2.8.32 1.04.41.44.15.85.13 1.17.08.36-.05 1.1-.45 1.25-.89.15-.44.15-.82.11-.91-.05-.08-.16-.13-.41-.25Z" fill="#fff"/>
-    </svg>
-  </a>
 
   <!-- Photo Modal -->
   <div class="modal" id="photoModal" aria-hidden="true" aria-modal="true" role="dialog">
