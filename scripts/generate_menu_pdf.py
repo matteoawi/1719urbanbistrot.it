@@ -1,14 +1,19 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import re
 import subprocess
+import tempfile
 from datetime import date
 from pathlib import Path
+from urllib.parse import unquote
 from xml.sax.saxutils import escape
 
+from PIL import Image as PILImage
+from PIL import ImageOps
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
@@ -20,6 +25,7 @@ from reportlab.platypus import (
     BaseDocTemplate,
     CondPageBreak,
     Frame,
+    Image as PdfImage,
     KeepTogether,
     PageTemplate,
     Paragraph,
@@ -80,13 +86,15 @@ def aperitivo_from_index(source: str) -> dict:
         name_match = re.search(r'<h4 class="deal-title">([\s\S]*?)</h4>', block)
         price_match = re.search(r'<span class="deal-price">([\s\S]*?)</span>', block)
         desc_match = re.search(r'<p class="deal-desc">([\s\S]*?)</p>', block)
-        if not (name_match and price_match and desc_match):
+        photo_match = re.search(r'<img[^>]+src="([^"]+)"', block)
+        if not (name_match and price_match and desc_match and photo_match):
             raise ValueError("Formula aperitivo incompleta")
         items.append(
             {
                 "name": plain_text(name_match.group(1)),
                 "price": plain_text(price_match.group(1)),
                 "desc": plain_text(desc_match.group(1)),
+                "photo": html.unescape(photo_match.group(1)),
             }
         )
 
@@ -104,6 +112,42 @@ def aperitivo_from_index(source: str) -> dict:
 
 def clean_heading(value: str) -> str:
     return normalize_text(re.sub(r"^[^A-Za-zÀ-ÿ0-9]+", "", value))
+
+
+class ThumbnailStore:
+    def __init__(self, directory: Path, size_px: int = 360):
+        self.directory = directory
+        self.size_px = size_px
+        self.created: dict[str, Path] = {}
+        self.missing: list[str] = []
+
+    def get(self, reference: str) -> Path | None:
+        reference = str(reference or "").strip()
+        if not reference:
+            return None
+        if reference in self.created:
+            return self.created[reference]
+
+        relative_path = unquote(reference.split("?", 1)[0].lstrip("/"))
+        source_path = ROOT / relative_path
+        if not source_path.exists():
+            self.missing.append(reference)
+            return None
+
+        digest = hashlib.sha1(reference.encode("utf-8")).hexdigest()[:16]
+        output_path = self.directory / f"{digest}.jpg"
+        with PILImage.open(source_path) as source:
+            source = ImageOps.exif_transpose(source)
+            square = ImageOps.fit(
+                source.convert("RGB"),
+                (self.size_px, self.size_px),
+                method=PILImage.Resampling.LANCZOS,
+                centering=(0.5, 0.5),
+            )
+            square.save(output_path, "JPEG", quality=84, optimize=True, progressive=True)
+
+        self.created[reference] = output_path
+        return output_path
 
 
 def register_fonts() -> None:
@@ -213,7 +257,12 @@ def build_styles() -> dict[str, ParagraphStyle]:
     }
 
 
-def item_flowable(item: dict, styles: dict[str, ParagraphStyle], frame_width: float):
+def item_flowable(
+    item: dict,
+    styles: dict[str, ParagraphStyle],
+    frame_width: float,
+    thumbnails: ThumbnailStore,
+):
     name = normalize_text(str(item.get("name", "")))
     tag = normalize_text(str(item.get("tag", "")))
     if tag:
@@ -222,6 +271,53 @@ def item_flowable(item: dict, styles: dict[str, ParagraphStyle], frame_width: fl
     raw_desc = normalize_text(str(item.get("desc", "")))
     desc = "" if raw_desc.startswith("§§AUTO§§") else raw_desc
     price = normalize_text(str(item.get("price", "")))
+    photo_path = thumbnails.get(str(item.get("photo", "")))
+
+    if photo_path:
+        photo_size = 19 * mm
+        photo_column = 22 * mm
+        price_width = 48
+        text_width = frame_width - photo_column - price_width
+        text_rows = [[Paragraph(escape(name), styles["name"])]]
+        if desc:
+            text_rows.append([Paragraph(escape(desc), styles["desc"])])
+        text_table = Table(text_rows, colWidths=[text_width], hAlign="LEFT")
+        text_table.setStyle(
+            TableStyle(
+                [
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
+                ]
+            )
+        )
+        table = Table(
+            [
+                [
+                    PdfImage(str(photo_path), width=photo_size, height=photo_size),
+                    text_table,
+                    Paragraph(escape(price), styles["price"]),
+                ]
+            ],
+            colWidths=[photo_column, text_width, price_width],
+            hAlign="LEFT",
+        )
+        table.setStyle(
+            TableStyle(
+                [
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (0, 0), 5),
+                    ("RIGHTPADDING", (1, 0), (1, 0), 4),
+                    ("RIGHTPADDING", (2, 0), (2, 0), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 3),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                    ("LINEBELOW", (0, 0), (-1, -1), 0.45, LINE),
+                ]
+            )
+        )
+        return KeepTogether([table])
 
     price_width = 88
     name_width = frame_width - price_width
@@ -235,10 +331,10 @@ def item_flowable(item: dict, styles: dict[str, ParagraphStyle], frame_width: fl
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
         ("RIGHTPADDING", (0, 0), (0, -1), 4),
         ("RIGHTPADDING", (1, 0), (1, -1), 0),
-        ("TOPPADDING", (0, 0), (-1, 0), 2.5),
-        ("BOTTOMPADDING", (0, 0), (-1, 0), 2.5 if not desc else 0.5),
+        ("TOPPADDING", (0, 0), (-1, 0), 2),
+        ("BOTTOMPADDING", (0, 0), (-1, 0), 2 if not desc else 0.5),
         ("TOPPADDING", (0, 1), (-1, -1), 0),
-        ("BOTTOMPADDING", (0, 1), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 1), (-1, -1), 2.5),
         ("LINEBELOW", (0, -1), (-1, -1), 0.45, LINE),
     ]
     if desc:
@@ -260,7 +356,7 @@ def page_decor(canvas, doc) -> None:
     canvas.restoreState()
 
 
-def build_pdf(output_path: Path) -> tuple[int, int]:
+def build_pdf(output_path: Path) -> tuple[int, int, int]:
     register_fonts()
     styles = build_styles()
 
@@ -270,6 +366,13 @@ def build_pdf(output_path: Path) -> tuple[int, int]:
         len(group.get("items", []))
         for category in categories
         for group in category.get("groups", [])
+    )
+    photo_count = sum(
+        1
+        for category in categories
+        for group in category.get("groups", [])
+        for item in group.get("items", [])
+        if item.get("photo")
     )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -337,35 +440,49 @@ def build_pdf(output_path: Path) -> tuple[int, int]:
     ]
     updated = f"{today.day} {month_names[today.month]} {today.year}"
 
-    story = [
-        Paragraph("Menu completo", styles["title"]),
-        Paragraph(
-            f"17/19 Urban Bistrot · Aggiornato il {escape(updated)} · {item_count} proposte",
-            styles["subtitle"],
-        ),
-    ]
+    with tempfile.TemporaryDirectory(prefix="1719-menu-thumbs-") as thumbnail_dir:
+        thumbnails = ThumbnailStore(Path(thumbnail_dir))
+        story = [
+            Paragraph("Menu completo", styles["title"]),
+            Paragraph(
+                f"17/19 Urban Bistrot · Aggiornato il {escape(updated)} · "
+                f"{item_count} proposte · {photo_count} foto",
+                styles["subtitle"],
+            ),
+        ]
 
-    for category in categories:
-        story.append(CondPageBreak(40 * mm))
-        story.append(Paragraph(escape(clean_heading(category["title"])), styles["category"]))
-        for group in category.get("groups", []):
-            story.append(Paragraph(escape(clean_heading(group["title"])), styles["group"]))
-            for item in group.get("items", []):
-                story.append(item_flowable(item, styles, frame_width))
-            if group.get("note"):
-                story.append(Paragraph(escape(group["note"]), styles["note"]))
-            story.append(Spacer(1, 1.5 * mm))
+        for category in categories:
+            story.append(CondPageBreak(40 * mm))
+            story.append(
+                Paragraph(escape(clean_heading(category["title"])), styles["category"])
+            )
+            for group in category.get("groups", []):
+                story.append(
+                    Paragraph(escape(clean_heading(group["title"])), styles["group"])
+                )
+                for item in group.get("items", []):
+                    story.append(item_flowable(item, styles, frame_width, thumbnails))
+                if group.get("note"):
+                    story.append(Paragraph(escape(group["note"]), styles["note"]))
+                story.append(Spacer(1, 1 * mm))
 
-    doc.build(story)
-    return len(categories), item_count
+        if thumbnails.missing:
+            raise FileNotFoundError(
+                "Foto menu mancanti: " + ", ".join(sorted(set(thumbnails.missing)))
+            )
+        doc.build(story)
+    return len(categories), item_count, photo_count
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Genera il menu PDF dal menu attivo del sito.")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
-    categories, items = build_pdf(args.output.resolve())
-    print(f"Creato {args.output.resolve()} ({categories} categorie, {items} voci)")
+    categories, items, photos = build_pdf(args.output.resolve())
+    print(
+        f"Creato {args.output.resolve()} "
+        f"({categories} categorie, {items} voci, {photos} foto)"
+    )
 
 
 if __name__ == "__main__":
