@@ -1,1 +1,3 @@
 .codex-remote-attachments/
+tmp/
+__pycache__/
