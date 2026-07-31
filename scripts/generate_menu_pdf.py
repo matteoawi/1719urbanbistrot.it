@@ -24,10 +24,10 @@ from reportlab.platypus import (
     BaseDocTemplate,
     CondPageBreak,
     Frame,
+    FrameBreak,
     HRFlowable,
     Image as PdfImage,
     KeepTogether,
-    PageBreak,
     PageTemplate,
     Paragraph,
     Spacer,
@@ -40,11 +40,11 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "index.html"
 DEFAULT_OUTPUT = ROOT / "output" / "pdf" / "menu-1719-urban-bistrot.pdf"
 
-BRAND_RED = colors.HexColor("#9D2D2D")
+BRAND_RED = colors.HexColor("#8E2E2E")
 INK = colors.HexColor("#1C1917")
 MUTED = colors.HexColor("#5F5752")
-LINE = colors.HexColor("#DDD6D1")
-PANEL = colors.HexColor("#F3F0ED")
+LINE = colors.HexColor("#D8CFC9")
+PANEL = colors.HexColor("#F6F3F0")
 
 
 def normalize_text(value: str) -> str:
@@ -171,26 +171,24 @@ def build_styles() -> dict[str, ParagraphStyle]:
             "MenuCategory",
             parent=base["Heading1"],
             fontName="MenuSans-Bold",
-            fontSize=16,
-            leading=18,
-            textColor=colors.white,
-            backColor=BRAND_RED,
-            borderPadding=(6, 7, 6, 7),
+            fontSize=18,
+            leading=21,
+            textColor=BRAND_RED,
             spaceBefore=0,
-            spaceAfter=3 * mm,
+            spaceAfter=1.5 * mm,
             keepWithNext=True,
         ),
         "group": ParagraphStyle(
             "MenuGroup",
             parent=base["Heading2"],
             fontName="MenuSans-Bold",
-            fontSize=12.5,
-            leading=15,
+            fontSize=13,
+            leading=15.5,
             textColor=INK,
             backColor=PANEL,
-            borderPadding=(4, 5, 4, 5),
+            borderPadding=(5, 6, 5, 6),
             spaceBefore=0,
-            spaceAfter=1.5 * mm,
+            spaceAfter=2 * mm,
             keepWithNext=True,
         ),
         "name": ParagraphStyle(
@@ -258,8 +256,8 @@ def item_flowable(
     photo_path = thumbnails.get(str(item.get("photo", "")))
 
     if photo_path:
-        photo_size = 19 * mm
-        photo_column = 22 * mm
+        photo_size = 20 * mm
+        photo_column = 23 * mm
         price_width = 48
         text_width = frame_width - photo_column - price_width
         text_rows = [[Paragraph(escape(name), styles["name"])]]
@@ -296,8 +294,8 @@ def item_flowable(
                     ("RIGHTPADDING", (0, 0), (0, 0), 5),
                     ("RIGHTPADDING", (1, 0), (1, 0), 4),
                     ("RIGHTPADDING", (2, 0), (2, 0), 0),
-                    ("TOPPADDING", (0, 0), (-1, -1), 3),
-                    ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                    ("TOPPADDING", (0, 0), (-1, -1), 3.5),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 3.5),
                     ("LINEBELOW", (0, 0), (-1, -1), 0.45, LINE),
                 ]
             )
@@ -333,31 +331,33 @@ def item_flowable(
     return table
 
 
-def group_flowables(
+def group_content(
     group: dict,
     styles: dict[str, ParagraphStyle],
     frame_width: float,
     thumbnails: ThumbnailStore,
 ):
-    heading = Paragraph(escape(clean_heading(group["title"])), styles["group"])
-    items = [
+    content = [Paragraph(escape(clean_heading(group["title"])), styles["group"])]
+    content.extend(
         item_flowable(item, styles, frame_width, thumbnails)
         for item in group.get("items", [])
-    ]
-    ending = []
-    if group.get("note"):
-        ending.append(Paragraph(escape(group["note"]), styles["note"]))
-    ending.append(
-        HRFlowable(width="100%", thickness=0.8, color=LINE, spaceAfter=3 * mm)
     )
+    if group.get("note"):
+        content.append(Paragraph(escape(group["note"]), styles["note"]))
+    content.append(
+        HRFlowable(width="100%", thickness=0.8, color=LINE, spaceAfter=4 * mm)
+    )
+    return content
 
-    if len(items) <= 3:
-        return [KeepTogether([heading, *items, *ending])]
 
-    flowables = [KeepTogether([heading, *items[:2]])]
-    flowables.extend(items[2:-2])
-    flowables.append(KeepTogether([*items[-2:], *ending]))
-    return flowables
+def reorder_groups(category: dict, ordered_titles: list[str]) -> dict:
+    groups_by_title = {
+        clean_heading(group["title"]): group for group in category.get("groups", [])
+    }
+    return {
+        **category,
+        "groups": [groups_by_title[title] for title in ordered_titles],
+    }
 
 
 def page_decor(canvas, doc) -> None:
@@ -382,12 +382,31 @@ def build_pdf(output_path: Path) -> tuple[int, int, int]:
     menu_categories = {
         category["title"]: category for category in menu_data_from_index(INDEX_PATH)
     }
+    tea = reorder_groups(
+        menu_categories["Tè e Tisane"],
+        [
+            "Tisane (Infusione 7-8 min)",
+            "Tè Neri (Infusione 3-4 min)",
+            "Tè Verdi (Infusione 3-4 min)",
+            "Tè Oolong (Infusione 4-5 min)",
+        ],
+    )
+    coffee = reorder_groups(
+        menu_categories["Caffetteria/Colazione"],
+        [
+            "Colazioni Special",
+            "Succhi & Frutta",
+            "Bakery",
+            "Cioccolata calda",
+            "Caffetteria",
+        ],
+    )
     categories = [
         menu_categories["La nostra cucina"],
         aperitivo,
         menu_categories["Drinks"],
-        menu_categories["Tè e Tisane"],
-        menu_categories["Caffetteria/Colazione"],
+        tea,
+        coffee,
     ]
     item_count = sum(
         len(group.get("items", []))
@@ -454,18 +473,42 @@ def build_pdf(output_path: Path) -> tuple[int, int, int]:
         story = []
 
         for category_index, category in enumerate(categories):
-            if category_index and category["title"] in {
-                "Drinks",
-                "Caffetteria/Colazione",
-            }:
-                story.append(PageBreak())
-            elif category_index:
-                story.append(CondPageBreak(55 * mm))
-            story.append(
-                Paragraph(escape(clean_heading(category["title"])), styles["category"])
+            if category_index:
+                story.append(CondPageBreak(70 * mm))
+            category_heading = Paragraph(
+                escape(clean_heading(category["title"])), styles["category"]
             )
-            for group in category.get("groups", []):
-                story.extend(group_flowables(group, styles, frame_width, thumbnails))
+            category_rule = HRFlowable(
+                width="100%",
+                thickness=1.1,
+                color=BRAND_RED,
+                spaceBefore=0,
+                spaceAfter=4 * mm,
+            )
+            category_rule.keepWithNext = True
+            groups = category.get("groups", [])
+            if not groups:
+                story.extend([category_heading, category_rule])
+                continue
+
+            story.append(
+                KeepTogether(
+                    [
+                        category_heading,
+                        category_rule,
+                        *group_content(groups[0], styles, frame_width, thumbnails),
+                    ]
+                )
+            )
+            for group in groups[1:]:
+                if (
+                    category["title"] == "Caffetteria/Colazione"
+                    and clean_heading(group["title"]) == "Cioccolata calda"
+                ):
+                    story.append(FrameBreak())
+                story.append(
+                    KeepTogether(group_content(group, styles, frame_width, thumbnails))
+                )
 
         if thumbnails.missing:
             raise FileNotFoundError(
