@@ -7,7 +7,6 @@ import json
 import re
 import subprocess
 import tempfile
-from datetime import date
 from pathlib import Path
 from urllib.parse import unquote
 from xml.sax.saxutils import escape
@@ -15,7 +14,7 @@ from xml.sax.saxutils import escape
 from PIL import Image as PILImage
 from PIL import ImageOps
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
@@ -25,8 +24,10 @@ from reportlab.platypus import (
     BaseDocTemplate,
     CondPageBreak,
     Frame,
+    HRFlowable,
     Image as PdfImage,
     KeepTogether,
+    PageBreak,
     PageTemplate,
     Paragraph,
     Spacer,
@@ -166,34 +167,17 @@ def register_fonts() -> None:
 def build_styles() -> dict[str, ParagraphStyle]:
     base = getSampleStyleSheet()
     return {
-        "title": ParagraphStyle(
-            "MenuTitle",
-            parent=base["Title"],
-            fontName="MenuSans-Bold",
-            fontSize=24,
-            leading=27,
-            textColor=INK,
-            alignment=TA_LEFT,
-            spaceAfter=3 * mm,
-        ),
-        "subtitle": ParagraphStyle(
-            "MenuSubtitle",
-            parent=base["BodyText"],
-            fontName="MenuSans",
-            fontSize=10.5,
-            leading=13,
-            textColor=MUTED,
-            spaceAfter=6 * mm,
-        ),
         "category": ParagraphStyle(
             "MenuCategory",
             parent=base["Heading1"],
             fontName="MenuSans-Bold",
             fontSize=16,
             leading=18,
-            textColor=BRAND_RED,
-            spaceBefore=4 * mm,
-            spaceAfter=2.5 * mm,
+            textColor=colors.white,
+            backColor=BRAND_RED,
+            borderPadding=(6, 7, 6, 7),
+            spaceBefore=0,
+            spaceAfter=3 * mm,
             keepWithNext=True,
         ),
         "group": ParagraphStyle(
@@ -205,8 +189,8 @@ def build_styles() -> dict[str, ParagraphStyle]:
             textColor=INK,
             backColor=PANEL,
             borderPadding=(4, 5, 4, 5),
-            spaceBefore=2 * mm,
-            spaceAfter=2 * mm,
+            spaceBefore=0,
+            spaceAfter=1.5 * mm,
             keepWithNext=True,
         ),
         "name": ParagraphStyle(
@@ -302,6 +286,7 @@ def item_flowable(
             ],
             colWidths=[photo_column, text_width, price_width],
             hAlign="LEFT",
+            splitByRow=0,
         )
         table.setStyle(
             TableStyle(
@@ -317,7 +302,7 @@ def item_flowable(
                 ]
             )
         )
-        return KeepTogether([table])
+        return table
 
     price_width = 88
     name_width = frame_width - price_width
@@ -325,7 +310,12 @@ def item_flowable(
     if desc:
         rows.append([Paragraph(escape(desc), styles["desc"]), ""])
 
-    table = Table(rows, colWidths=[name_width, price_width], hAlign="LEFT")
+    table = Table(
+        rows,
+        colWidths=[name_width, price_width],
+        hAlign="LEFT",
+        splitByRow=0,
+    )
     commands = [
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -340,7 +330,34 @@ def item_flowable(
     if desc:
         commands.append(("SPAN", (0, 1), (1, 1)))
     table.setStyle(TableStyle(commands))
-    return KeepTogether([table])
+    return table
+
+
+def group_flowables(
+    group: dict,
+    styles: dict[str, ParagraphStyle],
+    frame_width: float,
+    thumbnails: ThumbnailStore,
+):
+    heading = Paragraph(escape(clean_heading(group["title"])), styles["group"])
+    items = [
+        item_flowable(item, styles, frame_width, thumbnails)
+        for item in group.get("items", [])
+    ]
+    ending = []
+    if group.get("note"):
+        ending.append(Paragraph(escape(group["note"]), styles["note"]))
+    ending.append(
+        HRFlowable(width="100%", thickness=0.8, color=LINE, spaceAfter=3 * mm)
+    )
+
+    if len(items) <= 3:
+        return [KeepTogether([heading, *items, *ending])]
+
+    flowables = [KeepTogether([heading, *items[:2]])]
+    flowables.extend(items[2:-2])
+    flowables.append(KeepTogether([*items[-2:], *ending]))
+    return flowables
 
 
 def page_decor(canvas, doc) -> None:
@@ -361,7 +378,17 @@ def build_pdf(output_path: Path) -> tuple[int, int, int]:
     styles = build_styles()
 
     source = INDEX_PATH.read_text(encoding="utf-8")
-    categories = [aperitivo_from_index(source), *menu_data_from_index(INDEX_PATH)]
+    aperitivo = aperitivo_from_index(source)
+    menu_categories = {
+        category["title"]: category for category in menu_data_from_index(INDEX_PATH)
+    }
+    categories = [
+        menu_categories["La nostra cucina"],
+        aperitivo,
+        menu_categories["Drinks"],
+        menu_categories["Tè e Tisane"],
+        menu_categories["Caffetteria/Colazione"],
+    ]
     item_count = sum(
         len(group.get("items", []))
         for category in categories
@@ -416,55 +443,29 @@ def build_pdf(output_path: Path) -> tuple[int, int, int]:
         rightMargin=right_margin,
         topMargin=top_margin,
         bottomMargin=bottom_margin,
-        title="Menu completo - 17/19 Urban Bistrot",
+        title="Menu - 17/19 Urban Bistrot",
         author="17/19 Urban Bistrot",
-        subject="Menu completo aggiornato",
+        subject="Menu 17/19 Urban Bistrot",
     )
     doc.addPageTemplates([PageTemplate(id="menu", frames=frames, onPageEnd=page_decor)])
 
-    today = date.today()
-    month_names = [
-        "",
-        "gennaio",
-        "febbraio",
-        "marzo",
-        "aprile",
-        "maggio",
-        "giugno",
-        "luglio",
-        "agosto",
-        "settembre",
-        "ottobre",
-        "novembre",
-        "dicembre",
-    ]
-    updated = f"{today.day} {month_names[today.month]} {today.year}"
-
     with tempfile.TemporaryDirectory(prefix="1719-menu-thumbs-") as thumbnail_dir:
         thumbnails = ThumbnailStore(Path(thumbnail_dir))
-        story = [
-            Paragraph("Menu completo", styles["title"]),
-            Paragraph(
-                f"17/19 Urban Bistrot · Aggiornato il {escape(updated)} · "
-                f"{item_count} proposte · {photo_count} foto",
-                styles["subtitle"],
-            ),
-        ]
+        story = []
 
-        for category in categories:
-            story.append(CondPageBreak(40 * mm))
+        for category_index, category in enumerate(categories):
+            if category_index and category["title"] in {
+                "Drinks",
+                "Caffetteria/Colazione",
+            }:
+                story.append(PageBreak())
+            elif category_index:
+                story.append(CondPageBreak(55 * mm))
             story.append(
                 Paragraph(escape(clean_heading(category["title"])), styles["category"])
             )
             for group in category.get("groups", []):
-                story.append(
-                    Paragraph(escape(clean_heading(group["title"])), styles["group"])
-                )
-                for item in group.get("items", []):
-                    story.append(item_flowable(item, styles, frame_width, thumbnails))
-                if group.get("note"):
-                    story.append(Paragraph(escape(group["note"]), styles["note"]))
-                story.append(Spacer(1, 1 * mm))
+                story.extend(group_flowables(group, styles, frame_width, thumbnails))
 
         if thumbnails.missing:
             raise FileNotFoundError(
